@@ -1,23 +1,26 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kevloro — Полный расчет ламината, подложки и плинтуса</title>
     <meta name="description" content="Точный онлайн-калькулятор напольных покрытий: ламинат, подложка, плинтусы и общая смета.">
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112471439', 'ym');
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
 
-    ym(112471439, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/112471439" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112471439', 'ym');
+
+        ym(112471439, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/112471439" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
     <style>
         :root {
             --primary: #2563eb;
@@ -27,7 +30,30 @@
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border: #e2e8f0;
+            --input-bg: #ffffff;
             --accent: #10b981;
+            --subcard-bg: #f8fafc;
+            --total-bg: #ecfdf5;
+            --total-border: #a7f3d0;
+            --btn-copy-bg: #f1f5f9;
+            --btn-copy-hover: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --input-bg: #0f172a;
+            --accent: #34d399;
+            --subcard-bg: #0f172a;
+            --total-bg: rgba(16, 185, 129, 0.12);
+            --total-border: rgba(16, 185, 129, 0.35);
+            --btn-copy-bg: #334155;
+            --btn-copy-hover: #475569;
         }
 
         * {
@@ -35,6 +61,7 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
         }
 
         body {
@@ -51,8 +78,30 @@
         }
 
         .header {
+            position: relative;
             text-align: center;
             margin-bottom: 20px;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.85;
         }
 
         .logo {
@@ -105,6 +154,7 @@
             font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 4px;
+            color: var(--text-main);
         }
 
         .row {
@@ -122,9 +172,9 @@
             border-radius: 8px;
             border: 1px solid var(--border);
             font-size: 0.9rem;
-            background: #fff;
+            background: var(--input-bg);
+            color: var(--text-main);
             outline: none;
-            transition: border-color 0.2s;
         }
 
         input:focus, select:focus {
@@ -142,7 +192,6 @@
             cursor: pointer;
             font-size: 0.95rem;
             margin-top: 16px;
-            transition: background 0.2s;
         }
 
         .btn:hover {
@@ -150,14 +199,14 @@
         }
 
         .btn-copy {
-            background-color: #f1f5f9;
+            background-color: var(--btn-copy-bg);
             color: var(--text-main);
             border: 1px solid var(--border);
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
         .btn-copy:hover {
-            background-color: #e2e8f0;
+            background-color: var(--btn-copy-hover);
         }
 
         .results {
@@ -168,7 +217,7 @@
         }
 
         .result-group {
-            background: #f8fafc;
+            background: var(--subcard-bg);
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 12px;
@@ -212,8 +261,8 @@
         }
 
         .total-price-box {
-            background: #ecfdf5;
-            border: 1px solid #a7f3d0;
+            background: var(--total-bg);
+            border: 1px solid var(--total-border);
             border-radius: 8px;
             padding: 12px;
             display: flex;
@@ -226,6 +275,53 @@
             font-size: 1.25rem;
             font-weight: 800;
             color: var(--accent);
+        }
+
+        /* Кнопки соцсетей и мессенджеров */
+        .share-block {
+            margin-top: 12px;
+        }
+
+        .share-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .share-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr) auto;
+            gap: 6px;
+        }
+
+        .share-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+
+        .share-btn:hover {
+            opacity: 0.9;
+        }
+
+        .share-tg { background-color: #229ED9; }
+        .share-wa { background-color: #25D366; }
+        .share-vk { background-color: #0077FF; }
+        .share-ok { background-color: #EE8208; }
+        .share-native {
+            background-color: var(--btn-copy-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 8px 10px;
         }
 
         .seo-text {
@@ -246,6 +342,7 @@
 
 <div class="container">
     <div class="header">
+        <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">🌙</button>
         <div class="logo">KEVLORO</div>
         <h1>Калькулятор напольных покрытий</h1>
         <p class="subtitle">Смета: покрытие, подложка, плинтус и стоимость</p>
@@ -290,10 +387,9 @@
             </div>
         </div>
 
-        <button class="btn" onclick="calculate()">Рассчитать полную смету</button>
+        <button class="btn" onclick="calculate(true)">Рассчитать полную смету</button>
 
         <div class="results" id="resultBlock">
-            
             <div class="result-group">
                 <div class="result-group-title">Основное покрытие</div>
                 <div class="result-item">
@@ -336,6 +432,17 @@
             </div>
 
             <button class="btn btn-copy" onclick="copyResults()">📋 Скопировать список для магазина</button>
+
+            <div class="share-block">
+                <div class="share-label">Отправить смету себе или мастеру:</div>
+                <div class="share-buttons">
+                    <button class="share-btn share-tg" onclick="shareTo('tg')">Telegram</button>
+                    <button class="share-btn share-wa" onclick="shareTo('wa')">WhatsApp</button>
+                    <button class="share-btn share-vk" onclick="shareTo('vk')">ВК</button>
+                    <button class="share-btn share-ok" onclick="shareTo('ok')">ОК</button>
+                    <button class="share-btn share-native" onclick="shareTo('native')" title="Поделиться через другое приложение">📤 Ещё</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -346,15 +453,43 @@
 </div>
 
 <script>
+    // --- Логика темной темы ---
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme');
+
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggleBtn.textContent = '☀️';
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            themeToggleBtn.textContent = '🌙';
+        }
+    }
+
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    } else if (prefersDark) {
+        applyTheme('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const nextTheme = isDark ? 'light' : 'dark';
+        applyTheme(nextTheme);
+        localStorage.setItem('theme', nextTheme);
+    });
+
+    // --- Логика калькулятора ---
     let calculationText = '';
 
-    // Функция для безопасного считывания чисел с запятыми или точками
     function parseInput(id) {
         const val = document.getElementById(id).value.trim().replace(',', '.');
         return parseFloat(val) || 0;
     }
 
-    function calculate() {
+    function calculate(showAlert = false) {
         const length = parseInput('length');
         const width = parseInput('width');
         const doorWidth = parseInput('doorWidth');
@@ -363,11 +498,13 @@
         const price = parseInput('pricePerM2');
 
         if (length <= 0 || width <= 0) {
-            alert('Пожалуйста, укажите длину и ширину комнаты.');
+            if (showAlert) {
+                alert('Пожалуйста, укажите длину и ширину комнаты.');
+            }
             return;
         }
 
-        // 1. Расчет площади
+        // 1. Площадь
         const roomArea = length * width;
         const totalAreaWithMargin = roomArea * (1 + marginPercent / 100);
         let packs = 0;
@@ -385,11 +522,11 @@
         document.getElementById('totalArea').innerText = totalAreaWithMargin.toFixed(2) + ' м²';
         document.getElementById('boughtArea').innerText = finalBoughtArea.toFixed(2) + ' м²';
 
-        // 2. Подложка (рулоны по 10 м2)
+        // 2. Подложка
         const rolls = Math.ceil(roomArea / 10);
         document.getElementById('underlayRolls').innerText = rolls + ' рул. (' + (rolls * 10) + ' м²)';
 
-        // 3. Плинтус (периметр минус дверь + 5% запас)
+        // 3. Плинтус
         const perimeter = (length + width) * 2;
         const cleanPerimeter = Math.max(0, perimeter - doorWidth);
         const skirtingWithMargin = cleanPerimeter * 1.05;
@@ -409,19 +546,25 @@
 
         document.getElementById('resultBlock').style.display = 'block';
 
-        // Формируем текст сметы
-        calculationText = `Смета материалов (Kevloro.ru):\n` +
+        // Текст сметы
+        calculationText = `Смета материалов (Kevloro):\n` +
             `• Покрытие: ${packs} упак. (${finalBoughtArea.toFixed(2)} м²)\n` +
             `• Подложка: ${rolls} рул. (по 10 м²)\n` +
             `• Плинтус (2.5 м): ${skirtingPieces} шт\n` +
-            (price > 0 ? `• Стоимость: ${Math.round(finalBoughtArea * price).toLocaleString('ru-RU')} ₽` : '');
+            (price > 0 ? `• Стоимость: ${Math.round(finalBoughtArea * price).toLocaleString('ru-RU')} ₽\n` : '') +
+            `Рассчитано на: ${window.location.href.split('?')[0]}`;
     }
 
-    // Универсальное копирование для смартфонов и ПК
+    // Мгновенный пересчет на лету (Live-расчет)
+    ['length', 'width', 'doorWidth', 'packArea', 'pricePerM2'].forEach(id => {
+        document.getElementById(id).addEventListener('input', () => calculate(false));
+    });
+    document.getElementById('layout').addEventListener('change', () => calculate(false));
+
+    // Копирование
     function copyResults() {
         if (!calculationText) return;
 
-        // Резервный метод через невидимый textarea (работает на любых мобилках и без HTTPS)
         const textArea = document.createElement('textarea');
         textArea.value = calculationText;
         textArea.style.position = 'fixed';
@@ -445,10 +588,44 @@
             navigator.clipboard.writeText(calculationText).then(() => {
                 alert('✅ Список покупок скопирован в буфер!');
             }).catch(() => {
-                alert('Не удалось скопировать автоматически. Выделите текст вручную.');
+                alert('Не удалось скопировать. Выделите текст вручную.');
             });
-        } else {
-            alert('Буфер недоступен. Откройте страницу через веб-браузер.');
+        }
+    }
+
+    // Поделиться сметой (TG, WA, VK, OK, Native)
+    function shareTo(platform) {
+        if (!calculationText) {
+            alert('Сначала выполните расчет');
+            return;
+        }
+
+        const encodedText = encodeURIComponent(calculationText);
+        const pageUrl = encodeURIComponent(window.location.href.split('?')[0]);
+
+        switch (platform) {
+            case 'tg':
+                window.open(`https://t.me/share/url?url=${pageUrl}&text=${encodedText}`, '_blank');
+                break;
+            case 'wa':
+                window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+                break;
+            case 'vk':
+                window.open(`https://vk.com/share.php?url=${pageUrl}&title=${encodeURIComponent('Расчет напольных покрытий')}&comment=${encodedText}`, '_blank');
+                break;
+            case 'ok':
+                window.open(`https://connect.ok.ru/offer?url=${pageUrl}&title=${encodedText}`, '_blank');
+                break;
+            case 'native':
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Смета напольных покрытий (Kevloro)',
+                        text: calculationText
+                    }).catch(() => {});
+                } else {
+                    copyResults();
+                }
+                break;
         }
     }
 </script>
