@@ -1,9 +1,10 @@
 {
-  "name": "Kevloro — Калькулятор полов",
+  "name": "Kevloro — Смета напольных покрытий",
   "short_name": "Kevloro",
+  "description": "Расчет ламината, плитки, плинтуса и сметы без интернета",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#0f172a",
   "theme_color": "#2563eb",
   "icons": [
     {
