@@ -7,6 +7,14 @@
     <meta name="description" content="Точный онлайн-калькулятор напольных покрытий: ламинат, подложка, плинтусы и общая смета.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
 
+    <!-- Теги для PWA и мобильных платформ -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kevloro">
+
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -69,7 +77,7 @@
             color: var(--text-main);
             display: flex;
             justify-content: center;
-            padding: 30px 16px;
+            padding: 30px 16px 80px; /* Отступ снизу для баннера */
         }
 
         .container {
@@ -336,6 +344,79 @@
             color: var(--text-main);
             margin-bottom: 6px;
         }
+
+        /* Баннер установки PWA */
+        .pwa-banner {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 580px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translate(-50%, 100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+
+        .pwa-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pwa-icon {
+            font-size: 1.5rem;
+        }
+
+        .pwa-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .pwa-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .pwa-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pwa-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .pwa-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px;
+        }
     </style>
 </head>
 <body>
@@ -449,6 +530,21 @@
     <div class="seo-text">
         <h2>Полезные советы при покупке</h2>
         <p>Не выбрасывайте остатки ламината после ремонта: сохраните 2–3 целые доски в горизонтальном положении на случай локальной замены при повреждении замка или планки.</p>
+    </div>
+</div>
+
+<!-- Баннер установки PWA -->
+<div class="pwa-banner" id="pwaBanner">
+    <div class="pwa-info">
+        <span class="pwa-icon">📐</span>
+        <div>
+            <div class="pwa-title">Установить Kevloro</div>
+            <div class="pwa-desc" id="pwaDesc">Быстрый доступ прямо с экрана телефона</div>
+        </div>
+    </div>
+    <div class="pwa-actions">
+        <button class="pwa-btn" id="pwaInstallBtn">Установить</button>
+        <button class="pwa-close" id="pwaCloseBtn" aria-label="Закрыть">&times;</button>
     </div>
 </div>
 
@@ -628,6 +724,59 @@
                 break;
         }
     }
+
+    // --- Логика PWA (Установка приложения) ---
+    let deferredPrompt;
+    const pwaBanner = document.getElementById('pwaBanner');
+    const pwaInstallBtn = document.getElementById('pwaInstallBtn');
+    const pwaCloseBtn = document.getElementById('pwaCloseBtn');
+    const pwaDesc = document.getElementById('pwaDesc');
+
+    // Проверка, запущено ли уже как установленное приложение
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    // Регистрация Service Worker (обязательно для работы PWA)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+    }
+
+    // Для Android / Chrome / ПК
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        if (!localStorage.getItem('pwa_banner_closed')) {
+            pwaBanner.style.display = 'flex';
+        }
+    });
+
+    pwaInstallBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            pwaBanner.style.display = 'none';
+        } else {
+            // Если открыто на iOS Safari
+            alert('Чтобы установить:\n1. Нажмите иконку "Поделиться" (квадрат со стрелкой)\n2. Выберите "На экран «Домой»"');
+        }
+    });
+
+    // Для iOS устройств (Safari) показываем подсказку
+    const isIOS = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+    if (isIOS && !isStandalone && !localStorage.getItem('pwa_banner_closed')) {
+        pwaDesc.innerText = 'Нажмите «Поделиться» → «На экран Домой»';
+        pwaInstallBtn.innerText = 'Инструкция';
+        pwaBanner.style.display = 'flex';
+    }
+
+    pwaCloseBtn.addEventListener('click', () => {
+        pwaBanner.style.display = 'none';
+        // Не беспокоим пользователя 7 дней после закрытия
+        localStorage.setItem('pwa_banner_closed', 'true');
+    });
 </script>
 
 </body>
