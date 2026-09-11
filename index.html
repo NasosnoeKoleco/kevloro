@@ -528,28 +528,73 @@
 
         /* Стили для печати */
         @media print {
-            body {
-                background: #fff !important;
-                color: #000 !important;
-                padding: 0;
-            }
-            .theme-toggle, .btn-outline, .btn-remove-room, .btn, .action-grid, .share-buttons, .pwa-banner, .faq-card, .offline-status, input, select {
-                display: none !important;
-            }
-            .card {
-                box-shadow: none !important;
-                border: none !important;
-                padding: 0 !important;
-            }
-            .results {
-                display: block !important;
-                border-top: 2px solid #000 !important;
-            }
-            .total-price-box {
-                border: 2px solid #000 !important;
-                background: none !important;
-            }
-        }
+    /* Фон и цвет */
+    body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        padding: 0 !important;
+    }
+
+    /* Прячем все интерактивные кнопки, баннеры и переключатели */
+    .theme-toggle,
+    .btn-outline,
+    .btn-remove-room,
+    .btn,
+    .action-grid,
+    .share-buttons,
+    .pwa-banner,
+    .faq-card,
+    .offline-status,
+    .room-type-toggle {
+        display: none !important;
+    }
+
+    /* Убираем рамки карточек для чистого бланка */
+    .card {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* Делаем так, чтобы введенные значения отображались как аккуратный текст, а не пустые поля */
+    input, select {
+        display: inline-block !important;
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        color: #000000 !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        width: auto !important;
+        min-width: 50px !important;
+    }
+
+    .room-card {
+        border: 1px solid #cbd5e1 !important;
+        background: #f8fafc !important;
+        page-break-inside: avoid;
+        margin-bottom: 10px !important;
+    }
+
+    .results {
+        display: block !important;
+        page-break-inside: avoid;
+        border-top: 2px solid #0f172a !important;
+    }
+
+    .result-group {
+        border: 1px solid #cbd5e1 !important;
+        background: #ffffff !important;
+    }
+
+    .total-price-box {
+        border: 2px solid #059669 !important;
+        background: #f0fdf4 !important;
+    }
+}
     </style>
 </head>
 <body>
