@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kevloro — Полный расчет ламината, подложки и плинтуса</title>
-    <meta name="description" content="Точный онлайн-калькулятор напольных покрытий: ламинат, подложка, плинтусы и общая смета.">
+    <title>Kevloro — Смета напольных покрытий, плинтуса и подложки</title>
+    <meta name="description" content="Профессиональный калькулятор напольных покрытий: многокомнатный расчет, подложка, плинтусы с фурнитурой, порожки и экспорт сметы. Работает офлайн.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
 
-    <!-- Теги для PWA и мобильных платформ -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2563eb">
     <meta name="mobile-web-app-capable" content="yes">
@@ -15,19 +14,39 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Kevloro">
 
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){
-            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112471439', 'ym');
-
-        ym(112471439, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    <!-- Schema.org Microdata для FAQ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Какой запас ламината закладывать при укладке?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Для прямой классической укладки вдоль света достаточно 5%. При диагональной укладке требуется 10%, а для укладки «ёлочкой» (венгерской или французской) — не менее 15% из-за большого числа угловых подрезов."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Работает ли калькулятор без интернета?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да, Kevloro — это PWA-приложение. Установите его на экран смартфона или компьютера, и все расчеты будут доступны в подвалах, новостройках и строительных магазинах даже при полном отсутствии связи."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какую подложку выбрать под ламинат и кварцвинил?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Для ламината оптимальна экструдированная подложка (XPS) толщиной 2–3 мм или пробка. Для замкового кварцвинила (LVT/SPC) необходима специализированная подложка высокой плотности толщиной не более 1–1.5 мм."
+          }
+        }
+      ]
+    }
     </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/112471439" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
 
     <style>
         :root {
@@ -45,6 +64,7 @@
             --total-border: #a7f3d0;
             --btn-copy-bg: #f1f5f9;
             --btn-copy-hover: #e2e8f0;
+            --danger: #ef4444;
         }
 
         [data-theme="dark"] {
@@ -62,6 +82,7 @@
             --total-border: rgba(16, 185, 129, 0.35);
             --btn-copy-bg: #334155;
             --btn-copy-hover: #475569;
+            --danger: #f87171;
         }
 
         * {
@@ -77,12 +98,12 @@
             color: var(--text-main);
             display: flex;
             justify-content: center;
-            padding: 30px 16px 80px; /* Отступ снизу для баннера */
+            padding: 24px 16px 90px;
         }
 
         .container {
             width: 100%;
-            max-width: 580px;
+            max-width: 640px;
         }
 
         .header {
@@ -105,24 +126,46 @@
             align-items: center;
             justify-content: center;
             font-size: 1.1rem;
-            line-height: 1;
         }
 
-        .theme-toggle:hover {
-            opacity: 0.85;
+        .offline-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .offline-status.is-offline {
+            background: #fef2f2;
+            color: #991b1b;
+            border-color: #fecaca;
+        }
+
+        .offline-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: currentColor;
         }
 
         .logo {
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-size: 1.15rem;
+            font-weight: 800;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--primary);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         h1 {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             margin-bottom: 4px;
         }
 
@@ -133,33 +176,71 @@
 
         .card {
             background: var(--card-bg);
-            padding: 24px;
+            padding: 22px;
             border-radius: 12px;
             border: 1px solid var(--border);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .section-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .section-title {
             font-size: 0.95rem;
             font-weight: 700;
-            margin-top: 16px;
-            margin-bottom: 12px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid var(--border);
             color: var(--text-main);
         }
 
-        .section-title:first-of-type {
-            margin-top: 0;
+        .room-card {
+            background: var(--subcard-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .room-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .room-name-input {
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: none;
+            background: transparent;
+            color: var(--primary);
+            outline: none;
+            padding: 2px 0;
+            width: 60%;
+        }
+
+        .btn-remove-room {
+            background: none;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
             margin-bottom: 4px;
             color: var(--text-main);
@@ -176,10 +257,10 @@
 
         input, select {
             width: 100%;
-            padding: 9px 12px;
+            padding: 8px 10px;
             border-radius: 8px;
             border: 1px solid var(--border);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             background: var(--input-bg);
             color: var(--text-main);
             outline: none;
@@ -187,6 +268,38 @@
 
         input:focus, select:focus {
             border-color: var(--primary);
+        }
+
+        .room-type-toggle {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 10px;
+            font-size: 0.78rem;
+        }
+
+        .room-type-toggle label {
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px dashed var(--primary);
+            color: var(--primary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .btn-outline:hover {
+            background: rgba(37, 99, 235, 0.06);
         }
 
         .btn {
@@ -199,29 +312,17 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.95rem;
-            margin-top: 16px;
+            margin-top: 14px;
         }
 
         .btn:hover {
             background-color: var(--primary-hover);
         }
 
-        .btn-copy {
-            background-color: var(--btn-copy-bg);
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            margin-top: 12px;
-        }
-
-        .btn-copy:hover {
-            background-color: var(--btn-copy-hover);
-        }
-
         .results {
             margin-top: 20px;
             padding-top: 16px;
             border-top: 2px dashed var(--border);
-            display: none;
         }
 
         .result-group {
@@ -258,14 +359,14 @@
         }
 
         .result-val {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 700;
             color: var(--text-main);
         }
 
         .result-val.highlight {
             color: var(--primary);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
 
         .total-price-box {
@@ -285,22 +386,34 @@
             color: var(--accent);
         }
 
-        /* Кнопки соцсетей и мессенджеров */
-        .share-block {
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
             margin-top: 12px;
         }
 
-        .share-label {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-bottom: 6px;
+        .btn-action {
+            background-color: var(--btn-copy-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
             text-align: center;
+        }
+
+        .btn-action:hover {
+            background-color: var(--btn-copy-hover);
         }
 
         .share-buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr) auto;
             gap: 6px;
+            margin-top: 10px;
         }
 
         .share-btn {
@@ -309,7 +422,6 @@
             justify-content: center;
             padding: 8px 4px;
             border-radius: 8px;
-            text-decoration: none;
             color: #ffffff;
             font-size: 0.78rem;
             font-weight: 600;
@@ -317,105 +429,112 @@
             border: none;
         }
 
-        .share-btn:hover {
-            opacity: 0.9;
-        }
-
         .share-tg { background-color: #229ED9; }
         .share-wa { background-color: #25D366; }
         .share-vk { background-color: #0077FF; }
         .share-ok { background-color: #EE8208; }
-        .share-native {
-            background-color: var(--btn-copy-bg);
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            padding: 8px 10px;
+        .share-native { background-color: var(--btn-copy-bg); color: var(--text-main); border: 1px solid var(--border); padding: 8px 10px; }
+
+        /* FAQ Аккордеон */
+        .faq-card {
+            margin-top: 24px;
         }
 
-        .seo-text {
-            margin-top: 28px;
+        details {
+            border-bottom: 1px solid var(--border);
+            padding: 10px 0;
+            cursor: pointer;
+        }
+
+        details:last-child {
+            border-bottom: none;
+        }
+
+        summary {
+            font-size: 0.88rem;
+            font-weight: 600;
+            outline: none;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '＋';
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        details[open] summary::after {
+            content: '—';
+        }
+
+        details p {
+            margin-top: 8px;
             font-size: 0.8rem;
             color: var(--text-muted);
             line-height: 1.5;
         }
 
-        .seo-text h2 {
-            font-size: 0.95rem;
-            color: var(--text-main);
-            margin-bottom: 6px;
-        }
-
-        /* Баннер установки PWA */
+        /* PWA Баннер */
         .pwa-banner {
             position: fixed;
-            bottom: 16px;
+            bottom: 14px;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 32px);
-            max-width: 580px;
+            width: calc(100% - 24px);
+            max-width: 640px;
             background: var(--card-bg);
             border: 1px solid var(--border);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
             border-radius: 12px;
             padding: 12px 16px;
             display: none;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            z-index: 1000;
-            animation: slideUp 0.3s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { transform: translate(-50%, 100%); opacity: 0; }
-            to { transform: translate(-50%, 0); opacity: 1; }
-        }
-
-        .pwa-info {
-            display: flex;
-            align-items: center;
             gap: 10px;
+            z-index: 1000;
         }
 
-        .pwa-icon {
-            font-size: 1.5rem;
-        }
-
-        .pwa-title {
-            font-size: 0.85rem;
+        .pwa-badge {
+            background: #ecfdf5;
+            color: #059669;
+            font-size: 0.68rem;
             font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 2px;
         }
 
-        .pwa-desc {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .pwa-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .pwa-btn {
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            padding: 7px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .pwa-close {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 4px;
+        /* Стили для печати */
+        @media print {
+            body {
+                background: #fff !important;
+                color: #000 !important;
+                padding: 0;
+            }
+            .theme-toggle, .btn-outline, .btn-remove-room, .btn, .action-grid, .share-buttons, .pwa-banner, .faq-card, .offline-status, input, select {
+                display: none !important;
+            }
+            .card {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+            }
+            .results {
+                display: block !important;
+                border-top: 2px solid #000 !important;
+            }
+            .total-price-box {
+                border: 2px solid #000 !important;
+                background: none !important;
+            }
         }
     </style>
 </head>
@@ -424,132 +543,188 @@
 <div class="container">
     <div class="header">
         <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">🌙</button>
+        <div class="offline-status" id="netStatus">
+            <span class="offline-dot"></span>
+            <span id="netStatusText">Готов к офлайн-работе</span>
+        </div>
         <div class="logo">KEVLORO</div>
         <h1>Калькулятор напольных покрытий</h1>
-        <p class="subtitle">Смета: покрытие, подложка, плинтус и стоимость</p>
+        <p class="subtitle">Смета: покрытие, подложка, плинтусы, фурнитура и порожки</p>
     </div>
 
     <div class="card">
-        <div class="section-title">1. Параметры помещения</div>
-        <div class="row form-group">
-            <div class="col">
-                <label for="length">Длина комнаты (м)</label>
-                <input type="number" id="length" step="0.01" placeholder="5.0">
-            </div>
-            <div class="col">
-                <label for="width">Ширина комнаты (м)</label>
-                <input type="number" id="width" step="0.01" placeholder="3.0">
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="col">
-                <label for="doorWidth">Ширина дверей (м)</label>
-                <input type="number" id="doorWidth" step="0.1" value="0.8" placeholder="0.8">
-            </div>
-            <div class="col">
-                <label for="layout">Способ укладки</label>
-                <select id="layout">
-                    <option value="5">Прямая (запас 5%)</option>
-                    <option value="10">Диагональная (запас 10%)</option>
-                    <option value="15">Ёлочка (запас 15%)</option>
-                </select>
-            </div>
+        <div class="section-header-flex">
+            <div class="section-title">1. Помещения</div>
         </div>
 
-        <div class="section-title">2. Параметры материала</div>
+        <div id="roomsContainer">
+            <!-- Комнаты генерируются через JS -->
+        </div>
+
+        <button type="button" class="btn-outline" onclick="addRoom()">＋ Добавить еще комнату</button>
+
+        <div class="section-header-flex" style="margin-top: 18px;">
+            <div class="section-title">2. Параметры материала</div>
+        </div>
+
+        <div class="form-group">
+            <label for="materialPreset">Шаблон материала</label>
+            <select id="materialPreset" onchange="applyPreset()">
+                <option value="custom">Пользовательский ввод</option>
+                <option value="2.13">Ламинат стандарт 8 мм (пачка 2.13 м²)</option>
+                <option value="1.85">Ламинат 12 мм (пачка 1.85 м²)</option>
+                <option value="2.60">SPC-кварцвинил (пачка 2.60 м²)</option>
+                <option value="1.48">Керамогранит 60×60 (пачка 1.48 м²)</option>
+            </select>
+        </div>
+
         <div class="row form-group">
             <div class="col">
                 <label for="packArea">Площадь в пачке (м²)</label>
-                <input type="number" id="packArea" step="0.001" value="2.13" placeholder="2.13">
+                <input type="number" id="packArea" step="0.001" value="2.13">
             </div>
             <div class="col">
-                <label for="pricePerM2">Цена за 1 м² (₽, не обязательно)</label>
+                <label for="pricePerM2">Цена за 1 м² (₽, необязательно)</label>
                 <input type="number" id="pricePerM2" placeholder="например, 1400">
             </div>
         </div>
 
-        <button class="btn" onclick="calculate(true)">Рассчитать полную смету</button>
+        <div class="section-header-flex" style="margin-top: 18px;">
+            <div class="section-title">3. Плинтус, фурнитура и стыки</div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col">
+                <label for="skirtingLengthParam">Длина планки (м)</label>
+                <select id="skirtingLengthParam">
+                    <option value="2.5">2.5 м (пластик/МДФ)</option>
+                    <option value="2.2">2.2 м</option>
+                    <option value="2.0">2.0 м (алюминий/дюрополимер)</option>
+                    <option value="2.4">2.4 м</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="thresholdCount">Стыковочные порожки (шт)</label>
+                <input type="number" id="thresholdCount" min="0" value="1">
+            </div>
+        </div>
+
+        <button class="btn" onclick="calculate()">Рассчитать полную смету</button>
 
         <div class="results" id="resultBlock">
             <div class="result-group">
                 <div class="result-group-title">Основное покрытие</div>
                 <div class="result-item">
-                    <span class="result-label">Площадь комнаты:</span>
-                    <span class="result-val" id="roomArea">0 м²</span>
+                    <span class="result-label">Суммарная чистая площадь:</span>
+                    <span class="result-val" id="resTotalNetArea">0 м²</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">Площадь с запасом на подрезку:</span>
-                    <span class="result-val" id="totalArea">0 м²</span>
+                    <span class="result-label">Площадь с учетом запаса комнат:</span>
+                    <span class="result-val" id="resTotalGrossArea">0 м²</span>
                 </div>
                 <div class="result-item">
                     <span class="result-label">Количество упаковок:</span>
-                    <span class="result-val highlight" id="packsNeeded">0 упак.</span>
+                    <span class="result-val highlight" id="resPacks">0 упак.</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">Фактическая покупка:</span>
-                    <span class="result-val" id="boughtArea">0 м²</span>
+                    <span class="result-label">Фактическая покупка по пачкам:</span>
+                    <span class="result-val" id="resBoughtArea">0 м²</span>
                 </div>
             </div>
 
             <div class="result-group">
-                <div class="result-group-title">Сопутствующие материалы</div>
+                <div class="result-group-title">Подложка и плинтус</div>
                 <div class="result-item">
                     <span class="result-label">Подложка (рулоны по 10 м²):</span>
-                    <span class="result-val" id="underlayRolls">0 рул.</span>
+                    <span class="result-val" id="resUnderlay">0 рул.</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">Периметр под плинтус:</span>
-                    <span class="result-val" id="skirtingLength">0 м</span>
+                    <span class="result-label">Чистый периметр за вычетом проемов:</span>
+                    <span class="result-val" id="resPerimeter">0 м</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">Планки плинтуса (по 2.5 м + запас):</span>
-                    <span class="result-val highlight" id="skirtingPcs">0 шт</span>
+                    <span class="result-label">Планки плинтуса (+5% запас):</span>
+                    <span class="result-val highlight" id="resSkirting">0 шт</span>
+                </div>
+            </div>
+
+            <div class="result-group">
+                <div class="result-group-title">Фурнитура и стыки</div>
+                <div class="result-item">
+                    <span class="result-label">Внутренние углы (расчетно):</span>
+                    <span class="result-val" id="resInnerCorners">0 шт</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Внешние углы (расчетно):</span>
+                    <span class="result-val" id="resOuterCorners">0 шт</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Соединители планок:</span>
+                    <span class="result-val" id="resConnectors">0 шт</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Торцевые заглушки (левые/правые):</span>
+                    <span class="result-val" id="resEndCaps">0 пар</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Межкомнатные порожки:</span>
+                    <span class="result-val" id="resThresholds">0 шт</span>
                 </div>
             </div>
 
             <div class="total-price-box" id="priceRow" style="display: none;">
-                <span style="font-weight: 600; font-size: 0.9rem;">Ориентировочная стоимость:</span>
+                <span style="font-weight: 600; font-size: 0.9rem;">Ориентир. стоимость покрытия:</span>
                 <span class="total-price-val" id="totalPrice">0 ₽</span>
             </div>
 
-            <button class="btn btn-copy" onclick="copyResults()">📋 Скопировать список для магазина</button>
+            <div class="action-grid">
+                <button class="btn-action" onclick="copyResults()">📋 Скопировать</button>
+                <button class="btn-action" onclick="window.print()">🖨️ Печать / PDF</button>
+            </div>
 
-            <div class="share-block">
-                <div class="share-label">Отправить смету себе или мастеру:</div>
-                <div class="share-buttons">
-                    <button class="share-btn share-tg" onclick="shareTo('tg')">Telegram</button>
-                    <button class="share-btn share-wa" onclick="shareTo('wa')">WhatsApp</button>
-                    <button class="share-btn share-vk" onclick="shareTo('vk')">ВК</button>
-                    <button class="share-btn share-ok" onclick="shareTo('ok')">ОК</button>
-                    <button class="share-btn share-native" onclick="shareTo('native')" title="Поделиться через другое приложение">📤 Ещё</button>
-                </div>
+            <div class="share-buttons">
+                <button class="share-btn share-tg" onclick="shareTo('tg')">Telegram</button>
+                <button class="share-btn share-wa" onclick="shareTo('wa')">WhatsApp</button>
+                <button class="share-btn share-vk" onclick="shareTo('vk')">ВК</button>
+                <button class="share-btn share-ok" onclick="shareTo('ok')">ОК</button>
+                <button class="share-btn share-native" onclick="shareTo('native')" title="Поделиться">📤 Ещё</button>
             </div>
         </div>
     </div>
 
-    <div class="seo-text">
-        <h2>Полезные советы при покупке</h2>
-        <p>Не выбрасывайте остатки ламината после ремонта: сохраните 2–3 целые доски в горизонтальном положении на случай локальной замены при повреждении замка или планки.</p>
+    <!-- FAQ Блок (SEO + Schema.org) -->
+    <div class="card faq-card">
+        <div class="section-title" style="margin-bottom: 12px;">Часто задаваемые вопросы</div>
+        <details>
+            <summary>Какой запас закладывать при укладке?</summary>
+            <p>Прямая классическая укладка требует 5% запаса на подрезку. Диагональная укладка — 10%. Сложные укладки («ёлочка», модуль) требуют от 15% запаса.</p>
+        </details>
+        <details>
+            <summary>Работает ли калькулятор без интернета?</summary>
+            <p>Да. Калькулятор спроектирован как PWA. После первой загрузки или добавления на домашний экран он запускается и производит расчеты даже при полном отсутствии мобильной сети.</p>
+        </details>
+        <details>
+            <summary>Как рассчитывается фурнитура плинтуса?</summary>
+            <p>Для стандартной комнаты рассчитывается 4 внутренних угла. Соединители рассчитываются исходя из стыков планок по периметру, а заглушки — по числу дверных проемов.</p>
+        </details>
     </div>
 </div>
 
-<!-- Баннер установки PWA -->
+<!-- PWA Баннер -->
 <div class="pwa-banner" id="pwaBanner">
-    <div class="pwa-info">
-        <span class="pwa-icon">📐</span>
-        <div>
-            <div class="pwa-title">Установить Kevloro</div>
-            <div class="pwa-desc" id="pwaDesc">Быстрый доступ прямо с экрана телефона</div>
-        </div>
+    <div>
+        <span class="pwa-badge">⚡ Работает без интернета</span>
+        <div style="font-weight: 700; font-size: 0.85rem;">Установить Kevloro</div>
+        <div style="font-size: 0.74rem; color: var(--text-muted);" id="pwaDesc">Мгновенный расчет в магазинах и новостройках офлайн</div>
     </div>
-    <div class="pwa-actions">
-        <button class="pwa-btn" id="pwaInstallBtn">Установить</button>
-        <button class="pwa-close" id="pwaCloseBtn" aria-label="Закрыть">&times;</button>
+    <div style="display: flex; gap: 6px; align-items: center;">
+        <button class="btn-action" id="pwaInstallBtn" style="padding: 6px 12px; background: var(--primary); color: #fff;">Установить</button>
+        <button id="pwaCloseBtn" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted);">&times;</button>
     </div>
 </div>
 
 <script>
-    // --- Логика темной темы ---
+    // 1. Инициализация и тема
     const themeToggleBtn = document.getElementById('themeToggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const savedTheme = localStorage.getItem('theme');
@@ -564,11 +739,7 @@
         }
     }
 
-    if (savedTheme) {
-        applyTheme(savedTheme);
-    } else if (prefersDark) {
-        applyTheme('dark');
-    }
+    applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
 
     themeToggleBtn.addEventListener('click', () => {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -577,147 +748,298 @@
         localStorage.setItem('theme', nextTheme);
     });
 
-    // --- Логика калькулятора ---
-    let calculationText = '';
+    // 2. Индикатор сети (Онлайн / Офлайн)
+    function updateNetStatus() {
+        const statusEl = document.getElementById('netStatus');
+        const textEl = document.getElementById('netStatusText');
+        if (navigator.onLine) {
+            statusEl.classList.remove('is-offline');
+            textEl.textContent = 'Офлайн-режим активен (в сети)';
+        } else {
+            statusEl.classList.add('is-offline');
+            textEl.textContent = 'Работает без интернета';
+        }
+    }
+    window.addEventListener('online', updateNetStatus);
+    window.addEventListener('offline', updateNetStatus);
+    updateNetStatus();
 
-    function parseInput(id) {
-        const val = document.getElementById(id).value.trim().replace(',', '.');
-        return parseFloat(val) || 0;
+    // 3. Управление комнатами
+    let rooms = [];
+
+    function createRoomElement(room, index) {
+        const div = document.createElement('div');
+        div.className = 'room-card';
+        div.id = `room-${room.id}`;
+        div.innerHTML = `
+            <div class="room-header">
+                <input class="room-name-input" value="${room.name}" onchange="updateRoom(${room.id}, 'name', this.value)">
+                ${rooms.length > 1 ? `<button type="button" class="btn-remove-room" onclick="removeRoom(${room.id})">Удалить</button>` : ''}
+            </div>
+
+            <div class="room-type-toggle">
+                <label>
+                    <input type="radio" name="geom-${room.id}" value="rect" ${room.type === 'rect' ? 'checked' : ''} onchange="updateRoom(${room.id}, 'type', 'rect')">
+                    По размерам (Д × Ш)
+                </label>
+                <label>
+                    <input type="radio" name="geom-${room.id}" value="custom" ${room.type === 'custom' ? 'checked' : ''} onchange="updateRoom(${room.id}, 'type', 'custom')">
+                    Сложная форма (м² + периметр)
+                </label>
+            </div>
+
+            ${room.type === 'rect' ? `
+                <div class="row form-group">
+                    <div class="col">
+                        <label>Длина (м)</label>
+                        <input type="number" step="0.01" value="${room.length}" oninput="updateRoom(${room.id}, 'length', this.value)">
+                    </div>
+                    <div class="col">
+                        <label>Ширина (м)</label>
+                        <input type="number" step="0.01" value="${room.width}" oninput="updateRoom(${room.id}, 'width', this.value)">
+                    </div>
+                </div>
+            ` : `
+                <div class="row form-group">
+                    <div class="col">
+                        <label>Площадь (м²)</label>
+                        <input type="number" step="0.01" value="${room.customArea}" oninput="updateRoom(${room.id}, 'customArea', this.value)">
+                    </div>
+                    <div class="col">
+                        <label>Периметр (м)</label>
+                        <input type="number" step="0.01" value="${room.customPerimeter}" oninput="updateRoom(${room.id}, 'customPerimeter', this.value)">
+                    </div>
+                </div>
+            `}
+
+            <div class="row form-group">
+                <div class="col">
+                    <label>Ширина дверей (м)</label>
+                    <input type="number" step="0.1" value="${room.doorWidth}" oninput="updateRoom(${room.id}, 'doorWidth', this.value)">
+                </div>
+                <div class="col">
+                    <label>Способ укладки</label>
+                    <select onchange="updateRoom(${room.id}, 'layout', this.value)">
+                        <option value="5" ${room.layout == 5 ? 'selected' : ''}>Прямая (5%)</option>
+                        <option value="10" ${room.layout == 10 ? 'selected' : ''}>Диагональ (10%)</option>
+                        <option value="15" ${room.layout == 15 ? 'selected' : ''}>Ёлочка (15%)</option>
+                    </select>
+                </div>
+            </div>
+        `;
+        return div;
     }
 
-    function calculate(showAlert = false) {
-        const length = parseInput('length');
-        const width = parseInput('width');
-        const doorWidth = parseInput('doorWidth');
-        const packArea = parseInput('packArea');
-        const marginPercent = parseFloat(document.getElementById('layout').value);
-        const price = parseInput('pricePerM2');
+    function renderRooms() {
+        const container = document.getElementById('roomsContainer');
+        container.innerHTML = '';
+        rooms.forEach((room, idx) => {
+            container.appendChild(createRoomElement(room, idx));
+        });
+        saveDraft();
+    }
 
-        if (length <= 0 || width <= 0) {
-            if (showAlert) {
-                alert('Пожалуйста, укажите длину и ширину комнаты.');
+    function addRoom() {
+        rooms.push({
+            id: Date.now(),
+            name: `Комната ${rooms.length + 1}`,
+            type: 'rect',
+            length: 5.0,
+            width: 3.0,
+            customArea: 15.0,
+            customPerimeter: 16.0,
+            doorWidth: 0.8,
+            layout: 5
+        });
+        renderRooms();
+        calculate();
+    }
+
+    function removeRoom(id) {
+        rooms = rooms.filter(r => r.id !== id);
+        renderRooms();
+        calculate();
+    }
+
+    function updateRoom(id, field, value) {
+        const room = rooms.find(r => r.id === id);
+        if (room) {
+            room[field] = (field === 'type' || field === 'name') ? value : (parseFloat(value) || 0);
+            if (field === 'type') renderRooms();
+            saveDraft();
+            calculate();
+        }
+    }
+
+    function applyPreset() {
+        const val = document.getElementById('materialPreset').value;
+        if (val !== 'custom') {
+            document.getElementById('packArea').value = val;
+            calculate();
+        }
+    }
+
+    // 4. Расчет и смета
+    let calculationSummary = '';
+
+    function calculate() {
+        let totalNetArea = 0;
+        let totalGrossArea = 0;
+        let totalPerimeter = 0;
+        let totalDoors = 0;
+        let totalDoorsWidth = 0;
+
+        rooms.forEach(r => {
+            let area = 0;
+            let perimeter = 0;
+            if (r.type === 'rect') {
+                area = (r.length || 0) * (r.width || 0);
+                perimeter = ((r.length || 0) + (r.width || 0)) * 2;
+            } else {
+                area = r.customArea || 0;
+                perimeter = r.customPerimeter || 0;
             }
-            return;
-        }
 
-        // 1. Площадь
-        const roomArea = length * width;
-        const totalAreaWithMargin = roomArea * (1 + marginPercent / 100);
+            const grossArea = area * (1 + (r.layout || 0) / 100);
+            totalNetArea += area;
+            totalGrossArea += grossArea;
+            totalPerimeter += perimeter;
+            totalDoorsWidth += (r.doorWidth || 0);
+            if (r.doorWidth > 0) totalDoors++;
+        });
+
+        const packArea = parseFloat(document.getElementById('packArea').value) || 0;
+        const pricePerM2 = parseFloat(document.getElementById('pricePerM2').value) || 0;
+        const skirtingPlankLength = parseFloat(document.getElementById('skirtingLengthParam').value) || 2.5;
+        const thresholds = parseInt(document.getElementById('thresholdCount').value) || 0;
+
+        // Покрытие
         let packs = 0;
-        let finalBoughtArea = totalAreaWithMargin;
-
+        let boughtArea = totalGrossArea;
         if (packArea > 0) {
-            packs = Math.ceil(totalAreaWithMargin / packArea);
-            finalBoughtArea = packs * packArea;
-            document.getElementById('packsNeeded').innerText = packs + ' упак.';
-        } else {
-            document.getElementById('packsNeeded').innerText = 'Не задана пачка';
+            packs = Math.ceil(totalGrossArea / packArea);
+            boughtArea = packs * packArea;
         }
 
-        document.getElementById('roomArea').innerText = roomArea.toFixed(2) + ' м²';
-        document.getElementById('totalArea').innerText = totalAreaWithMargin.toFixed(2) + ' м²';
-        document.getElementById('boughtArea').innerText = finalBoughtArea.toFixed(2) + ' м²';
+        // Подложка и плинтус
+        const underlayRolls = Math.ceil(totalNetArea / 10);
+        const cleanPerimeter = Math.max(0, totalPerimeter - totalDoorsWidth);
+        const skirtingPieces = Math.ceil((cleanPerimeter * 1.05) / skirtingPlankLength);
 
-        // 2. Подложка
-        const rolls = Math.ceil(roomArea / 10);
-        document.getElementById('underlayRolls').innerText = rolls + ' рул. (' + (rolls * 10) + ' м²)';
+        // Фурнитура
+        const innerCorners = rooms.length * 4;
+        const outerCorners = Math.max(0, Math.round(rooms.length * 0.5));
+        const connectors = Math.max(0, skirtingPieces - innerCorners);
+        const endCapsPairs = totalDoors > 0 ? totalDoors : 1;
 
-        // 3. Плинтус
-        const perimeter = (length + width) * 2;
-        const cleanPerimeter = Math.max(0, perimeter - doorWidth);
-        const skirtingWithMargin = cleanPerimeter * 1.05;
-        const skirtingPieces = Math.ceil(skirtingWithMargin / 2.5);
+        // Вывод на экран
+        document.getElementById('resTotalNetArea').innerText = totalNetArea.toFixed(2) + ' м²';
+        document.getElementById('resTotalGrossArea').innerText = totalGrossArea.toFixed(2) + ' м²';
+        document.getElementById('resPacks').innerText = packs + ' упак.';
+        document.getElementById('resBoughtArea').innerText = boughtArea.toFixed(2) + ' м²';
 
-        document.getElementById('skirtingLength').innerText = cleanPerimeter.toFixed(1) + ' м';
-        document.getElementById('skirtingPcs').innerText = skirtingPieces + ' шт';
+        document.getElementById('resUnderlay').innerText = `${underlayRolls} рул. (${underlayRolls * 10} м²)`;
+        document.getElementById('resPerimeter').innerText = cleanPerimeter.toFixed(1) + ' м';
+        document.getElementById('resSkirting').innerText = `${skirtingPieces} шт (по ${skirtingPlankLength} м)`;
 
-        // 4. Стоимость
-        if (price > 0) {
-            const sum = Math.round(finalBoughtArea * price);
+        document.getElementById('resInnerCorners').innerText = innerCorners + ' шт';
+        document.getElementById('resOuterCorners').innerText = outerCorners + ' шт';
+        document.getElementById('resConnectors').innerText = connectors + ' шт';
+        document.getElementById('resEndCaps').innerText = endCapsPairs + ' пар';
+        document.getElementById('resThresholds').innerText = thresholds + ' шт';
+
+        // Стоимость
+        if (pricePerM2 > 0) {
+            const sum = Math.round(boughtArea * pricePerM2);
             document.getElementById('totalPrice').innerText = sum.toLocaleString('ru-RU') + ' ₽';
             document.getElementById('priceRow').style.display = 'flex';
         } else {
             document.getElementById('priceRow').style.display = 'none';
         }
 
-        document.getElementById('resultBlock').style.display = 'block';
-
         // Текст сметы
-        calculationText = `Смета материалов (Kevloro):\n` +
-            `• Покрытие: ${packs} упак. (${finalBoughtArea.toFixed(2)} м²)\n` +
-            `• Подложка: ${rolls} рул. (по 10 м²)\n` +
-            `• Плинтус (2.5 м): ${skirtingPieces} шт\n` +
-            (price > 0 ? `• Стоимость: ${Math.round(finalBoughtArea * price).toLocaleString('ru-RU')} ₽\n` : '') +
-            `Рассчитано на: ${window.location.href.split('?')[0]}`;
+        calculationSummary = `Смета Kevloro (Помещений: ${rooms.length}):\n` +
+            `• Покрытие: ${packs} упак. (${boughtArea.toFixed(2)} м²)\n` +
+            `• Подложка (по 10 м²): ${underlayRolls} рул.\n` +
+            `• Плинтус (${skirtingPlankLength} м): ${skirtingPieces} шт (${cleanPerimeter.toFixed(1)} м)\n` +
+            `• Углы внутр./внеш.: ${innerCorners} / ${outerCorners} шт\n` +
+            `• Соединители/заглушки: ${connectors} шт / ${endCapsPairs} пар\n` +
+            `• Порожки: ${thresholds} шт\n` +
+            (pricePerM2 > 0 ? `• Стоимость покрытия: ${Math.round(boughtArea * pricePerM2).toLocaleString('ru-RU')} ₽\n` : '') +
+            `Калькулятор работает офлайн: ${window.location.href.split('?')[0]}`;
+
+        saveDraft();
     }
 
-    // Мгновенный пересчет на лету (Live-расчет)
-    ['length', 'width', 'doorWidth', 'packArea', 'pricePerM2'].forEach(id => {
-        document.getElementById(id).addEventListener('input', () => calculate(false));
+    // 5. Автосохранение черновика в localStorage
+    function saveDraft() {
+        const draft = {
+            rooms: rooms,
+            packArea: document.getElementById('packArea').value,
+            pricePerM2: document.getElementById('pricePerM2').value,
+            skirtingLength: document.getElementById('skirtingLengthParam').value,
+            thresholdCount: document.getElementById('thresholdCount').value,
+            materialPreset: document.getElementById('materialPreset').value
+        };
+        localStorage.setItem('kevloro_draft', JSON.stringify(draft));
+    }
+
+    function loadDraft() {
+        const raw = localStorage.getItem('kevloro_draft');
+        if (raw) {
+            try {
+                const draft = JSON.parse(raw);
+                if (draft.rooms && draft.rooms.length > 0) rooms = draft.rooms;
+                if (draft.packArea) document.getElementById('packArea').value = draft.packArea;
+                if (draft.pricePerM2) document.getElementById('pricePerM2').value = draft.pricePerM2;
+                if (draft.skirtingLength) document.getElementById('skirtingLengthParam').value = draft.skirtingLength;
+                if (draft.thresholdCount) document.getElementById('thresholdCount').value = draft.thresholdCount;
+                if (draft.materialPreset) document.getElementById('materialPreset').value = draft.materialPreset;
+            } catch(e) {}
+        }
+        if (rooms.length === 0) {
+            rooms = [{
+                id: 1,
+                name: 'Гостиная',
+                type: 'rect',
+                length: 5.0,
+                width: 3.0,
+                customArea: 15.0,
+                customPerimeter: 16.0,
+                doorWidth: 0.8,
+                layout: 5
+            }];
+        }
+        renderRooms();
+        calculate();
+    }
+
+    // Слушатели глобальных полей
+    ['packArea', 'pricePerM2', 'skirtingLengthParam', 'thresholdCount'].forEach(id => {
+        document.getElementById(id).addEventListener('input', calculate);
     });
-    document.getElementById('layout').addEventListener('change', () => calculate(false));
 
-    // Копирование
+    // 6. Копирование и шаринг
     function copyResults() {
-        if (!calculationText) return;
-
-        const textArea = document.createElement('textarea');
-        textArea.value = calculationText;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-9999px';
-        textArea.style.top = '0';
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-
-        let success = false;
-        try {
-            success = document.execCommand('copy');
-        } catch (err) {
-            success = false;
-        }
-        document.body.removeChild(textArea);
-
-        if (success) {
-            alert('✅ Список покупок скопирован в буфер!');
-        } else if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(calculationText).then(() => {
-                alert('✅ Список покупок скопирован в буфер!');
-            }).catch(() => {
-                alert('Не удалось скопировать. Выделите текст вручную.');
-            });
-        }
+        if (!calculationSummary) return;
+        navigator.clipboard.writeText(calculationSummary).then(() => {
+            alert('✅ Смета скопирована в буфер обмена!');
+        }).catch(() => {
+            alert('Скопируйте текст вручную');
+        });
     }
 
-    // Поделиться сметой (TG, WA, VK, OK, Native)
     function shareTo(platform) {
-        if (!calculationText) {
-            alert('Сначала выполните расчет');
-            return;
-        }
-
-        const encodedText = encodeURIComponent(calculationText);
-        const pageUrl = encodeURIComponent(window.location.href.split('?')[0]);
-
+        const text = encodeURIComponent(calculationSummary);
+        const url = encodeURIComponent(window.location.href.split('?')[0]);
         switch (platform) {
-            case 'tg':
-                window.open(`https://t.me/share/url?url=${pageUrl}&text=${encodedText}`, '_blank');
-                break;
-            case 'wa':
-                window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
-                break;
-            case 'vk':
-                window.open(`https://vk.com/share.php?url=${pageUrl}&title=${encodeURIComponent('Расчет напольных покрытий')}&comment=${encodedText}`, '_blank');
-                break;
-            case 'ok':
-                window.open(`https://connect.ok.ru/offer?url=${pageUrl}&title=${encodedText}`, '_blank');
-                break;
+            case 'tg': window.open(`https://t.me/share/url?url=${url}&text=${text}`); break;
+            case 'wa': window.open(`https://api.whatsapp.com/send?text=${text}`); break;
+            case 'vk': window.open(`https://vk.com/share.php?url=${url}&comment=${text}`); break;
+            case 'ok': window.open(`https://connect.ok.ru/offer?url=${url}&title=${text}`); break;
             case 'native':
                 if (navigator.share) {
-                    navigator.share({
-                        title: 'Смета напольных покрытий (Kevloro)',
-                        text: calculationText
-                    }).catch(() => {});
+                    navigator.share({ title: 'Смета напольных покрытий', text: calculationSummary }).catch(() => {});
                 } else {
                     copyResults();
                 }
@@ -725,28 +1047,21 @@
         }
     }
 
-    // --- Логика PWA (Установка приложения) ---
+    // 7. PWA установка и Service Worker
     let deferredPrompt;
     const pwaBanner = document.getElementById('pwaBanner');
     const pwaInstallBtn = document.getElementById('pwaInstallBtn');
     const pwaCloseBtn = document.getElementById('pwaCloseBtn');
-    const pwaDesc = document.getElementById('pwaDesc');
 
-    // Проверка, запущено ли уже как установленное приложение
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
-    // Регистрация Service Worker (обязательно для работы PWA)
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('./sw.js').catch(() => {});
         });
     }
 
-    // Для Android / Chrome / ПК
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-
         if (!localStorage.getItem('pwa_banner_closed')) {
             pwaBanner.style.display = 'flex';
         }
@@ -755,29 +1070,21 @@
     pwaInstallBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
             deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
+            await deferredPrompt.userChoice;
             deferredPrompt = null;
             pwaBanner.style.display = 'none';
         } else {
-            // Если открыто на iOS Safari
-            alert('Чтобы установить:\n1. Нажмите иконку "Поделиться" (квадрат со стрелкой)\n2. Выберите "На экран «Домой»"');
+            alert('Для установки:\n• iOS Safari: «Поделиться» → «На экран Домой»\n• Android/Chrome: три точки → «Установить приложение»');
         }
     });
 
-    // Для iOS устройств (Safari) показываем подсказку
-    const isIOS = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-    if (isIOS && !isStandalone && !localStorage.getItem('pwa_banner_closed')) {
-        pwaDesc.innerText = 'Нажмите «Поделиться» → «На экран Домой»';
-        pwaInstallBtn.innerText = 'Инструкция';
-        pwaBanner.style.display = 'flex';
-    }
-
     pwaCloseBtn.addEventListener('click', () => {
         pwaBanner.style.display = 'none';
-        // Не беспокоим пользователя 7 дней после закрытия
         localStorage.setItem('pwa_banner_closed', 'true');
     });
-</script>
 
+    // Старт
+    loadDraft();
+</script>
 </body>
 </html>
