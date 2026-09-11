@@ -451,6 +451,87 @@
         .share-ok { background-color: #EE8208; }
         .share-native { background-color: var(--btn-copy-bg); color: var(--text-main); border: 1px solid var(--border); padding: 8px 10px; }
 
+        /* Партнерские блоки Яндекс Дистрибьюции */
+        .partner-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            background: var(--card-bg);
+        }
+
+        .partner-badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .badge-market {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge-plus {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .partner-promo-box {
+            background: var(--subcard-bg);
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .promo-code-val {
+            font-family: monospace;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.08em;
+        }
+
+        .partner-btn {
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .partner-btn-market {
+            background: #facc15;
+            color: #78350f;
+            border: 1px solid #eab308;
+        }
+
+        .partner-btn-market:hover {
+            background: #eab308;
+        }
+
+        .partner-btn-plus {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .partner-btn-plus:hover {
+            background: var(--primary-hover);
+        }
+
         /* FAQ Аккордеон */
         .faq-card {
             margin-top: 24px;
@@ -546,6 +627,7 @@
     .share-buttons,
     .pwa-banner,
     .faq-card,
+    .partner-card,
     .offline-status,
     .room-type-toggle {
         display: none !important;
@@ -751,6 +833,37 @@
                 <button class="share-btn share-native" onclick="shareTo('native')" title="Поделиться">📤 Ещё</button>
             </div>
         </div>
+    </div>
+
+    <!-- БЛОК 1: Яндекс Маркет (Напольные покрытия) -->
+    <!-- <div class="card partner-card">
+        <span class="partner-badge badge-market">Яндекс Маркет</span>
+        <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">Где купить материалы по смете?</div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4;">
+            Сравните цены на ламинат, SPC-кварцвинил, подложку и комплектующие с быстрой доставкой на объект.
+        </p>
+        <a href="https://market.yandex.ru/catalog--napolnye-pokrytiia/55152?clid=YOUR_PARTNER_LINK_HERE" target="_blank" rel="noopener sponsored" class="partner-btn partner-btn-market">
+            Посмотреть напольные покрытия со скидками →
+        </a>
+    </div> -->
+
+    <!-- БЛОК 2: Яндекс Плюс (Промокод) -->
+    <div class="card partner-card">
+        <span class="partner-badge badge-plus">Яндекс Плюс</span>
+        <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">Кешбэк баллами за покупки для ремонта</div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+            Активируйте промокод перед закупкой материалов на Маркете и возвращайте баллами Плюса часть стоимости на будущие заказы.
+        </p>
+		<p style="font-size: 0.6rem; color: var(--text-muted); line-height: 1.4;">
+            Реклама. ООО «ЯНДЕКС», ИНН 7736207543, erid: 5jtCeReNx12oak2pythYFst
+        </p>
+        <div class="partner-promo-box">
+            <span class="promo-code-val">VV7VJRUQ6X</span>
+            <button class="btn-action" style="padding: 4px 10px; font-size: 0.75rem;" onclick="copyPromo('VV7VJRUQ6X')">Копировать</button>
+        </div>
+        <a href="https://plus.yandex.ru/action/gift/45_perf?utm_source=DI&utm_medium=paid_performance&utm_content=goal-PL&utm_campaign=MSCAMP-1259&promocode=VV7VJRUQ6X&erid=5jtCeReNx12oak2pythYFst&clid=15369947" target="_blank" rel="noopener sponsored" class="partner-btn partner-btn-plus">
+            Активировать промокод
+        </a>
     </div>
 
     <!-- FAQ Блок (SEO + Schema.org) -->
@@ -1073,6 +1186,13 @@
         }
         renderRooms();
         calculate();
+    }
+
+    // Копирование промокода
+    function copyPromo(code) {
+        navigator.clipboard.writeText(code).then(() => {
+            alert('Промокод скопирован: ' + code);
+        }).catch(() => {});
     }
 
     // Слушатели глобальных полей
