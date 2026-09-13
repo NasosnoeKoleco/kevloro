@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <rect width="512" height="512" rx="112" fill="#2563eb"/>
+  <!-- Планки ламината / покрытия -->
+  <path d="M120 160h180v50H120zM315 160h77v50h-77zM120 225h110v50H120zM245 225h147v50H245zM120 290h195v50H120zM330 290h62v50h-62z" fill="#ffffff" opacity="0.25"/>
+  <!-- Строительный угольник / линейка -->
+  <path d="M140 140v232h232v-58h-174V140h-58z" fill="#ffffff"/>
+  <!-- Разметка шкалы линейки -->
+  <rect x="198" y="314" width="8" height="26" rx="4" fill="#2563eb"/>
+  <rect x="238" y="314" width="8" height="18" rx="4" fill="#2563eb"/>
+  <rect x="278" y="314" width="8" height="26" rx="4" fill="#2563eb"/>
+  <rect x="318" y="314" width="8" height="18" rx="4" fill="#2563eb"/>
+  <rect x="140" y="198" width="26" height="8" rx="4" fill="#2563eb"/>
+  <rect x="140" y="238" width="18" height="8" rx="4" fill="#2563eb"/>
+  <rect x="140" y="278" width="26" height="8" rx="4" fill="#2563eb"/>
+</svg>

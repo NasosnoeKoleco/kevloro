@@ -1,8 +1,10 @@
-const CACHE_NAME = 'kevloro-cache-v3';
+const CACHE_NAME = 'kevloro-cache-v4';
 const ASSETS = [
     './',
     './index.html',
-    './manifest.json'
+    './manifest.json',
+    './icon-192.svg',
+    './icon-512.svg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -11,8 +13,6 @@ self.addEventListener('install', (event) => {
             return cache.addAll(ASSETS);
         })
     );
-    // Не вызываем skipWaiting() автоматически: новая версия ждет,
-    // пока пользователь сам не подтвердит обновление (см. showUpdateBanner в index.html).
 });
 
 self.addEventListener('activate', (event) => {
@@ -37,7 +37,6 @@ self.addEventListener('message', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-    // Стратегия Network First с откатом в Cache для гарантированной работы офлайн
     event.respondWith(
         fetch(event.request).catch(() => {
             return caches.match(event.request).then((response) => {
