@@ -6,6 +6,24 @@
     <title>Kevloro — Смета напольных покрытий, плинтуса и подложки</title>
     <meta name="description" content="Профессиональный калькулятор напольных покрытий: многокомнатный расчет, подложка, плинтусы с фурнитурой, порожки и экспорт сметы. Работает офлайн.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
+    <link rel="canonical" href="https://kevloro.ru/">
+
+    <!-- Open Graph / соцсети -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Kevloro">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:url" content="https://kevloro.ru/">
+    <meta property="og:title" content="Kevloro — Смета напольных покрытий, плинтуса и подложки">
+    <meta property="og:description" content="Профессиональный калькулятор напольных покрытий: многокомнатный расчет, подложка, плинтусы с фурнитурой, порожки и экспорт сметы. Работает офлайн.">
+    <meta property="og:image" content="https://kevloro.ru/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kevloro — Смета напольных покрытий, плинтуса и подложки">
+    <meta name="twitter:description" content="Профессиональный калькулятор напольных покрытий: многокомнатный расчет, подложка, плинтусы с фурнитурой, порожки и экспорт сметы. Работает офлайн.">
+    <meta name="twitter:image" content="https://kevloro.ru/og-image.png">
 
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2563eb">
@@ -16,6 +34,24 @@
 
     <!-- 5982gk3utnr2bvlz -->
     
+    <!-- Schema.org: описание приложения -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Kevloro",
+      "url": "https://kevloro.ru/",
+      "description": "Калькулятор напольных покрытий: расчет покрытия, подложки, плинтуса с фурнитурой и порожков. Работает офлайн как PWA.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "RUB"
+      }
+    }
+    </script>
+
     <!-- Schema.org Microdata для FAQ -->
     <script type="application/ld+json">
     {
@@ -316,6 +352,68 @@
 
         .btn-outline:hover {
             background: rgba(37, 99, 235, 0.06);
+        }
+
+        .project-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            background: var(--subcard-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .project-item-info {
+            min-width: 0;
+        }
+
+        .project-item-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .project-item-meta {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .project-item-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .project-item-actions button {
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--btn-copy-bg);
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .project-item-actions button:hover {
+            background: var(--btn-copy-hover);
+        }
+
+        .project-item-actions button.danger {
+            color: var(--danger);
+            border-color: var(--danger);
+            background: transparent;
+        }
+
+        .projects-empty {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 10px 0;
         }
 
         .btn {
@@ -724,11 +822,11 @@
         <div class="row form-group">
             <div class="col">
                 <label for="packArea">Площадь в пачке (м²)</label>
-                <input type="number" id="packArea" step="0.001" value="2.13">
+                <input type="number" id="packArea" step="0.001" min="0.001" value="2.13">
             </div>
             <div class="col">
                 <label for="pricePerM2">Цена за 1 м² (₽, необязательно)</label>
-                <input type="number" id="pricePerM2" placeholder="например, 1400">
+                <input type="number" id="pricePerM2" min="0" placeholder="например, 1400">
             </div>
         </div>
 
@@ -833,6 +931,22 @@
                 <button class="share-btn share-native" onclick="shareTo('native')" title="Поделиться">📤 Ещё</button>
             </div>
         </div>
+    </div>
+
+    <div class="card">
+        <div class="section-header-flex">
+            <div class="section-title">4. Мои сметы</div>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
+            Сохраняйте расчеты для разных объектов и возвращайтесь к ним позже — данные хранятся только в этом браузере.
+        </p>
+        <div class="row form-group">
+            <div class="col">
+                <input type="text" id="projectNameInput" placeholder="Название объекта, например «Квартира на Ленина»">
+            </div>
+        </div>
+        <button type="button" class="btn-outline" onclick="saveProject()">💾 Сохранить текущую смету</button>
+        <div id="projectsList" style="margin-top: 14px;"></div>
     </div>
 
     <!-- БЛОК 1: Яндекс Маркет (Напольные покрытия) -->
@@ -966,22 +1080,22 @@
                 <div class="row form-group">
                     <div class="col">
                         <label>Длина (м)</label>
-                        <input type="number" step="0.01" value="${room.length}" oninput="updateRoom(${room.id}, 'length', this.value)">
+                        <input type="number" step="0.01" min="0" value="${room.length}" oninput="updateRoom(${room.id}, 'length', this.value)">
                     </div>
                     <div class="col">
                         <label>Ширина (м)</label>
-                        <input type="number" step="0.01" value="${room.width}" oninput="updateRoom(${room.id}, 'width', this.value)">
+                        <input type="number" step="0.01" min="0" value="${room.width}" oninput="updateRoom(${room.id}, 'width', this.value)">
                     </div>
                 </div>
             ` : `
                 <div class="row form-group">
                     <div class="col">
                         <label>Площадь (м²)</label>
-                        <input type="number" step="0.01" value="${room.customArea}" oninput="updateRoom(${room.id}, 'customArea', this.value)">
+                        <input type="number" step="0.01" min="0" value="${room.customArea}" oninput="updateRoom(${room.id}, 'customArea', this.value)">
                     </div>
                     <div class="col">
                         <label>Периметр (м)</label>
-                        <input type="number" step="0.01" value="${room.customPerimeter}" oninput="updateRoom(${room.id}, 'customPerimeter', this.value)">
+                        <input type="number" step="0.01" min="0" value="${room.customPerimeter}" oninput="updateRoom(${room.id}, 'customPerimeter', this.value)">
                     </div>
                 </div>
             `}
@@ -989,7 +1103,7 @@
             <div class="row form-group">
                 <div class="col">
                     <label>Ширина дверей (м)</label>
-                    <input type="number" step="0.1" value="${room.doorWidth}" oninput="updateRoom(${room.id}, 'doorWidth', this.value)">
+                    <input type="number" step="0.1" min="0" value="${room.doorWidth}" oninput="updateRoom(${room.id}, 'doorWidth', this.value)">
                 </div>
                 <div class="col">
                     <label>Способ укладки</label>
@@ -1038,7 +1152,12 @@
     function updateRoom(id, field, value) {
         const room = rooms.find(r => r.id === id);
         if (room) {
-            room[field] = (field === 'type' || field === 'name') ? value : (parseFloat(value) || 0);
+            if (field === 'type' || field === 'name') {
+                room[field] = value;
+            } else {
+                const num = parseFloat(value) || 0;
+                room[field] = Math.max(0, num);
+            }
             if (field === 'type') renderRooms();
             saveDraft();
             calculate();
@@ -1082,10 +1201,10 @@
             if (r.doorWidth > 0) totalDoors++;
         });
 
-        const packArea = parseFloat(document.getElementById('packArea').value) || 0;
-        const pricePerM2 = parseFloat(document.getElementById('pricePerM2').value) || 0;
-        const skirtingPlankLength = parseFloat(document.getElementById('skirtingLengthParam').value) || 2.5;
-        const thresholds = parseInt(document.getElementById('thresholdCount').value) || 0;
+        const packArea = Math.max(0, parseFloat(document.getElementById('packArea').value) || 0);
+        const pricePerM2 = Math.max(0, parseFloat(document.getElementById('pricePerM2').value) || 0);
+        const skirtingPlankLength = Math.max(0.1, parseFloat(document.getElementById('skirtingLengthParam').value) || 2.5);
+        const thresholds = Math.max(0, parseInt(document.getElementById('thresholdCount').value) || 0);
 
         // Покрытие
         let packs = 0;
@@ -1188,6 +1307,95 @@
         calculate();
     }
 
+    // Мои сметы (несколько сохраненных объектов)
+    const PROJECTS_KEY = 'kevloro_projects';
+
+    function getProjects() {
+        try {
+            return JSON.parse(localStorage.getItem(PROJECTS_KEY)) || [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function setProjects(list) {
+        localStorage.setItem(PROJECTS_KEY, JSON.stringify(list));
+    }
+
+    function collectCurrentState() {
+        return {
+            rooms: rooms,
+            packArea: document.getElementById('packArea').value,
+            pricePerM2: document.getElementById('pricePerM2').value,
+            skirtingLength: document.getElementById('skirtingLengthParam').value,
+            thresholdCount: document.getElementById('thresholdCount').value,
+            materialPreset: document.getElementById('materialPreset').value
+        };
+    }
+
+    function saveProject() {
+        const nameInput = document.getElementById('projectNameInput');
+        const name = (nameInput.value || '').trim() || `Объект от ${new Date().toLocaleDateString('ru-RU')}`;
+        const projects = getProjects();
+        projects.unshift({
+            id: Date.now(),
+            name: name,
+            savedAt: new Date().toISOString(),
+            state: collectCurrentState()
+        });
+        setProjects(projects);
+        nameInput.value = '';
+        renderProjects();
+    }
+
+    function loadProject(id) {
+        const projects = getProjects();
+        const project = projects.find(p => p.id === id);
+        if (!project) return;
+        const state = project.state;
+        if (state.rooms && state.rooms.length > 0) rooms = state.rooms;
+        if (state.packArea) document.getElementById('packArea').value = state.packArea;
+        document.getElementById('pricePerM2').value = state.pricePerM2 || '';
+        if (state.skirtingLength) document.getElementById('skirtingLengthParam').value = state.skirtingLength;
+        if (state.thresholdCount) document.getElementById('thresholdCount').value = state.thresholdCount;
+        if (state.materialPreset) document.getElementById('materialPreset').value = state.materialPreset;
+        renderRooms();
+        calculate();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function deleteProject(id) {
+        if (!confirm('Удалить эту сохраненную смету?')) return;
+        const projects = getProjects().filter(p => p.id !== id);
+        setProjects(projects);
+        renderProjects();
+    }
+
+    function renderProjects() {
+        const container = document.getElementById('projectsList');
+        const projects = getProjects();
+        if (projects.length === 0) {
+            container.innerHTML = '<div class="projects-empty">Пока нет сохраненных смет</div>';
+            return;
+        }
+        container.innerHTML = projects.map(p => {
+            const date = new Date(p.savedAt).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const roomsCount = (p.state.rooms || []).length;
+            return `
+                <div class="project-item">
+                    <div class="project-item-info">
+                        <div class="project-item-name">${p.name}</div>
+                        <div class="project-item-meta">${date} · помещений: ${roomsCount}</div>
+                    </div>
+                    <div class="project-item-actions">
+                        <button onclick="loadProject(${p.id})">Открыть</button>
+                        <button class="danger" onclick="deleteProject(${p.id})">Удалить</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
     // Копирование промокода
     function copyPromo(code) {
         navigator.clipboard.writeText(code).then(() => {
@@ -1236,7 +1444,55 @@
 
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js').catch(() => {});
+            navigator.serviceWorker.register('./sw.js').then((reg) => {
+                // Проверяем обновления сразу и периодически
+                reg.update().catch(() => {});
+                setInterval(() => reg.update().catch(() => {}), 60 * 60 * 1000);
+
+                reg.addEventListener('updatefound', () => {
+                    const newWorker = reg.installing;
+                    if (!newWorker) return;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            showUpdateBanner(newWorker);
+                        }
+                    });
+                });
+            }).catch(() => {});
+
+            // Если уже есть активный воркер, но появилась новая версия — перезагружаем один раз
+            let refreshing = false;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (refreshing) return;
+                refreshing = true;
+                window.location.reload();
+            });
+        });
+    }
+
+    function showUpdateBanner(newWorker) {
+        if (document.getElementById('updateBanner')) return;
+        const banner = document.createElement('div');
+        banner.id = 'updateBanner';
+        banner.className = 'pwa-banner';
+        banner.style.display = 'flex';
+        banner.innerHTML = `
+            <div>
+                <span class="pwa-badge">🔄 Доступно обновление</span>
+                <div style="font-weight: 700; font-size: 0.85rem;">Вышла новая версия Kevloro</div>
+                <div style="font-size: 0.74rem; color: var(--text-muted);">Обновите, чтобы получить последние изменения</div>
+            </div>
+            <div style="display: flex; gap: 6px; align-items: center;">
+                <button class="btn-action" id="updateReloadBtn" style="padding: 6px 12px; background: var(--primary); color: #fff;">Обновить</button>
+                <button id="updateCloseBtn" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+            </div>
+        `;
+        document.body.appendChild(banner);
+        document.getElementById('updateReloadBtn').addEventListener('click', () => {
+            newWorker.postMessage({ type: 'SKIP_WAITING' });
+        });
+        document.getElementById('updateCloseBtn').addEventListener('click', () => {
+            banner.remove();
         });
     }
 
@@ -1266,6 +1522,7 @@
 
     // Старт
     loadDraft();
+    renderProjects();
 </script>
 </body>
 </html>
