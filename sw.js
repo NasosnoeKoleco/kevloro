@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kevloro-cache-v2';
+const CACHE_NAME = 'kevloro-cache-v3';
 const ASSETS = [
     './',
     './index.html',
@@ -11,7 +11,8 @@ self.addEventListener('install', (event) => {
             return cache.addAll(ASSETS);
         })
     );
-    self.skipWaiting();
+    // Не вызываем skipWaiting() автоматически: новая версия ждет,
+    // пока пользователь сам не подтвердит обновление (см. showUpdateBanner в index.html).
 });
 
 self.addEventListener('activate', (event) => {
@@ -27,6 +28,12 @@ self.addEventListener('activate', (event) => {
         })
     );
     self.clients.claim();
+});
+
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
 });
 
 self.addEventListener('fetch', (event) => {
