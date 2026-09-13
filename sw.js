@@ -1,13 +1,18 @@
-const CACHE_NAME = 'kevloro-cache-v4';
+const CACHE_NAME = 'kevloro-cache-v6';
 const ASSETS = [
     './',
     './index.html',
     './manifest.json',
+    './icon-192.png',
+    './icon-512.png',
+    './apple-touch-icon.png',
     './icon-192.svg',
-    './icon-512.svg'
+    './icon-512.svg',
+    './favicon.ico'
 ];
 
 self.addEventListener('install', (event) => {
+    self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll(ASSETS);
@@ -28,12 +33,6 @@ self.addEventListener('activate', (event) => {
         })
     );
     self.clients.claim();
-});
-
-self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
-        self.skipWaiting();
-    }
 });
 
 self.addEventListener('fetch', (event) => {
