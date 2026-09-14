@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "ru.kevloro.twa",
+        "sha256_cert_fingerprints": ["DC:1F:BC:5C:F3:C6:63:42:57:8C:7B:3D:90:81:3D:50:EF:73:8F:03:CD:4A:22:A0:F8:15:D9:BF:80:3C:FA:D4"]
+      }
+    }]
