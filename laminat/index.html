@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор ламината онлайн: расчет упаковок, подложки и запаса на подрезку — Kevloro</title>
+    <meta name="description" content="Бесплатный онлайн калькулятор расчета ламината на комнату. Точный расчет количества упаковок, подложки, плинтуса и запаса на подрезку при прямой или диагональной укладке. Экспорт в Excel.">
+    <link rel="icon" href="./favicon.ico" sizes="any">
+    <link rel="icon" href="./icon-192.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+    <link rel="canonical" href="https://kevloro.ru/laminat/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Kevloro">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:url" content="https://kevloro.ru/laminat/">
+    <meta property="og:title" content="Калькулятор ламината онлайн: точный расчет упаковок и сметы">
+    <meta property="og:description" content="Рассчитайте необходимое количество упаковок ламината, рулонов подложки и плинтусов с учетом геометрии комнат.">
+    <meta property="og:image" content="https://kevloro.ru/og-image.png">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Schema.org WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Kevloro — Калькулятор ламината",
+      "url": "https://kevloro.ru/laminat/",
+      "description": "Онлайн калькулятор ламината: точный расчет упаковок с учетом запаса, рулонов подложки и плинтуса.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RUB" }
+    }
+    </script>
+
+    <!-- Schema.org FAQPage (Оптимизировано под запросы о ламинате) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Сколько упаковок ламината нужно брать про запас?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "При стандартной укладке вдоль света рекомендуется закладывать 5% запаса на подрезку. При диагональной укладке под углом 45° требуется 10%. При укладке «английской» или «французской ёлочкой» — от 15%."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как рассчитать количество пачек ламината по площади комнаты?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Умножьте чистую площадь пола на коэффициент запаса (например, 1.05 для 5%), затем разделите полученное число на квадратуру одной пачки (указана на упаковке, чаще всего 2.131 м² или 1.85 м²) и округлите результат вверх до целой пачки."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какая подложка лучше подходит под ламинат?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Оптимальный выбор — экструдированный пенополистирол (XPS) толщиной 2–3 мм или натуральная агломерированная пробка. Слишком толстая подложка (более 3–4 мм) приводит к деформации замков."
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112471439', 'ym');
+    ym(112471439, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/112471439" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+    <!-- Используем тот же блок стилей, что и в index.html -->
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --input-bg: #ffffff;
+            --accent: #10b981;
+            --subcard-bg: #f8fafc;
+            --total-bg: #ecfdf5;
+            --total-border: #a7f3d0;
+            --btn-copy-bg: #f1f5f9;
+            --btn-copy-hover: #e2e8f0;
+            --danger: #ef4444;
+            --warning-bg: #fffbeb;
+            --warning-border: #fde68a;
+            --warning-text: #92400e;
+        }
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --input-bg: #0f172a;
+            --accent: #34d399;
+            --subcard-bg: #0f172a;
+            --total-bg: rgba(16, 185, 129, 0.12);
+            --total-border: rgba(16, 185, 129, 0.35);
+            --btn-copy-bg: #334155;
+            --btn-copy-hover: #475569;
+            --danger: #f87171;
+            --warning-bg: rgba(245, 158, 11, 0.12);
+            --warning-border: rgba(245, 158, 11, 0.3);
+            --warning-text: #fbbf24;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease; }
+        body { background-color: var(--bg); color: var(--text-main); display: flex; justify-content: center; padding: 24px 16px 90px; }
+        .container { width: 100%; max-width: 640px; }
+        .header { position: relative; text-align: center; margin-bottom: 20px; }
+        .theme-toggle { position: absolute; top: 0; right: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+        .offline-status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; margin-bottom: 10px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+        .offline-status.is-offline { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
+        .offline-dot { width: 7px; height: 7px; border-radius: 50%; background-color: currentColor; }
+        .logo { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); margin-bottom: 4px; }
+        h1 { font-size: 1.35rem; margin-bottom: 4px; }
+        .subtitle { font-size: 0.85rem; color: var(--text-muted); }
+        .print-header-info { display: none; font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; }
+        .print-heating-badge { display: none; font-size: 0.85rem; font-weight: 700; color: #b45309; margin-top: 4px; }
+        .card { background: var(--card-bg); padding: 22px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 20px; }
+        .section-header-flex { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px; }
+        .section-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); }
+        .room-card { background: var(--subcard-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 12px; position: relative; }
+        .room-header { display: flex; justify-content: space-between; align-items: center; }
+        .room-title-area { display: flex; align-items: center; gap: 8px; width: 60%; }
+        .room-name-input { font-weight: 700; font-size: 0.9rem; border: none; background: transparent; color: var(--primary); outline: none; padding: 2px 0; width: 100%; }
+        .room-collapsed-badge { font-size: 0.72rem; background: rgba(37, 99, 235, 0.1); color: var(--primary); padding: 2px 6px; border-radius: 4px; font-weight: 600; white-space: nowrap; display: none; }
+        .room-card.is-collapsed .room-collapsed-badge { display: inline-block; }
+        .room-card.is-collapsed .room-body { display: none; }
+        .room-header-actions { display: flex; gap: 6px; align-items: center; }
+        .btn-room-action { background: none; border: none; cursor: pointer; font-size: 0.76rem; font-weight: 600; padding: 2px 4px; }
+        .btn-toggle-room { color: var(--text-muted); font-size: 0.82rem; }
+        .btn-duplicate-room { color: var(--primary); }
+        .btn-remove-room { color: var(--danger); }
+        .room-body { margin-top: 10px; }
+        .form-group { margin-bottom: 10px; }
+        label { display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 4px; color: var(--text-main); }
+        .field-tip { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; }
+        .row { display: flex; gap: 10px; }
+        .col { flex: 1; }
+        input, select { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem; background: var(--input-bg); color: var(--text-main); outline: none; }
+        input:focus, select:focus { border-color: var(--primary); }
+        .room-type-toggle { display: flex; gap: 12px; margin-bottom: 10px; font-size: 0.78rem; }
+        .room-type-toggle label { font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+        .checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 600; margin-top: 4px; }
+        .checkbox-label input[type="checkbox"] { width: auto; cursor: pointer; }
+        .notice-box { background: var(--warning-bg); border: 1px solid var(--warning-border); color: var(--warning-text); border-radius: 8px; padding: 8px 12px; font-size: 0.76rem; line-height: 1.4; margin-top: 8px; display: none; }
+        .btn-outline { background: transparent; border: 1px dashed var(--primary); color: var(--primary); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 600; width: 100%; margin-top: 4px; }
+        .btn-outline:hover { background: rgba(37, 99, 235, 0.06); }
+        .project-item { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 12px; background: var(--subcard-bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; }
+        .project-item-info { min-width: 0; }
+        .project-item-name { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .project-item-meta { font-size: 0.7rem; color: var(--text-muted); }
+        .project-item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+        .project-item-actions button { padding: 6px 10px; font-size: 0.75rem; border-radius: 6px; border: 1px solid var(--border); background: var(--btn-copy-bg); color: var(--text-main); cursor: pointer; }
+        .project-item-actions button:hover { background: var(--btn-copy-hover); }
+        .project-item-actions button.danger { color: var(--danger); border-color: var(--danger); background: transparent; }
+        .projects-empty { font-size: 0.78rem; color: var(--text-muted); text-align: center; padding: 10px 0; }
+        .btn { width: 100%; padding: 12px; background-color: var(--primary); color: #fff; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; margin-top: 14px; }
+        .btn:hover { background-color: var(--primary-hover); }
+        .results { margin-top: 20px; padding-top: 16px; border-top: 2px dashed var(--border); }
+        .result-group { background: var(--subcard-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+        .result-group-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 8px; }
+        .result-item { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+        .result-item:last-child { margin-bottom: 0; }
+        .result-label { font-size: 0.85rem; color: var(--text-muted); }
+        .result-val { font-size: 0.92rem; font-weight: 700; color: var(--text-main); }
+        .result-val.highlight { color: var(--primary); font-size: 1.05rem; }
+        .total-price-box { background: var(--total-bg); border: 1px solid var(--total-border); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+        .total-price-val { font-size: 1.25rem; font-weight: 800; color: var(--accent); }
+        .action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 12px; }
+        .btn-action { background-color: var(--btn-copy-bg); color: var(--text-main); border: 1px solid var(--border); border-radius: 8px; padding: 10px 2px; font-weight: 600; font-size: 0.78rem; cursor: pointer; text-align: center; }
+        .btn-action:hover { background-color: var(--btn-copy-hover); }
+        .share-buttons { display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 6px; margin-top: 10px; }
+        .share-btn { display: flex; align-items: center; justify-content: center; padding: 8px 4px; border-radius: 8px; color: #ffffff; font-size: 0.78rem; font-weight: 600; cursor: pointer; border: none; }
+        .share-tg { background-color: #229ED9; } .share-wa { background-color: #25D366; } .share-vk { background-color: #0077FF; } .share-ok { background-color: #EE8208; }
+        .share-native { background-color: var(--btn-copy-bg); color: var(--text-main); border: 1px solid var(--border); padding: 8px 10px; }
+        .seo-table-container { overflow-x: auto; margin-top: 10px; }
+        .seo-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; text-align: left; }
+        .seo-table th, .seo-table td { padding: 8px 10px; border: 1px solid var(--border); }
+        .seo-table th { background: var(--subcard-bg); font-weight: 700; color: var(--text-main); }
+        .seo-table td { color: var(--text-muted); }
+        .partner-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 20px; background: var(--card-bg); }
+        .partner-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .badge-plus { background: #e0e7ff; color: #4338ca; }
+        .partner-promo-box { background: var(--subcard-bg); border: 1px dashed var(--border); border-radius: 8px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
+        .promo-code-val { font-family: monospace; font-size: 1.05rem; font-weight: 700; color: var(--primary); letter-spacing: 0.08em; }
+        .partner-btn { display: inline-block; text-align: center; text-decoration: none; width: 100%; padding: 10px 14px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; }
+        .partner-btn-plus { background: var(--primary); color: #ffffff; }
+        .partner-btn-plus:hover { background: var(--primary-hover); }
+        .faq-card { margin-top: 24px; }
+        details { border-bottom: 1px solid var(--border); padding: 10px 0; cursor: pointer; }
+        details:last-child { border-bottom: none; }
+        summary { font-size: 0.88rem; font-weight: 600; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: '＋'; font-size: 1rem; color: var(--primary); }
+        details[open] summary::after { content: '—'; }
+        details p { margin-top: 8px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+        .pwa-banner { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); width: calc(100% - 24px); max-width: 640px; background: var(--card-bg); border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); border-radius: 12px; padding: 12px 16px; display: none; align-items: center; justify-content: space-between; gap: 10px; z-index: 1000; }
+        .pwa-badge { background: #ecfdf5; color: #059669; font-size: 0.68rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 2px; }
+        @media print {
+            body { background: #ffffff !important; color: #0f172a !important; padding: 0 !important; }
+            .print-header-info { display: block !important; }
+            .print-heating-badge.is-active { display: block !important; }
+            .theme-toggle, .btn-outline, .btn-room-action, .btn, .action-grid, .share-buttons, .pwa-banner, .faq-card, .partner-card, .offline-status, .room-type-toggle, .field-tip, .notice-box, .no-print, #heatingGroup, #spcNotice, #seoTableCard, #projectsCard, .nav-links-pills { display: none !important; }
+            .card { box-shadow: none !important; border: none !important; padding: 0 !important; margin-bottom: 15px !important; }
+            input, select { display: inline-block !important; border: none !important; background: transparent !important; padding: 0 !important; font-weight: 700 !important; font-size: 0.9rem !important; color: #000000 !important; appearance: none !important; -webkit-appearance: none !important; width: auto !important; min-width: 50px !important; }
+            .room-card { border: 1px solid #cbd5e1 !important; background: #f8fafc !important; page-break-inside: avoid; margin-bottom: 10px !important; }
+            .room-body { display: block !important; }
+            .room-collapsed-badge { display: none !important; }
+            .results { display: block !important; page-break-inside: avoid; border-top: 2px solid #0f172a !important; }
+            .result-group { border: 1px solid #cbd5e1 !important; background: #ffffff !important; }
+            .total-price-box { border: 2px solid #059669 !important; background: #f0fdf4 !important; }
+        }
+    </style>
+</head>
+<body data-page-mode="laminat">
+
+<div class="container">
+    <div class="header">
+        <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">🌙</button>
+        <div class="offline-status" id="netStatus">
+            <span class="offline-dot"></span>
+            <span id="netStatusText">Готов к офлайн-работе</span>
+        </div>
+        <div class="logo"><a href="./index.html" style="text-decoration:none; color:inherit;">KEVLORO</a></div>
+        <h1>Калькулятор ламината онлайн</h1>
+        <p class="subtitle">Точный расчет упаковок ламината, рулонов подложки и плинтусов</p>
+
+        <!-- Навигация -->
+        <nav class="nav-links-pills no-print" style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 12px; margin-bottom: 6px;">
+            <a href="./" class="nav-pill active" style="padding: 6px 12px; border-radius: 20px; font-size: 0.76rem; font-weight: 600; text-decoration: none; background: var(--primary); color: #fff; border: 1px solid var(--primary);">Все покрытия</a>
+            <a href="./laminat/" class="nav-pill" style="padding: 6px 12px; border-radius: 20px; font-size: 0.76rem; font-weight: 600; text-decoration: none; background: var(--card-bg); color: var(--text-muted); border: 1px solid var(--border);">Ламинат</a>
+            <a href="./spc/" class="nav-pill" style="padding: 6px 12px; border-radius: 20px; font-size: 0.76rem; font-weight: 600; text-decoration: none; background: var(--card-bg); color: var(--text-muted); border: 1px solid var(--border);">SPC Кварцвинил</a>
+        </nav>
+
+        <div class="print-header-info" id="printHeaderInfo"></div>
+        <div class="print-heating-badge" id="printHeatingBadge">🔥 В проекте предусмотрен тёплый пол (требуется термостойкая перфорированная подложка)</div>
+    </div>
+
+    <div class="card">
+        <div class="form-group no-print">
+            <label for="clientInfoInput">Объект / Заказчик (отобразится на бланке)</label>
+            <input type="text" id="clientInfoInput" placeholder="Например: Квартира 42, ул. Ленина 10 (Алексей)" oninput="saveDraft()">
+        </div>
+
+        <div class="section-header-flex" style="margin-top: 14px;">
+            <div class="section-title">1. Помещения для укладки ламината</div>
+        </div>
+
+        <div id="roomsContainer"></div>
+
+        <button type="button" class="btn-outline" onclick="addRoom()">＋ Добавить еще комнату</button>
+
+        <div class="section-header-flex" style="margin-top: 18px;">
+            <div class="section-title">2. Параметры ламината и цены</div>
+        </div>
+
+        <div class="form-group">
+            <label for="materialPreset">Шаблон ламината</label>
+            <select id="materialPreset" onchange="applyPreset()">
+                <option value="2.13" selected>Ламинат стандарт 8 мм (пачка 2.13 м²)</option>
+                <option value="1.85">Ламинат 12 мм (пачка 1.85 м²)</option>
+                <option value="custom">Пользовательский ввод площади пачки</option>
+            </select>
+            <div class="notice-box" id="spcNotice"></div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col">
+                <label for="packArea">Площадь ламината в пачке (м²)</label>
+                <input type="number" id="packArea" step="0.001" min="0.001" value="2.13">
+            </div>
+            <div class="col">
+                <label for="pricePerM2">Цена ламината за 1 м² (₽)</label>
+                <input type="number" id="pricePerM2" min="0" placeholder="например, 1400">
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col">
+                <label for="priceUnderlay">Цена подложки за рулон 10 м² (₽)</label>
+                <input type="number" id="priceUnderlay" min="0" placeholder="например, 850">
+            </div>
+            <div class="col">
+                <label for="priceSkirting">Цена планки плинтуса (₽)</label>
+                <input type="number" id="priceSkirting" min="0" placeholder="например, 220">
+            </div>
+        </div>
+
+        <div class="form-group" id="heatingGroup">
+            <label class="checkbox-label">
+                <input type="checkbox" id="hasUnderfloorHeating" onchange="toggleHeatingNotice()">
+                В помещениях планируется тёплый пол
+            </label>
+            <div class="notice-box" id="heatingNotice">
+                ⚠️ <strong>Ламинат и тёплый пол:</strong> Максимальная температура нагрева стяжки не должна превышать +27 °C. Используйте перфорированную подложку с низким термосопротивлением.
+            </div>
+        </div>
+
+        <div class="section-header-flex" style="margin-top: 18px;">
+            <div class="section-title">3. Плинтус, фурнитура и стыки</div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col">
+                <label for="skirtingLengthParam">Длина планки (м)</label>
+                <select id="skirtingLengthParam">
+                    <option value="2.5">2.5 м (пластик/МДФ)</option>
+                    <option value="2.2">2.2 м</option>
+                    <option value="2.0">2.0 м (алюминий/дюрополимер)</option>
+                    <option value="2.4">2.4 м</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="thresholdCount">Стыковочные порожки (шт)</label>
+                <input type="number" id="thresholdCount" min="0" value="1">
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col">
+                <label for="pipeCount">Трубы / стояки отопления из пола (шт)</label>
+                <input type="number" id="pipeCount" min="0" value="0" placeholder="0">
+                <div class="field-tip">Для расчёта декоративных колец-обводов</div>
+            </div>
+        </div>
+
+        <button class="btn" onclick="calculate()">Рассчитать смету на ламинат</button>
+
+        <div class="results" id="resultBlock">
+            <div class="result-group">
+                <div class="result-group-title">Ламинат к закупке</div>
+                <div class="result-item">
+                    <span class="result-label">Суммарная чистая площадь:</span>
+                    <span class="result-val" id="resTotalNetArea">0 м²</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Площадь с учетом запаса:</span>
+                    <span class="result-val" id="resTotalGrossArea">0 м²</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Количество упаковок ламината:</span>
+                    <span class="result-val highlight" id="resPacks">0 упак.</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Фактическая покупка по пачкам:</span>
+                    <span class="result-val" id="resBoughtArea">0 м²</span>
+                </div>
+            </div>
+
+            <div class="result-group">
+                <div class="result-group-title">Подложка и плинтус</div>
+                <div class="result-item">
+                    <span class="result-label">Подложка (рулоны по 10 м²):</span>
+                    <span class="result-val" id="resUnderlay">0 рул.</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Чистый периметр за вычетом проемов:</span>
+                    <span class="result-val" id="resPerimeter">0 м</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Планки плинтуса (+5% запас):</span>
+                    <span class="result-val highlight" id="resSkirting">0 шт</span>
+                </div>
+            </div>
+
+            <div class="result-group">
+                <div class="result-group-title">Фурнитура и стыки</div>
+                <div class="result-item">
+                    <span class="result-label">Внутренние углы (расчетно):</span>
+                    <span class="result-val" id="resInnerCorners">0 шт</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Внешние углы (расчетно):</span>
+                    <span class="result-val" id="resOuterCorners">0 шт</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Соединители планок:</span>
+                    <span class="result-val" id="resConnectors">0 шт</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Торцевые заглушки (левые/правые):</span>
+                    <span class="result-val" id="resEndCaps">0 пар</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Межкомнатные порожки:</span>
+                    <span class="result-val" id="resThresholds">0 шт</span>
+                </div>
+                <div class="result-item" id="resPipesRow" style="display: none;">
+                    <span class="result-label">Обводы для труб отопления:</span>
+                    <span class="result-val" id="resPipes">0 шт</span>
+                </div>
+            </div>
+
+            <div class="total-price-box" id="priceRow" style="display: none;">
+                <div>
+                    <div style="font-weight: 700; font-size: 0.95rem;">Итоговая ориентир. смета:</div>
+                    <div id="priceDetails" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;"></div>
+                </div>
+                <span class="total-price-val" id="totalPrice">0 ₽</span>
+            </div>
+
+            <div class="action-grid">
+                <button class="btn-action" onclick="copyResults()">📋 Текст</button>
+                <button class="btn-action" onclick="copyShareLink()">🔗 Ссылка</button>
+                <button class="btn-action" onclick="exportExcel()">📊 Excel</button>
+                <button class="btn-action" onclick="printEstimate()">🖨️ Бланк</button>
+            </div>
+
+            <div class="share-buttons">
+                <button class="share-btn share-tg" onclick="shareTo('tg')">Telegram</button>
+                <button class="share-btn share-wa" onclick="shareTo('wa')">WhatsApp</button>
+                <button class="share-btn share-vk" onclick="shareTo('vk')">ВК</button>
+                <button class="share-btn share-ok" onclick="shareTo('ok')">ОК</button>
+                <button class="share-btn share-native" onclick="shareTo('native')" title="Поделиться">📤 Ещё</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Карточка со сметами -->
+    <div class="card" id="projectsCard">
+        <div class="section-header-flex">
+            <div class="section-title">4. Мои сметы</div>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
+            Сохраняйте расчеты для разных комнат и объектов — данные хранятся локально в вашем браузере.
+        </p>
+        <div class="row form-group">
+            <div class="col">
+                <input type="text" id="projectNameInput" placeholder="Например: Спальня + Коридор">
+            </div>
+        </div>
+        <button type="button" class="btn-outline" onclick="saveProject()">💾 Сохранить смету</button>
+        <div id="projectsList" style="margin-top: 14px;"></div>
+    </div>
+
+    <!-- Рекомендации по укладке ламината -->
+    <div class="card" id="seoTableCard">
+        <div class="section-title" style="margin-bottom: 6px;">Рекомендации по расчету и запасу ламината</div>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.4;">
+            Нормы расхода ламината в зависимости от толщины плиты и выбранного метода укладки.
+        </p>
+        <div class="seo-table-container">
+            <table class="seo-table">
+                <thead>
+                    <tr>
+                        <th>Тип укладки</th>
+                        <th>Рекомендуемый запас</th>
+                        <th>Требования к подложке</th>
+                        <th>Ориентация досок</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Прямая по свету</strong></td>
+                        <td>5%</td>
+                        <td>XPS / пробка 2–3 мм</td>
+                        <td>Вдоль лучей от окна</td>
+                    </tr>
+                    <tr>
+                        <td><strong>По диагонали (45°)</strong></td>
+                        <td>10%</td>
+                        <td>XPS повышенной плотности 2 мм</td>
+                        <td>От дальнего угла к двери</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ёлочка / Паркетная</strong></td>
+                        <td>15%</td>
+                        <td>Специализированная XPS 2 мм</td>
+                        <td>По оси симметрии комнаты</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Яндекс Плюс промокод 
+    <div class="card partner-card">
+        <span class="partner-badge badge-plus">Яндекс Плюс</span>
+        <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">Кешбэк баллами за покупки для ремонта</div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+            Активируйте промокод перед закупкой материалов на Маркете и возвращайте баллами Плюса часть стоимости на будущие заказы.
+        </p>
+		<p style="font-size: 0.6rem; color: var(--text-muted); line-height: 1.4;">
+            Реклама. ООО «...», ИНН 0000000000, erid: ордшка
+        </p>
+        <div class="partner-promo-box">
+            <span class="promo-code-val">промокод</span>
+            <button class="btn-action" style="padding: 4px 10px; font-size: 0.75rem;" onclick="copyPromo('промокод')">Копировать</button>
+        </div>
+        <a href="ссылка" target="_blank" rel="noopener sponsored" class="partner-btn partner-btn-plus">
+            Активировать промокод
+        </a>
+    </div> -->
+
+    <!-- FAQ Блок Ламинат -->
+    <div class="card faq-card">
+        <div class="section-title" style="margin-bottom: 12px;">Вопросы и ответы по укладке и расчету ламината</div>
+        <details>
+            <summary>Сколько упаковок ламината нужно брать про запас?</summary>
+            <p>При стандартной прямой укладке вдоль света закладывается 5%. При укладке по диагонали — 10%. Если вы монтируете ламинат «ёлочкой», берите запас не менее 15% из-за большого количества обрезков у каждой стены.</p>
+        </details>
+        <details>
+            <summary>Как рассчитать количество упаковок ламината по формуле?</summary>
+            <p>Формула: (Площадь комнаты × Коэффициент запаса) / Площадь досок в одной пачке. Полученное значение округляется строго вверх до целого числа пачек. Например: (18 м² × 1.05) / 2.13 м² = 8.87 → требуется 9 упаковок.</p>
+        </details>
+        <details>
+            <summary>Какую подложку лучше выбрать под ламинат?</summary>
+            <p>Для ровной стяжки лучше всего подходит экструдированный пенополистирол (XPS) толщиной 2–3 мм либо натуральная пробка. Не используйте мягкую подложку толще 3–4 мм: со временем она промнется, и замки досок начнут скрипеть или треснут.</p>
+        </details>
+        <details>
+            <summary>Можно ли укладывать ламинат без межкомнатных порожков?</summary>
+            <p>Производители не рекомендуют единый настил более 8–10 метров в длину без деформационных швов. На границах комнат необходимо делать компенсационные зазоры 10–12 мм и закрывать их декоративными порожками.</p>
+        </details>
+    </div>
+</div>
+
+<div class="pwa-banner" id="pwaBanner">
+    <div>
+        <span class="pwa-badge">⚡ Работает без интернета</span>
+        <div style="font-weight: 700; font-size: 0.85rem;">Установить Kevloro</div>
+        <div style="font-size: 0.74rem; color: var(--text-muted);" id="pwaDesc">Мгновенный расчет в магазинах и новостройках офлайн</div>
+    </div>
+    <div style="display: flex; gap: 6px; align-items: center;">
+        <button class="btn-action" id="pwaInstallBtn" style="padding: 6px 12px; background: var(--primary); color: #fff;">Установить</button>
+        <button id="pwaCloseBtn" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+    </div>
+</div>
+
+<!-- Включаем оригинальный скрипт -->
+<script>
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme');
+
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggleBtn.textContent = '☀️';
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            themeToggleBtn.textContent = '🌙';
+        }
+    }
+
+    applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+
+    themeToggleBtn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const nextTheme = isDark ? 'light' : 'dark';
+        applyTheme(nextTheme);
+        localStorage.setItem('theme', nextTheme);
+    });
+
+    function updateNetStatus() {
+        const statusEl = document.getElementById('netStatus');
+        const textEl = document.getElementById('netStatusText');
+        if (navigator.onLine) {
+            statusEl.classList.remove('is-offline');
+            textEl.textContent = 'Офлайн-режим активен (в сети)';
+        } else {
+            statusEl.classList.add('is-offline');
+            textEl.textContent = 'Работает без интернета';
+        }
+    }
+    window.addEventListener('online', updateNetStatus);
+    window.addEventListener('offline', updateNetStatus);
+    updateNetStatus();
+
+    let rooms = [];
+
+    function getRoomArea(r) {
+        return r.type === 'rect' ? (parseFloat(r.length) || 0) * (parseFloat(r.width) || 0) : (parseFloat(r.customArea) || 0);
+    }
+
+    function createRoomElement(room, index) {
+        const div = document.createElement('div');
+        div.className = `room-card ${room.isCollapsed ? 'is-collapsed' : ''}`;
+        div.id = `room-${room.id}`;
+        const areaVal = getRoomArea(room).toFixed(1);
+
+        div.innerHTML = `
+            <div class="room-header">
+                <div class="room-title-area">
+                    <input class="room-name-input" value="${room.name}" onchange="updateRoom(${room.id}, 'name', this.value)">
+                    <span class="room-collapsed-badge" id="badge-${room.id}">${areaVal} м²</span>
+                </div>
+                <div class="room-header-actions">
+                    <button type="button" class="btn-room-action btn-toggle-room" onclick="toggleRoomCollapse(${room.id})" title="Свернуть / развернуть">
+                        ${room.isCollapsed ? '▼' : '▲'}
+                    </button>
+                    <button type="button" class="btn-room-action btn-duplicate-room" onclick="duplicateRoom(${room.id})" title="Создать копию комнаты">Копировать</button>
+                    ${rooms.length > 1 ? `<button type="button" class="btn-room-action btn-remove-room" onclick="removeRoom(${room.id})">Удалить</button>` : ''}
+                </div>
+            </div>
+
+            <div class="room-body">
+                <div class="room-type-toggle">
+                    <label>
+                        <input type="radio" name="geom-${room.id}" value="rect" ${room.type === 'rect' ? 'checked' : ''} onchange="updateRoom(${room.id}, 'type', 'rect')">
+                        По размерам (Д × Ш)
+                    </label>
+                    <label>
+                        <input type="radio" name="geom-${room.id}" value="custom" ${room.type === 'custom' ? 'checked' : ''} onchange="updateRoom(${room.id}, 'type', 'custom')">
+                        Сложная форма (м² + периметр)
+                    </label>
+                </div>
+
+                ${room.type === 'rect' ? `
+                    <div class="row form-group">
+                        <div class="col">
+                            <label>Длина (м)</label>
+                            <input type="number" step="0.01" min="0" value="${room.length}" oninput="updateRoom(${room.id}, 'length', this.value)">
+                        </div>
+                        <div class="col">
+                            <label>Ширина (м)</label>
+                            <input type="number" step="0.01" min="0" value="${room.width}" oninput="updateRoom(${room.id}, 'width', this.value)">
+                        </div>
+                    </div>
+                ` : `
+                    <div class="row form-group">
+                        <div class="col">
+                            <label>Площадь (м²)</label>
+                            <input type="number" step="0.01" min="0" value="${room.customArea}" oninput="updateRoom(${room.id}, 'customArea', this.value)">
+                        </div>
+                        <div class="col">
+                            <label>Периметр (м)</label>
+                            <input type="number" step="0.01" min="0" value="${room.customPerimeter}" oninput="updateRoom(${room.id}, 'customPerimeter', this.value)">
+                        </div>
+                    </div>
+                `}
+
+                <div class="row form-group">
+                    <div class="col">
+                        <label>Ширина проемов / дверей (м)</label>
+                        <input type="number" step="0.1" min="0" value="${room.doorWidth}" oninput="updateRoom(${room.id}, 'doorWidth', this.value)">
+                        <div class="field-tip">Сумма всех дверей и выходов</div>
+                    </div>
+                    <div class="col">
+                        <label>Способ укладки</label>
+                        <select onchange="updateRoom(${room.id}, 'layout', this.value)">
+                            <option value="5" ${room.layout == 5 ? 'selected' : ''}>Прямая вдоль света (5%)</option>
+                            <option value="10" ${room.layout == 10 ? 'selected' : ''}>Диагональ (10%)</option>
+                            <option value="15" ${room.layout == 15 ? 'selected' : ''}>Ёлочка / паркет (15%)</option>
+                        </select>
+                        <div class="field-tip">Прямую ведите по свету от окна</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        return div;
+    }
+
+    function renderRooms() {
+        const container = document.getElementById('roomsContainer');
+        container.innerHTML = '';
+        rooms.forEach((room, idx) => {
+            container.appendChild(createRoomElement(room, idx));
+        });
+        saveDraft();
+    }
+
+    function toggleRoomCollapse(id) {
+        const room = rooms.find(r => r.id === id);
+        if (room) {
+            room.isCollapsed = !room.isCollapsed;
+            const el = document.getElementById(`room-${id}`);
+            if (el) {
+                el.classList.toggle('is-collapsed', room.isCollapsed);
+                const btn = el.querySelector('.btn-toggle-room');
+                if (btn) btn.textContent = room.isCollapsed ? '▼' : '▲';
+                const badge = document.getElementById(`badge-${id}`);
+                if (badge) badge.textContent = `${getRoomArea(room).toFixed(1)} м²`;
+            }
+            saveDraft();
+        }
+    }
+
+    function addRoom() {
+        rooms.push({
+            id: Date.now(),
+            name: `Комната ${rooms.length + 1}`,
+            type: 'rect',
+            length: 5.0,
+            width: 3.0,
+            customArea: 15.0,
+            customPerimeter: 16.0,
+            doorWidth: 0.8,
+            layout: 5,
+            isCollapsed: false
+        });
+        renderRooms();
+        calculate();
+    }
+
+    function duplicateRoom(id) {
+        const target = rooms.find(r => r.id === id);
+        if (!target) return;
+        const copy = JSON.parse(JSON.stringify(target));
+        copy.id = Date.now();
+        copy.name = `${target.name} (копия)`;
+        copy.isCollapsed = false;
+        rooms.push(copy);
+        renderRooms();
+        calculate();
+    }
+
+    function removeRoom(id) {
+        rooms = rooms.filter(r => r.id !== id);
+        renderRooms();
+        calculate();
+    }
+
+    function updateRoom(id, field, value) {
+        const room = rooms.find(r => r.id === id);
+        if (room) {
+            if (field === 'type' || field === 'name') {
+                room[field] = value;
+            } else {
+                const num = parseFloat(value) || 0;
+                room[field] = Math.max(0, num);
+            }
+            const badge = document.getElementById(`badge-${id}`);
+            if (badge) badge.textContent = `${getRoomArea(room).toFixed(1)} м²`;
+
+            if (field === 'type') renderRooms();
+            saveDraft();
+            calculate();
+        }
+    }
+
+    function applyPreset() {
+        const val = document.getElementById('materialPreset').value;
+        const spcNotice = document.getElementById('spcNotice');
+        if (spcNotice) spcNotice.style.display = 'none';
+        if (val !== 'custom') {
+            document.getElementById('packArea').value = val;
+            calculate();
+        }
+    }
+
+    function toggleHeatingNotice() {
+        const isHeating = document.getElementById('hasUnderfloorHeating').checked;
+        document.getElementById('heatingNotice').style.display = isHeating ? 'block' : 'none';
+        const printBadge = document.getElementById('printHeatingBadge');
+        if (isHeating) {
+            printBadge.classList.add('is-active');
+        } else {
+            printBadge.classList.remove('is-active');
+        }
+        saveDraft();
+    }
+
+    let calculationSummary = '';
+    let lastCalculatedData = {};
+
+    function calculate() {
+        let totalNetArea = 0;
+        let totalGrossArea = 0;
+        let totalPerimeter = 0;
+        let totalDoors = 0;
+        let totalDoorsWidth = 0;
+
+        rooms.forEach(r => {
+            let area = 0;
+            let perimeter = 0;
+            if (r.type === 'rect') {
+                area = (r.length || 0) * (r.width || 0);
+                perimeter = ((r.length || 0) + (r.width || 0)) * 2;
+            } else {
+                area = r.customArea || 0;
+                perimeter = r.customPerimeter || 0;
+            }
+
+            const grossArea = area * (1 + (r.layout || 0) / 100);
+            totalNetArea += area;
+            totalGrossArea += grossArea;
+            totalPerimeter += perimeter;
+            const dw = Math.max(0, parseFloat(r.doorWidth) || 0);
+            totalDoorsWidth += dw;
+            if (dw > 0) {
+                totalDoors += Math.max(1, Math.round(dw / 0.8));
+            }
+        });
+
+        const packArea = Math.max(0, parseFloat(document.getElementById('packArea').value) || 0);
+        const pricePerM2 = Math.max(0, parseFloat(document.getElementById('pricePerM2').value) || 0);
+        const priceUnderlay = Math.max(0, parseFloat(document.getElementById('priceUnderlay').value) || 0);
+        const priceSkirting = Math.max(0, parseFloat(document.getElementById('priceSkirting').value) || 0);
+        const skirtingPlankLength = Math.max(0.1, parseFloat(document.getElementById('skirtingLengthParam').value) || 2.5);
+        const thresholds = Math.max(0, parseInt(document.getElementById('thresholdCount').value) || 0);
+        const pipes = Math.max(0, parseInt(document.getElementById('pipeCount').value) || 0);
+
+        let packs = 0;
+        let boughtArea = totalGrossArea;
+        if (packArea > 0) {
+            packs = Math.ceil(totalGrossArea / packArea);
+            boughtArea = packs * packArea;
+        }
+
+        const underlayRolls = Math.ceil(totalNetArea / 10);
+        const cleanPerimeter = Math.max(0, totalPerimeter - totalDoorsWidth);
+        const skirtingPieces = Math.ceil((cleanPerimeter * 1.05) / skirtingPlankLength);
+
+        const innerCorners = rooms.length * 4;
+        const outerCorners = Math.max(0, Math.round(rooms.length * 0.5));
+        const connectors = Math.max(0, skirtingPieces - innerCorners);
+        const endCapsPairs = totalDoors > 0 ? totalDoors : rooms.length;
+
+        document.getElementById('resTotalNetArea').innerText = totalNetArea.toFixed(2) + ' м²';
+        document.getElementById('resTotalGrossArea').innerText = totalGrossArea.toFixed(2) + ' м²';
+        document.getElementById('resPacks').innerText = packs + ' упак.';
+        document.getElementById('resBoughtArea').innerText = boughtArea.toFixed(2) + ' м²';
+
+        document.getElementById('resUnderlay').innerText = `${underlayRolls} рул. (${underlayRolls * 10} м²)`;
+        document.getElementById('resPerimeter').innerText = cleanPerimeter.toFixed(1) + ' м';
+        document.getElementById('resSkirting').innerText = `${skirtingPieces} шт (по ${skirtingPlankLength} м)`;
+
+        document.getElementById('resInnerCorners').innerText = innerCorners + ' шт';
+        document.getElementById('resOuterCorners').innerText = outerCorners + ' шт';
+        document.getElementById('resConnectors').innerText = connectors + ' шт';
+        document.getElementById('resEndCaps').innerText = endCapsPairs + ' пар';
+        document.getElementById('resThresholds').innerText = thresholds + ' шт';
+
+        const pipesRow = document.getElementById('resPipesRow');
+        if (pipes > 0) {
+            document.getElementById('resPipes').innerText = pipes + ' шт';
+            pipesRow.style.display = 'flex';
+        } else {
+            pipesRow.style.display = 'none';
+        }
+
+        const costCover = pricePerM2 > 0 ? Math.round(boughtArea * pricePerM2) : 0;
+        const costUnderlay = priceUnderlay > 0 ? Math.round(underlayRolls * priceUnderlay) : 0;
+        const costSkirting = priceSkirting > 0 ? Math.round(skirtingPieces * priceSkirting) : 0;
+        const totalSum = costCover + costUnderlay + costSkirting;
+
+        if (totalSum > 0) {
+            document.getElementById('totalPrice').innerText = totalSum.toLocaleString('ru-RU') + ' ₽';
+            const detailsArr = [];
+            if (costCover > 0) detailsArr.push(`ламинат: ${costCover.toLocaleString('ru-RU')} ₽`);
+            if (costUnderlay > 0) detailsArr.push(`подложка: ${costUnderlay.toLocaleString('ru-RU')} ₽`);
+            if (costSkirting > 0) detailsArr.push(`плинтус: ${costSkirting.toLocaleString('ru-RU')} ₽`);
+            document.getElementById('priceDetails').innerText = detailsArr.join(' | ');
+            document.getElementById('priceRow').style.display = 'flex';
+        } else {
+            document.getElementById('priceRow').style.display = 'none';
+        }
+
+        const clientInfo = (document.getElementById('clientInfoInput').value || '').trim();
+        const hasHeating = document.getElementById('hasUnderfloorHeating').checked;
+
+        lastCalculatedData = {
+            clientInfo,
+            hasHeating,
+            totalNetArea,
+            totalGrossArea,
+            packs,
+            boughtArea,
+            underlayRolls,
+            cleanPerimeter,
+            skirtingPieces,
+            skirtingPlankLength,
+            innerCorners,
+            outerCorners,
+            connectors,
+            endCapsPairs,
+            thresholds,
+            pipes,
+            costCover,
+            costUnderlay,
+            costSkirting,
+            totalSum
+        };
+
+        calculationSummary = `Смета Kevloro (Ламинат, помещений: ${rooms.length}):\n` +
+            (clientInfo ? `• Объект: ${clientInfo}\n` : '') +
+            (hasHeating ? `• Тёплый пол: Да (перфорированная подложка)\n` : '') +
+            `• Ламинат: ${packs} упак. (${boughtArea.toFixed(2)} м²)\n` +
+            `• Подложка (по 10 м²): ${underlayRolls} рул.\n` +
+            `• Плинтус (${skirtingPlankLength} м): ${skirtingPieces} шт (${cleanPerimeter.toFixed(1)} м)\n` +
+            `• Углы внутр./внеш.: ${innerCorners} / ${outerCorners} шт\n` +
+            `• Соединители/заглушки: ${connectors} шт / ${endCapsPairs} пар\n` +
+            `• Порожки: ${thresholds} шт\n` +
+            (pipes > 0 ? `• Обводы для труб: ${pipes} шт\n` : '') +
+            (totalSum > 0 ? `• Ориентир. сумма сметы: ${totalSum.toLocaleString('ru-RU')} ₽\n` : '') +
+            `Калькулятор ламината: ${window.location.href.split('#')[0].split('?')[0]}`;
+
+        saveDraft();
+    }
+
+    function printEstimate() {
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+        const clientVal = (document.getElementById('clientInfoInput').value || '').trim();
+        const clientPart = clientVal ? ` | Объект: ${clientVal}` : '';
+        document.getElementById('printHeaderInfo').innerText = `Смета сформирована: ${dateStr} в ${timeStr}${clientPart}`;
+        const isHeating = document.getElementById('hasUnderfloorHeating').checked;
+        const badge = document.getElementById('printHeatingBadge');
+        if (isHeating) badge.classList.add('is-active'); else badge.classList.remove('is-active');
+        window.print();
+    }
+
+    function exportExcel() {
+        if (!lastCalculatedData.packs && !lastCalculatedData.totalNetArea) calculate();
+        const d = lastCalculatedData;
+        const filename = (d.clientInfo ? `Смета_Ламинат_${d.clientInfo}` : 'Смета_Ламинат_Kevloro') + '.xls';
+
+        const tableHtml = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+            <head><meta charset="utf-8">
+                <style>
+                    td, th { font-family: Calibri, Arial, sans-serif; font-size: 11pt; }
+                    .th-header { background-color: #2563eb; color: #ffffff; font-weight: bold; border: 1px solid #1d4ed8; text-align: left; padding: 6px 10px; }
+                    .row-item { border: 0.5pt solid #cbd5e1; padding: 5px 8px; }
+                    .num { text-align: right; }
+                    .total-row { background-color: #ecfdf5; font-weight: bold; border: 1.5pt solid #059669; }
+                </style>
+            </head>
+            <body>
+                <h2>Смета на ламинат Kevloro</h2>
+                ${d.clientInfo ? `<p><b>Объект / Заказчик:</b> ${d.clientInfo}</p>` : ''}
+                <table border="1" style="border-collapse:collapse;">
+                    <thead>
+                        <tr><th class="th-header">Наименование позиции</th><th class="th-header num">Количество</th><th class="th-header">Ед. изм.</th><th class="th-header num">Ориентир. сумма (₽)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="row-item">Ламинат (в упаковках)</td><td class="row-item num">${d.packs}</td><td class="row-item">упак.</td><td class="row-item num">${d.costCover || '—'}</td></tr>
+                        <tr><td class="row-item">Фактическая площадь ламината</td><td class="row-item num">${d.boughtArea.toFixed(2)}</td><td class="row-item">м²</td><td class="row-item num">—</td></tr>
+                        <tr><td class="row-item">Подложка (рулоны по 10 м²)</td><td class="row-item num">${d.underlayRolls}</td><td class="row-item">рул.</td><td class="row-item num">${d.costUnderlay || '—'}</td></tr>
+                        <tr><td class="row-item">Плинтус (${d.skirtingPlankLength} м)</td><td class="row-item num">${d.skirtingPieces}</td><td class="row-item">шт</td><td class="row-item num">${d.costSkirting || '—'}</td></tr>
+                        <tr class="total-row"><td class="row-item" colspan="3" style="text-align:right;">ИТОГО:</td><td class="row-item num">${d.totalSum ? d.totalSum.toLocaleString('ru-RU') + ' ₽' : '—'}</td></tr>
+                    </tbody>
+                </table>
+            </body></html>`;
+        const blob = new Blob([tableHtml], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename.replace(/[/\\?%*:|"<>]/g, '_'));
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    function collectCurrentState() {
+        return {
+            clientInfo: document.getElementById('clientInfoInput').value,
+            rooms: rooms,
+            packArea: document.getElementById('packArea').value,
+            pricePerM2: document.getElementById('pricePerM2').value,
+            priceUnderlay: document.getElementById('priceUnderlay').value,
+            priceSkirting: document.getElementById('priceSkirting').value,
+            skirtingLength: document.getElementById('skirtingLengthParam').value,
+            thresholdCount: document.getElementById('thresholdCount').value,
+            pipeCount: document.getElementById('pipeCount').value,
+            materialPreset: document.getElementById('materialPreset').value,
+            hasHeating: document.getElementById('hasUnderfloorHeating').checked
+        };
+    }
+
+    function applyState(state) {
+        if (!state) return;
+        if (state.clientInfo !== undefined) document.getElementById('clientInfoInput').value = state.clientInfo;
+        if (state.rooms && state.rooms.length > 0) rooms = state.rooms;
+        if (state.packArea) document.getElementById('packArea').value = state.packArea;
+        document.getElementById('pricePerM2').value = state.pricePerM2 || '';
+        document.getElementById('priceUnderlay').value = state.priceUnderlay || '';
+        document.getElementById('priceSkirting').value = state.priceSkirting || '';
+        if (state.skirtingLength) document.getElementById('skirtingLengthParam').value = state.skirtingLength;
+        if (state.thresholdCount !== undefined) document.getElementById('thresholdCount').value = state.thresholdCount;
+        if (state.pipeCount !== undefined) document.getElementById('pipeCount').value = state.pipeCount;
+        if (state.materialPreset) {
+            document.getElementById('materialPreset').value = state.materialPreset;
+            applyPreset();
+        }
+        document.getElementById('hasUnderfloorHeating').checked = !!state.hasHeating;
+        toggleHeatingNotice();
+        renderRooms();
+        calculate();
+    }
+
+    function saveDraft() {
+        localStorage.setItem('kevloro_draft_laminat', JSON.stringify(collectCurrentState()));
+    }
+
+    function loadDraft() {
+        if (window.location.hash && window.location.hash.startsWith('#data=')) {
+            try {
+                const encoded = window.location.hash.substring(6);
+                const jsonStr = decodeURIComponent(atob(encoded));
+                applyState(JSON.parse(jsonStr));
+                return;
+            } catch (e) {}
+        }
+        const raw = localStorage.getItem('kevloro_draft_laminat');
+        if (raw) {
+            try {
+                applyState(JSON.parse(raw));
+                return;
+            } catch(e) {}
+        }
+        if (rooms.length === 0) {
+            rooms = [{ id: 1, name: 'Гостиная', type: 'rect', length: 5.0, width: 3.0, customArea: 15.0, customPerimeter: 16.0, doorWidth: 0.8, layout: 5, isCollapsed: false }];
+        }
+        document.getElementById('packArea').value = '2.13';
+        document.getElementById('materialPreset').value = '2.13';
+        renderRooms();
+        calculate();
+    }
+
+    function copyShareLink() {
+        const encoded = btoa(encodeURIComponent(JSON.stringify(collectCurrentState())));
+        const url = `${window.location.origin}${window.location.pathname}#data=${encoded}`;
+        navigator.clipboard.writeText(url).then(() => alert('🔗 Ссылка скопирована!')).catch(() => prompt('Ссылка:', url));
+    }
+
+    const PROJECTS_KEY = 'kevloro_projects';
+    function getProjects() { try { return JSON.parse(localStorage.getItem(PROJECTS_KEY)) || []; } catch (e) { return []; } }
+    function setProjects(list) { localStorage.setItem(PROJECTS_KEY, JSON.stringify(list)); }
+    function saveProject() {
+        const nameInput = document.getElementById('projectNameInput');
+        const defaultName = (document.getElementById('clientInfoInput').value || '').trim();
+        const name = (nameInput.value || '').trim() || defaultName || `Ламинат: ${new Date().toLocaleDateString('ru-RU')}`;
+        const projects = getProjects();
+        projects.unshift({ id: Date.now(), name: name, savedAt: new Date().toISOString(), state: collectCurrentState() });
+        setProjects(projects);
+        nameInput.value = '';
+        renderProjects();
+    }
+    function loadProject(id) { const project = getProjects().find(p => p.id === id); if (!project) return; applyState(project.state); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function deleteProject(id) { if (!confirm('Удалить смету?')) return; setProjects(getProjects().filter(p => p.id !== id)); renderProjects(); }
+    function renderProjects() {
+        const container = document.getElementById('projectsList');
+        const projects = getProjects();
+        if (projects.length === 0) { container.innerHTML = '<div class="projects-empty">Пока нет сохраненных смет</div>'; return; }
+        container.innerHTML = projects.map(p => `
+            <div class="project-item">
+                <div class="project-item-info"><div class="project-item-name">${p.name}</div><div class="project-item-meta">${new Date(p.savedAt).toLocaleDateString('ru-RU')}</div></div>
+                <div class="project-item-actions"><button onclick="loadProject(${p.id})">Открыть</button><button class="danger" onclick="deleteProject(${p.id})">Удалить</button></div>
+            </div>`).join('');
+    }
+
+    function copyPromo(code) { navigator.clipboard.writeText(code).then(() => alert('Промокод скопирован: ' + code)); }
+
+    ['packArea', 'pricePerM2', 'priceUnderlay', 'priceSkirting', 'skirtingLengthParam', 'thresholdCount', 'pipeCount', 'clientInfoInput'].forEach(id => {
+        document.getElementById(id).addEventListener('input', calculate);
+    });
+
+    function copyResults() {
+        if (!calculationSummary) return;
+        navigator.clipboard.writeText(calculationSummary).then(() => alert('✅ Смета скопирована!')).catch(() => alert('Скопируйте вручную'));
+    }
+
+    function shareTo(platform) {
+        const text = encodeURIComponent(calculationSummary);
+        const url = encodeURIComponent(window.location.href.split('#')[0].split('?')[0]);
+        switch (platform) {
+            case 'tg': window.open(`https://t.me/share/url?url=${url}&text=${text}`); break;
+            case 'wa': window.open(`https://api.whatsapp.com/send?text=${text}`); break;
+            case 'vk': window.open(`https://vk.com/share.php?url=${url}&comment=${text}`); break;
+            case 'ok': window.open(`https://connect.ok.ru/offer?url=${url}&title=${text}`); break;
+            case 'native': if (navigator.share) { navigator.share({ title: 'Смета ламината', text: calculationSummary }).catch(() => {}); } else { copyResults(); } break;
+        }
+    }
+
+    // PWA Service Worker
+    let deferredPrompt;
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+    }
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (!localStorage.getItem('pwa_banner_closed')) document.getElementById('pwaBanner').style.display = 'flex';
+    });
+    document.getElementById('pwaInstallBtn').addEventListener('click', async () => {
+        if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; document.getElementById('pwaBanner').style.display = 'none'; }
+    });
+    document.getElementById('pwaCloseBtn').addEventListener('click', () => {
+        document.getElementById('pwaBanner').style.display = 'none';
+        localStorage.setItem('pwa_banner_closed', 'true');
+    });
+
+    loadDraft();
+    renderProjects();
+</script>
+</body>
+</html>
