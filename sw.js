@@ -1,7 +1,9 @@
-const CACHE_NAME = 'kevloro-cache-v6';
+const CACHE_NAME = 'kevloro-cache-v7';
 const ASSETS = [
     './',
     './index.html',
+    './laminat.html',
+    './spc.html',
     './manifest.json',
     './icon-192.png',
     './icon-512.png',
