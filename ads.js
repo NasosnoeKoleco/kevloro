@@ -1,9 +1,12 @@
-﻿/*!
+/*!
  * Kevloro — рекламные места.
  *
- * Блок раскрывается только когда для него есть код интеграции из кабинета
- * (ads.config.js → slots.<имя>.code) или подключён свой рендерер
- * window.KevloroAdsRender. Иначе слот остаётся скрытым и не занимает место.
+ * Механика:
+ *   1. Пока слот не доскроллен, он скрыт и ничего не грузит.
+ *   2. При подходе к экрану ads.js создаёт <ins class="mrg-tag"> и один раз
+ *      подключает загрузчик сети, затем добавляет задание в MRGtag.
+ *   3. Если через 5 секунд блок не заполнился (модерация, блокировщик, сбой
+ *      сети), слот снова скрывается — пустого места на странице не остаётся.
  */
 (function () {
     'use strict';
@@ -15,16 +18,82 @@
         return;
     }
 
+    var FILL_TIMEOUT = 5000;
+
     function slotConfig(name) {
         var map = CONFIG.slots || {};
         var value = map[name];
         if (!value) {
             return null;
         }
-        if (typeof value === 'string') {
-            return { id: value, code: '' };
+        return typeof value === 'string' ? { id: value } : value;
+    }
+
+    function ensureLoader() {
+        if (!CONFIG.loader || document.querySelector('script[data-ad-loader]')) {
+            return;
         }
-        return value;
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = CONFIG.loader;
+        script.setAttribute('data-ad-loader', '1');
+        document.head.appendChild(script);
+    }
+
+    function renderNetwork(container, config) {
+        var size = String(config.format || '300x250').split('x');
+        var width = parseInt(size[0], 10) || 300;
+        var height = parseInt(size[1], 10) || 250;
+
+        var tag = document.createElement('ins');
+        tag.className = 'mrg-tag';
+        tag.style.display = 'inline-block';
+        tag.style.width = width + 'px';
+        tag.style.height = height + 'px';
+        tag.setAttribute('data-ad-client', 'ad-' + config.id);
+        tag.setAttribute('data-ad-slot', String(config.id));
+        container.appendChild(tag);
+
+        ensureLoader();
+        (window.MRGtag = window.MRGtag || []).push({});
+
+        return tag;
+    }
+
+    // Если сеть заполнила блок позже, показываем его снова; если не заполнила —
+    // прячем, чтобы на странице не осталось пустого прямоугольника.
+    function watchFill(slot, tag) {
+        var revealed = false;
+
+        function reveal() {
+            if (revealed) {
+                return;
+            }
+            revealed = true;
+            slot.hidden = false;
+            slot.setAttribute('data-ad-filled', '1');
+        }
+
+        if (tag.children.length > 0) {
+            reveal();
+            return;
+        }
+
+        var observer = new MutationObserver(function () {
+            if (tag.children.length > 0) {
+                observer.disconnect();
+                reveal();
+            }
+        });
+        observer.observe(tag, { childList: true, subtree: true });
+
+        window.setTimeout(function () {
+            observer.disconnect();
+            if (tag.children.length === 0) {
+                slot.hidden = true;
+                slot.removeAttribute('data-active');
+            }
+        }, FILL_TIMEOUT);
     }
 
     function activate(slot) {
@@ -38,18 +107,15 @@
         }
 
         var name = slot.getAttribute('data-ad');
-        var conf = slotConfig(name);
+        var config = slotConfig(name);
         var hasCustomRenderer = typeof window.KevloroAdsRender === 'function';
-        var hasCode = Boolean(conf && typeof conf.code === 'string' && conf.code.trim());
-        var legacyHtml = CONFIG.provider === 'custom' && typeof CONFIG.html === 'string' && CONFIG.html.trim();
+        var hasCode = Boolean(config && typeof config.code === 'string' && config.code.trim());
 
-        if (!hasCustomRenderer && !hasCode && !legacyHtml) {
-            // Кода ещё нет — блок не показываем, чтобы не оставлять пустое место.
+        if (!hasCustomRenderer && !hasCode && !(config && config.id)) {
             return;
         }
 
         slot.setAttribute('data-active', '1');
-
         var placeholder = slot.querySelector('.ad-placeholder');
         if (placeholder) {
             placeholder.remove();
@@ -57,15 +123,22 @@
 
         try {
             if (hasCustomRenderer) {
-                window.KevloroAdsRender(slot, inner, CONFIG, conf);
-            } else if (hasCode) {
-                inner.insertAdjacentHTML('beforeend', conf.code);
-            } else {
-                inner.insertAdjacentHTML('beforeend', CONFIG.html);
+                window.KevloroAdsRender(slot, inner, CONFIG, config);
+                slot.hidden = false;
+                return;
             }
+
+            if (hasCode) {
+                inner.insertAdjacentHTML('beforeend', config.code);
+                slot.hidden = false;
+                return;
+            }
+
+            var tag = renderNetwork(inner, config);
             slot.hidden = false;
+            watchFill(slot, tag);
         } catch (error) {
-            inner.innerHTML = '<span class="ad-placeholder">Реклама временно недоступна</span>';
+            slot.hidden = true;
         }
     }
 
@@ -81,8 +154,8 @@
         return;
     }
 
-    // Слот скрыт через [hidden], поэтому наблюдаем не его, а невидимый маркер
-    // перед ним: у скрытого элемента нет площади и он никогда не «пересекается».
+    // Слот скрыт через [hidden], поэтому наблюдаем невидимый маркер перед ним:
+    // у скрытого элемента нет площади и он никогда не «пересекается».
     var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
             if (entry.isIntersecting) {

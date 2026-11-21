@@ -2058,3 +2058,25 @@ select {
     height: 1px;
     pointer-events: none;
 }
+/* Рекламные блоки сети: центрируем и убираем рамку-заглушку после загрузки */
+.ad-slot-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.ad-slot[data-ad="article-mid"] .ad-slot-inner {
+    min-height: 280px;
+}
+
+.ad-slot[data-active="1"] .ad-slot-inner {
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+.ad-slot-inner .mrg-tag {
+    flex: none;
+}
