@@ -242,6 +242,110 @@ test('мусор в полях не ломает расчёт', () => {
     });
 });
 
+/* -------------------------------------------------------- гипсокартон */
+
+test('гипсокартон: листы, профиль и крепёж', () => {
+    const result = Calcs.gipsokarton.compute({ area: 20, perimeter: 18, reserve: 10, sheet: 3, studStep: 0.6 });
+    assert.equal(findRow(result, 'Площадь с запасом').value, 22);
+    assert.equal(findRow(result, 'Листов').value, 8);
+    assert.equal(findRow(result, 'Стоечный профиль CD').value, 15);
+    assert.equal(findRow(result, 'Направляющий профиль UD').value, 7);
+    assert.equal(findRow(result, 'Подвесы').value, 30);
+    assert.equal(findRow(result, 'Саморезы').value, 600);
+});
+
+test('гипсокартон: частый шаг стоек увеличивает каркас', () => {
+    const rare = Calcs.gipsokarton.compute({ area: 20, perimeter: 18, reserve: 0, sheet: 3, studStep: 0.6 });
+    const dense = Calcs.gipsokarton.compute({ area: 20, perimeter: 18, reserve: 0, sheet: 3, studStep: 0.4 });
+    assert.ok(findRow(dense, 'Стоечный профиль CD').value > findRow(rare, 'Стоечный профиль CD').value);
+    assert.ok(findRow(dense, 'Подвесы').value > findRow(rare, 'Подвесы').value);
+});
+
+test('гипсокартон: стоимость и итог', () => {
+    const result = Calcs.gipsokarton.compute({
+        area: 20, perimeter: 18, reserve: 10, sheet: 3, studStep: 0.6,
+        priceSheet: 900, priceProfile: 350, priceSuspension: 30
+    });
+    const sum = result.groups.flatMap((group) => group.rows).reduce((total, item) => total + (item.sum || 0), 0);
+    assert.equal(result.total, sum);
+    assert.equal(result.total, 8 * 900 + 22 * 350 + 30 * 30);
+});
+
+test('гипсокартон: нулевая площадь — предупреждение', () => {
+    const result = Calcs.gipsokarton.compute({ area: 0 });
+    assert.equal(result.total, 0);
+    assert.ok(result.warnings.length > 0);
+});
+
+/* --------------------------------------------------------- штукатурка */
+
+test('штукатурка: гипсовая 10 мм на 30 м²', () => {
+    const result = Calcs.shtukaturka.compute({ area: 30, thickness: 10, mix: 'gips', bagWeight: 30 });
+    assert.equal(findRow(result, 'Расход на 1 м²').value, 9);
+    assert.equal(findRow(result, 'Всего смеси').value, 270);
+    assert.equal(findRow(result, 'Мешков').value, 9);
+    assert.equal(findRow(result, 'Вода').value, 162);
+});
+
+test('штукатурка: цементная расходуется почти вдвое больше', () => {
+    const gips = Calcs.shtukaturka.compute({ area: 30, thickness: 10, mix: 'gips', bagWeight: 30 });
+    const cement = Calcs.shtukaturka.compute({ area: 30, thickness: 10, mix: 'cement', bagWeight: 30 });
+    assert.ok(findRow(cement, 'Всего смеси').value > findRow(gips, 'Всего смеси').value * 1.7);
+});
+
+test('штукатурка: толщина 20 мм удваивает расход', () => {
+    const thin = Calcs.shtukaturka.compute({ area: 30, thickness: 10, mix: 'gips', bagWeight: 30 });
+    const thick = Calcs.shtukaturka.compute({ area: 30, thickness: 20, mix: 'gips', bagWeight: 30 });
+    assert.equal(findRow(thick, 'Всего смеси').value, findRow(thin, 'Всего смеси').value * 2);
+});
+
+test('штукатурка: грунт и стоимость', () => {
+    const result = Calcs.shtukaturka.compute({ area: 30, thickness: 10, mix: 'gips', bagWeight: 30, priceBag: 450, pricePrimer: 700 });
+    assert.equal(findRow(result, 'Грунт').value, 6);
+    assert.equal(findRow(result, 'Канистр').value, 1);
+    assert.equal(result.total, 9 * 450 + 700);
+});
+
+/* --------------------------------------------------------- тёплый пол */
+
+test('тёплый пол: мат 150 Вт/м²', () => {
+    const result = Calcs.teplyyPol.compute({ area: 10, system: 'mat' });
+    assert.equal(findRow(result, 'Общая мощность').value, 1500);
+    assert.equal(findRow(result, 'Удельная мощность').value, 150);
+    assert.equal(findRow(result, 'Длина кабеля').value, 0);
+    assert.ok(result.notes[0].includes('1,5 мм²'));
+});
+
+test('тёплый пол: кабель с шагом 10 см даёт 10 м на метр', () => {
+    const result = Calcs.teplyyPol.compute({ area: 10, system: 'cable10' });
+    assert.equal(findRow(result, 'Общая мощность').value, 1800);
+    assert.equal(findRow(result, 'Длина кабеля').value, 100);
+});
+
+test('тёплый пол: шаг 15 см экономит кабель', () => {
+    const step10 = Calcs.teplyyPol.compute({ area: 10, system: 'cable10' });
+    const step15 = Calcs.teplyyPol.compute({ area: 10, system: 'cable15' });
+    assert.ok(findRow(step15, 'Длина кабеля').value < findRow(step10, 'Длина кабеля').value);
+    assert.ok(findRow(step15, 'Общая мощность').value < findRow(step10, 'Общая мощность').value);
+});
+
+test('тёплый пол: большая площадь требует отдельной линии', () => {
+    const result = Calcs.teplyyPol.compute({ area: 30, system: 'mat' });
+    assert.equal(findRow(result, 'Общая мощность').value, 4500);
+    assert.ok(result.notes[0].includes('2,5 мм²'));
+});
+
+test('тёплый пол: стоимость системы и терморегулятора', () => {
+    const result = Calcs.teplyyPol.compute({ area: 10, system: 'mat', priceM2: 2500, priceThermostat: 3500 });
+    assert.equal(result.total, 10 * 2500 + 3500);
+});
+
+test('тёплый пол: нулевая площадь — предупреждение', () => {
+    const result = Calcs.teplyyPol.compute({ area: 0 });
+    assert.equal(result.total, 0);
+    assert.ok(result.warnings.length > 0);
+});
+
 console.log('');
 if (failures.length > 0) {
     console.error(`Провалено тестов: ${failures.length}, успешно: ${passed}`);

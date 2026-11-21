@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kevloro — калькулятор тёплого пола: мощность, ток и длина кабеля</title>
+    <meta name="description" content="Рассчитайте мощность тёплого пола, ток при 220 В и длину кабеля по площади: мат 150 Вт/м², кабель с шагом 10, 12,5 и 15 см, плёночный пол. Смета в Excel.">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <link rel="canonical" href="https://kevloro.ru/teplyy-pol/">
+    <link rel="alternate" type="application/rss+xml" title="Статьи Kevloro" href="https://kevloro.ru/feed.xml">
+
+    <meta name="theme-color" content="#3556f5" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#070c17" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kevloro">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Kevloro">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:url" content="https://kevloro.ru/teplyy-pol/">
+    <meta property="og:title" content="Калькулятор тёплого пола: мощность, ток и длина кабеля">
+    <meta property="og:description" content="Мат, кабель с шагом 10–15 см или плёнка: мощность, ток и метры кабеля по площади обогрева. Смета с ценой системы и терморегулятора.">
+    <meta property="og:image" content="https://kevloro.ru/og-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Kevloro — калькулятор тёплого пола: мощность, ток и длина кабеля">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Калькулятор тёплого пола">
+    <meta name="twitter:description" content="Мощность, ток и длина кабеля по площади обогрева. Смета в Excel и печать бланка.">
+    <meta name="twitter:image" content="https://kevloro.ru/og-image.png">
+    <meta name="twitter:image:alt" content="Kevloro — калькулятор тёплого пола">
+
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('kevloro:theme');
+                if (!theme) {
+                    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (error) { /* приватный режим */ }
+        })();
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://kevloro.ru/teplyy-pol/#app",
+          "name": "Kevloro — калькулятор тёплого пола",
+          "url": "https://kevloro.ru/teplyy-pol/",
+          "description": "Расчёт мощности тёплого пола по площади и типу системы, тока при 220 В, длины кабеля по шагу укладки и рекомендации линии с автоматом.",
+          "applicationCategory": "UtilityApplication",
+          "operatingSystem": "Any",
+          "inLanguage": "ru",
+          "isAccessibleForFree": true,
+          "browserRequirements": "Требуется JavaScript",
+          "featureList": [
+            "Мощность мата, кабеля и плёнки по площади",
+            "Ток при 220 В",
+            "Длина кабеля по шагу укладки",
+            "Рекомендация линии и автомата"
+          ],
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RUB" }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://kevloro.ru/teplyy-pol/#breadcrumbs",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Калькуляторы отделки", "item": "https://kevloro.ru/kalkulyatory/" },
+            { "@type": "ListItem", "position": 2, "name": "Калькулятор тёплого пола", "item": "https://kevloro.ru/teplyy-pol/" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://kevloro.ru/teplyy-pol/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Мат или кабель — что выбрать для тёплого пола?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Мат — готовая тонкая секция 150 Вт/м² с фиксированной длиной: её укладывают в стяжку или слой клея под плитку, когда не хочется считать шаг. Кабель берут, когда важна точная мощность на квадрат: при шаге 10 см — 180 Вт/м² и 10 м кабеля на м², при 12,5 см — 144 Вт/м² и 8 м, при 15 см — 120 Вт/м² и 6,67 м. Для ламината и SPC удобнее плёнка 150 Вт/м²."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Какая мощность тёплого пола нужна на 10 м²?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Для 10 м² обогрева мат или плёнка 150 Вт/м² дают 1500 Вт и ток около 6,8 А. Кабель при шаге 10 см — 1800 Вт (8,2 А) и 100 м кабеля, при 12,5 см — 1440 Вт (6,5 А) и 80 м, при 15 см — 1200 Вт (5,5 А) и 66,7 м. Площадь считают по свободной зоне без мебели и сантехники."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Какая нужна проводка и автомат для тёплого пола?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "До 3,5 кВт достаточно линии 1,5 мм² с автоматом 10 А, выше 3,5 кВт нужна отдельная линия 2,5 мм² и автомат 16 А. Тёплый пол подключают через терморегулятор, а готовую рекомендацию по линии калькулятор показывает в результатах расчёта. Номиналы стоит согласовать с электриком по вашей проводке."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Можно ли укладывать тёплый пол под ламинат?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Да, под ламинат и SPC кладут плёночный пол 150 Вт/м²: он тонкий и не требует стяжки. Мат и кабель под ламинат не укладывают — их закрывают стяжкой или клеевым слоем под плитку. Перед покупкой проверьте, что производитель напольного покрытия допускает обогрев."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Yandex.Metrika counter -->
+    <script>
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112471439', 'ym');
+
+    ym(112471439, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/112471439" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+</head>
+<body>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5A2.5 2.5 0 0 0 12.5 3H6a2.5 2.5 0 0 0-2.5 2.5V13"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a3.5 3.5 0 0 0 5 0l3-3a3.54 3.54 0 0 0-5-5l-1.6 1.6"/><path d="M13.5 10.5a3.5 3.5 0 0 0-5 0l-3 3a3.54 3.54 0 0 0 5 5l1.6-1.6"/></symbol>
+    <symbol id="i-sheet" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M3 15h18M9 4v16M15 4v16"/></symbol>
+    <symbol id="i-csv" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h4.5"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5"/><rect x="4" y="9" width="16" height="7" rx="2"/><path d="M7 16h10v5H7z"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></symbol>
+</svg>
+
+<a class="skip-link" href="#main">Перейти к калькулятору</a>
+
+<div class="container">
+    <header class="header">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Включить тёмную тему" aria-pressed="false">🌙</button>
+        <div class="offline-status" id="netStatus" role="status" aria-live="polite">
+            <span class="offline-dot" aria-hidden="true"></span>
+            <span id="netStatusText">Офлайн-режим готов</span>
+        </div>
+        <a class="logo" href="/">KEVLORO</a>
+        <h1>Калькулятор тёплого пола</h1>
+        <p class="subtitle">Мощность, ток, длина кабеля и рекомендация линии по площади обогрева</p>
+        <p class="hero-badges">
+            <span class="chip">Бесплатно</span>
+            <span class="chip">Без регистрации</span>
+            <span class="chip">Работает офлайн</span>
+        </p>
+        <nav class="nav-links-pills no-print" aria-label="Калькуляторы">
+            <a class="pill" href="/">Все покрытия</a>
+            <a class="pill" href="/laminat/">Ламинат</a>
+            <a class="pill" href="/spc/">SPC кварцвинил</a>
+            <a class="pill" href="/plitka/">Плитка</a>
+            <a class="pill is-active" href="/teplyy-pol/" aria-current="page">Тёплый пол</a>
+            <a class="pill" href="/kalkulyatory/">Все калькуляторы</a>
+        </nav>
+        <div class="print-header-info" id="printHeaderInfo"></div>
+    </header>
+
+    <nav class="breadcrumbs no-print" aria-label="Вы находитесь здесь">
+        <ol>
+            <li><a href="/kalkulyatory/">Калькуляторы отделки</a></li>
+            <li aria-current="page">Тёплый пол</li>
+        </ol>
+    </nav>
+
+    <main id="main">
+        <section class="card" aria-labelledby="calc-heading">
+            <h2 class="section-title" id="calc-heading">Расчёт тёплого пола</h2>
+            <div id="calcRoot" data-calc="teplyyPol"></div>
+            <div class="validation-msg" id="calcWarnings" role="status" aria-live="polite"></div>
+            <div class="btn-row" style="margin-top:14px">
+                <button type="button" class="btn" id="calcBtn">Рассчитать</button>
+                <button type="button" class="btn-outline" id="calcReset" style="max-width:180px"><svg class="ico" aria-hidden="true"><use href="#i-reset"></use></svg>Сбросить</button>
+            </div>
+
+            <div class="results" id="calcResults" aria-live="polite">
+                <div id="calcGroups"></div>
+                <div class="total-price-box" id="calcTotalBox" hidden>
+                    <div>
+                        <div style="font-weight:700;font-size:.95rem">Ориентировочная стоимость:</div>
+                        <div id="calcTotalDetails" style="font-size:.75rem;margin-top:2px"></div>
+                    </div>
+                    <span class="total-price-val" id="calcTotal">0 ₽</span>
+                </div>
+                <div class="action-grid no-print">
+                    <button type="button" class="btn-action" id="copyBtn"><svg class="ico" aria-hidden="true"><use href="#i-copy"></use></svg>Текст</button>
+                    <button type="button" class="btn-action" id="shareLinkBtn"><svg class="ico" aria-hidden="true"><use href="#i-link"></use></svg>Ссылка</button>
+                    <button type="button" class="btn-action" id="excelBtn"><svg class="ico" aria-hidden="true"><use href="#i-sheet"></use></svg>Excel</button>
+                    <button type="button" class="btn-action" id="csvBtn"><svg class="ico" aria-hidden="true"><use href="#i-csv"></use></svg>CSV</button>
+                    <button type="button" class="btn-action" id="printBtn"><svg class="ico" aria-hidden="true"><use href="#i-print"></use></svg>Бланк</button>
+                </div>
+                <p class="results-note">Расчёт ориентировочный: фактическая мощность зависит от площади обогрева, а сечение кабеля и автомат нужно согласовать с электриком.</p>
+            </div>
+        </section>
+
+        <section class="card" id="methodCard" aria-labelledby="method-heading">
+            <h2 class="section-title" id="method-heading">Как считается тёплый пол</h2>
+            <ul class="method-list" style="margin-top:10px">
+                <li><strong>Мощность</strong> — <span class="formula">площадь обогрева × удельная мощность</span>. Мат и плёнка дают 150 Вт/м², кабель — 180 Вт/м² при шаге 10 см, 144 Вт/м² при 12,5 см и 120 Вт/м² при 15 см.</li>
+                <li><strong>Ток</strong> — <span class="formula">мощность ÷ 220 В</span>: 1500 Вт — это около 6,8 А, 1800 Вт — около 8,2 А.</li>
+                <li><strong>Длина кабеля</strong> — <span class="formula">площадь × метры кабеля на м²</span> для выбранного шага: 10 м/м² при шаге 10 см, 8 м/м² при 12,5 см, 6,67 м/м² при 15 см. Для мата и плёнки длина не считается — это готовые секции.</li>
+                <li><strong>Рекомендация линии</strong> — до 3,5 кВт хватает линии 1,5 мм² с автоматом 10 А, выше 3,5 кВт нужна отдельная линия 2,5 мм² и автомат 16 А. Рекомендация выводится в результатах отдельной строкой.</li>
+                <li><strong>Стоимость</strong> — по введённым ценам: площадь × цена за 1 м² системы плюс терморегулятор.</li>
+            </ul>
+        </section>
+
+        <section class="card" id="seoTableCard" aria-labelledby="norms-heading">
+            <h2 class="section-title" id="norms-heading">Нормы мощности и длины кабеля</h2>
+            <p class="field-hint" style="margin:8px 0 0">Ориентировочные значения для свободной площади обогрева без мебели.</p>
+            <div class="seo-table-container">
+                <table class="seo-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Система</th>
+                            <th scope="col">Вт/м²</th>
+                            <th scope="col">Кабель на 1 м²</th>
+                            <th scope="col">Для чего подходит</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Мат 150 Вт/м²</strong></td><td>150</td><td>— (готовая секция)</td><td>Плитка в санузле, кухне и прихожей: тонкий слой клея или стяжка</td></tr>
+                        <tr><td><strong>Кабель, шаг 10 см</strong></td><td>180</td><td>10 м</td><td>Максимальная мощность на квадрат: большие площади и холодные полы</td></tr>
+                        <tr><td><strong>Кабель, шаг 12,5 см</strong></td><td>144</td><td>8 м</td><td>Баланс мощности и расхода кабеля для основных зон обогрева</td></tr>
+                        <tr><td><strong>Кабель, шаг 15 см</strong></td><td>120</td><td>6,67 м</td><td>Комфортный подогрев пола без запаса на сильный холод</td></tr>
+                        <tr><td><strong>Плёнка 150 Вт/м²</strong></td><td>150</td><td>— (полотна)</td><td>Ламинат и SPC без стяжки: тонкий плёночный пол под подложку</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="card faq-card" aria-labelledby="faq-heading">
+            <h2 class="section-title" id="faq-heading">Вопросы по тёплому полу</h2>
+            <div style="margin-top:10px">
+                <details>
+                    <summary>Мат или кабель — что выбрать для тёплого пола?</summary>
+                    <p>Мат — готовая тонкая секция 150 Вт/м² с фиксированной длиной: её укладывают в стяжку или слой клея под плитку, когда не хочется считать шаг. Кабель берут, когда важна точная мощность на квадрат: при шаге 10 см — 180 Вт/м² и 10 м кабеля на м², при 12,5 см — 144 Вт/м² и 8 м, при 15 см — 120 Вт/м² и 6,67 м. Для ламината и SPC удобнее плёнка 150 Вт/м².</p>
+                </details>
+                <details>
+                    <summary>Какая мощность тёплого пола нужна на 10 м²?</summary>
+                    <p>Для 10 м² обогрева мат или плёнка 150 Вт/м² дают 1500 Вт и ток около 6,8 А. Кабель при шаге 10 см — 1800 Вт (8,2 А) и 100 м кабеля, при 12,5 см — 1440 Вт (6,5 А) и 80 м, при 15 см — 1200 Вт (5,5 А) и 66,7 м. Площадь считают по свободной зоне без мебели и сантехники.</p>
+                </details>
+                <details>
+                    <summary>Какая нужна проводка и автомат для тёплого пола?</summary>
+                    <p>До 3,5 кВт достаточно линии 1,5 мм² с автоматом 10 А, выше 3,5 кВт нужна отдельная линия 2,5 мм² и автомат 16 А. Тёплый пол подключают через терморегулятор, а готовую рекомендацию по линии калькулятор показывает в результатах расчёта. Номиналы стоит согласовать с электриком по вашей проводке.</p>
+                </details>
+                <details>
+                    <summary>Можно ли укладывать тёплый пол под ламинат?</summary>
+                    <p>Да, под ламинат и SPC кладут плёночный пол 150 Вт/м²: он тонкий и не требует стяжки. Мат и кабель под ламинат не укладывают — их закрывают стяжкой или клеевым слоем под плитку. Перед покупкой проверьте, что производитель напольного покрытия допускает обогрев.</p>
+                </details>
+            </div>
+        </section>
+
+        <section class="card" id="relatedCard" aria-labelledby="related-heading">
+            <h2 class="section-title" id="related-heading">Другие калькуляторы</h2>
+            <div class="related-grid" style="margin-top:10px">
+                <a class="related-card" href="/laminat/">
+                    <strong>Калькулятор ламината</strong>
+                    <span>Упаковки, подложка и запас на подрезку для ламината.</span>
+                </a>
+                <a class="related-card" href="/spc/">
+                    <strong>Калькулятор SPC кварцвинила</strong>
+                    <span>Планки, подложка и запас на подрезку для SPC-покрытия.</span>
+                </a>
+                <a class="related-card" href="/kalkulyatory/">
+                    <strong>Все калькуляторы</strong>
+                    <span>Полы, стены и потолок: плитка, обои, краска, стяжка, тёплый пол.</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="card" id="articlesCard" aria-labelledby="articles-heading">
+            <h2 class="section-title" id="articles-heading">Полезные статьи</h2>
+            <div class="article-list" style="margin-top:10px">
+                <a class="article-card" href="/blog/teplyy-pol-kabel-ili-mat/">
+                    <strong>Тёплый пол: кабель или мат</strong>
+                    <span>Мощность, ток, длина кабеля и выбор системы под покрытие.</span>
+                </a>
+            </div>
+        </section>
+
+        <aside class="ad-slot" data-ad="calculator-bottom" hidden aria-label="Рекламный блок">
+            <div class="ad-slot-inner" id="ad-calculator-bottom">
+                <span class="ad-label">Реклама</span>
+                <div class="ad-placeholder">Здесь будет рекламный блок</div>
+            </div>
+        </aside>
+
+    </main>
+
+    <footer class="footer no-print">
+        <nav aria-label="Разделы сайта">
+            <a href="/">Все покрытия</a>
+            <a href="/kalkulyatory/">Калькуляторы</a>
+            <a href="/teplyy-pol/">Тёплый пол</a>
+            <a href="/blog/">Статьи</a>
+            <a href="/privacy.html">Конфиденциальность</a>
+        </nav>
+        <p>Kevloro — бесплатные калькуляторы отделки. Расчёты выполняются в браузере, без регистрации и отправки данных на сервер.</p>
+        <p>© 2026 kevloro.ru</p>
+    </footer>
+</div>
+
+<div class="pwa-banner" id="pwaBanner" hidden>
+    <div>
+        <span class="pwa-badge">⚡ Работает без интернета</span>
+        <div style="font-weight:700;font-size:.85rem">Установить Kevloro</div>
+        <div style="font-size:.74rem;color:var(--text-muted)" id="pwaDesc">Расчёт в магазине и на объекте офлайн</div>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center">
+        <button type="button" class="btn-action" id="pwaInstallBtn" style="padding:6px 12px;background:var(--primary);color:#fff">Установить</button>
+        <button type="button" id="pwaCloseBtn" aria-label="Скрыть предложение установки" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted)">&times;</button>
+    </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/ui.js" defer></script>
+<script src="/calculators.js" defer></script>
+<script src="/engine.js" defer></script>
+<script src="/ads.config.js" defer></script>
+<script src="/ads.js" defer></script>
+</body>
+</html>

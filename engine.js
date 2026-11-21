@@ -176,6 +176,12 @@
             }
         }
 
+        if (Array.isArray(result.notes) && result.notes.length > 0) {
+            container.insertAdjacentHTML('beforeend', result.notes.map(function (note) {
+                return '<p class="results-note">' + UI.esc(note) + '</p>';
+            }).join(''));
+        }
+
         renderWarnings(result.warnings);
     }
 

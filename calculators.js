@@ -524,11 +524,317 @@
         }
     };
 
+
+    /* =====================================================================
+       Гипсокартон
+       ===================================================================== */
+
+    var gipsokarton = {
+        id: 'gipsokarton',
+        storage: 'gipsokarton',
+        summaryTitle: 'Смета на гипсокартон',
+        fileBase: 'Смета_гипсокартон',
+        groups: [
+            {
+                title: 'Поверхность',
+                fields: [
+                    { id: 'area', label: 'Площадь обшивки', unit: 'м²', type: 'number', min: 0, step: 0.5, value: 20, width: 'half', hint: 'Стены: длина × высота, потолок: длина × ширина' },
+                    { id: 'perimeter', label: 'Периметр помещения', unit: 'м', type: 'number', min: 0, step: 0.5, value: 18, width: 'half', hint: 'Нужен для направляющего профиля' },
+                    {
+                        id: 'reserve', label: 'Запас на подрезку', type: 'select', value: 10, width: 'half', options: [
+                            { value: 5, label: 'Простая стена — 5 %' },
+                            { value: 10, label: 'Обычный случай — 10 %' },
+                            { value: 15, label: 'Потолок и углы — 15 %' }
+                        ]
+                    },
+                    {
+                        id: 'sheet', label: 'Лист', type: 'select', value: 3, width: 'half', options: [
+                            { value: 3, label: '1200 × 2500 — 3,0 м²' },
+                            { value: 3.6, label: '1200 × 3000 — 3,6 м²' },
+                            { value: 2.16, label: '1200 × 1800 — 2,16 м²' }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: 'Профиль и крепёж',
+                fields: [
+                    {
+                        id: 'studStep', label: 'Шаг стоек', type: 'select', value: 0.6, width: 'half', options: [
+                            { value: 0.6, label: '60 см — под 1200 мм лист' },
+                            { value: 0.4, label: '40 см — под нагрузку' }
+                        ]
+                    },
+                    { id: 'priceSheet', label: 'Цена листа', unit: '₽', type: 'number', min: 0, step: 10, value: 0, width: 'half', placeholder: 'например, 900' },
+                    { id: 'priceProfile', label: 'Цена профиля 3 м', unit: '₽', type: 'number', min: 0, step: 10, value: 0, width: 'half', placeholder: 'например, 350' },
+                    { id: 'priceSuspension', label: 'Цена подвеса', unit: '₽', type: 'number', min: 0, step: 5, value: 0, width: 'half', placeholder: 'например, 30' }
+                ]
+            }
+        ],
+        compute: function (state) {
+            var area = positive(state.area);
+            var perimeter = positive(state.perimeter);
+            var reserve = num(state.reserve, 10);
+            var sheet = positive(state.sheet) || 3;
+            var step = positive(state.studStep) || 0.6;
+            var warnings = [];
+
+            if (area <= 0) {
+                warnings.push('Укажите площадь обшивки.');
+            }
+
+            var areaGross = area * (1 + reserve / 100);
+            var sheets = ceilSafe(areaGross / sheet);
+
+            // Стойки: на 1 м² при шаге 60 см уходит ~1,7 м профиля, при 40 см — 2,5 м.
+            var cdPerM2 = step <= 0.4 ? 2.5 : 1.7;
+            var cdLength = area * cdPerM2 + perimeter * 0.5;
+            var cdPieces = ceilSafe(cdLength / 3);
+            var udLength = perimeter * 1.1;
+            var udPieces = ceilSafe(udLength / 3);
+
+            var suspensions = ceilSafe(area * (step <= 0.4 ? 2.2 : 1.5));
+            var screws = Math.round(area * 30);
+            var tapeMeters = perimeter * 1.2;
+            var tapeRolls = ceilSafe(tapeMeters / 25);
+
+            var costSheets = sheets * positive(state.priceSheet);
+            var costProfiles = (cdPieces + udPieces) * positive(state.priceProfile);
+            var costSuspensions = suspensions * positive(state.priceSuspension);
+            var total = money([costSheets, costProfiles, costSuspensions]);
+
+            return {
+                groups: [
+                    {
+                        title: 'Листы',
+                        rows: [
+                            row('Площадь с запасом ' + reserve + ' %', areaGross, 'м²', 2),
+                            row('Листов к покупке', sheets, 'шт', 0, null, true),
+                            row('Площадь купленных листов', sheets * sheet, 'м²', 2)
+                        ]
+                    },
+                    {
+                        title: 'Каркас и крепёж',
+                        rows: [
+                            row('Стоечный профиль CD (3 м)', cdPieces, 'шт', 0),
+                            row('Направляющий профиль UD (3 м)', udPieces, 'шт', 0),
+                            row('Подвесы', suspensions, 'шт', 0),
+                            row('Саморезы', screws, 'шт', 0),
+                            row('Лента для швов (рулон 25 м)', tapeRolls, 'рул.', 0)
+                        ]
+                    },
+                    {
+                        title: 'Стоимость',
+                        rows: [
+                            row('Листы', costSheets, '₽', 0, costSheets),
+                            row('Профиль', costProfiles, '₽', 0, costProfiles),
+                            row('Подвесы', costSuspensions, '₽', 0, costSuspensions)
+                        ]
+                    }
+                ],
+                total: total,
+                warnings: warnings,
+            };
+        }
+    };
+
+    /* =====================================================================
+       Штукатурка
+       ===================================================================== */
+
+    var shtukaturka = {
+        id: 'shtukaturka',
+        storage: 'shtukaturka',
+        summaryTitle: 'Смета на штукатурку',
+        fileBase: 'Смета_штукатурка',
+        groups: [
+            {
+                title: 'Стены',
+                fields: [
+                    { id: 'area', label: 'Площадь стен', unit: 'м²', type: 'number', min: 0, step: 1, value: 30, width: 'half', hint: 'Периметр × высота минус окна и двери' },
+                    { id: 'thickness', label: 'Средняя толщина слоя', unit: 'мм', type: 'number', min: 0, step: 1, value: 10, width: 'half', hint: 'Среднее по маякам, а не максимум' }
+                ]
+            },
+            {
+                title: 'Смесь и цены',
+                fields: [
+                    {
+                        id: 'mix', label: 'Тип штукатурки', type: 'select', value: 'gips', width: 'half', options: [
+                            { value: 'gips', label: 'Гипсовая — 9 кг/м² на 10 мм' },
+                            { value: 'cement', label: 'Цементная — 16 кг/м² на 10 мм' },
+                            { value: 'decor', label: 'Декоративная — 3 кг/м² на 10 мм' }
+                        ]
+                    },
+                    { id: 'bagWeight', label: 'Вес мешка', unit: 'кг', type: 'number', min: 1, step: 5, value: 30, width: 'half' },
+                    { id: 'priceBag', label: 'Цена мешка', unit: '₽', type: 'number', min: 0, step: 10, value: 0, width: 'half', placeholder: 'например, 450' },
+                    { id: 'pricePrimer', label: 'Цена канистры грунта 10 л', unit: '₽', type: 'number', min: 0, step: 10, value: 0, width: 'half', placeholder: 'например, 700' }
+                ]
+            }
+        ],
+        compute: function (state) {
+            var MIXES = {
+                gips: { rate: 9, water: 0.6, label: 'Гипсовая штукатурка' },
+                cement: { rate: 16, water: 0.22, label: 'Цементная штукатурка' },
+                decor: { rate: 3, water: 0.25, label: 'Декоративная штукатурка' }
+            };
+            var area = positive(state.area);
+            var thickness = positive(state.thickness);
+            var mix = MIXES[String(state.mix)] || MIXES.gips;
+            var bagWeight = positive(state.bagWeight) || 30;
+            var warnings = [];
+
+            if (area <= 0) {
+                warnings.push('Укажите площадь стен.');
+            }
+            if (thickness <= 0) {
+                warnings.push('Укажите среднюю толщину слоя.');
+            }
+
+            var kgPerM2 = (thickness / 10) * mix.rate;
+            var kg = area * kgPerM2;
+            var bags = ceilSafe(kg / bagWeight);
+            var water = kg * mix.water;
+
+            var primerLiters = area * 0.2;
+            var primerCans = ceilSafe(primerLiters / 10);
+
+            var costMix = bags * positive(state.priceBag);
+            var costPrimer = primerCans * positive(state.pricePrimer);
+            var total = money([costMix, costPrimer]);
+
+            return {
+                groups: [
+                    {
+                        title: 'Смесь',
+                        rows: [
+                            row('Расход на 1 м²', kgPerM2, 'кг/м²', 2),
+                            row('Всего смеси', kg, 'кг', 1),
+                            row('Мешков по ' + bagWeight + ' кг', bags, 'шт', 0, null, true),
+                            row('Вода для затворения', water, 'л', 1)
+                        ]
+                    },
+                    {
+                        title: 'Грунтовка',
+                        rows: [
+                            row('Грунт (0,2 л/м²)', primerLiters, 'л', 1),
+                            row('Канистр по 10 л', primerCans, 'шт', 0)
+                        ]
+                    },
+                    {
+                        title: 'Стоимость',
+                        rows: [
+                            row(mix.label, costMix, '₽', 0, costMix),
+                            row('Грунтовка', costPrimer, '₽', 0, costPrimer)
+                        ]
+                    }
+                ],
+                total: total,
+                warnings: warnings,
+            };
+        }
+    };
+
+    /* =====================================================================
+       Тёплый пол
+       ===================================================================== */
+
+    var teplyPol = {
+        id: 'teplyy-pol',
+        storage: 'teplyy-pol',
+        summaryTitle: 'Смета на тёплый пол',
+        fileBase: 'Смета_теплый_пол',
+        groups: [
+            {
+                title: 'Помещение',
+                fields: [
+                    { id: 'area', label: 'Площадь обогрева', unit: 'м²', type: 'number', min: 0, step: 0.5, value: 10, width: 'half', hint: 'Свободная площадь без мебели' },
+                    {
+                        id: 'system', label: 'Система', type: 'select', value: 'mat', width: 'half', options: [
+                            { value: 'mat', label: 'Мат 150 Вт/м²' },
+                            { value: 'cable10', label: 'Кабель, шаг 10 см — 180 Вт/м²' },
+                            { value: 'cable125', label: 'Кабель, шаг 12,5 см — 144 Вт/м²' },
+                            { value: 'cable15', label: 'Кабель, шаг 15 см — 120 Вт/м²' },
+                            { value: 'film', label: 'Плёночный пол 150 Вт/м²' }
+                        ]
+                    },
+                    { id: 'priceM2', label: 'Цена за 1 м² системы', unit: '₽', type: 'number', min: 0, step: 100, value: 0, width: 'half', placeholder: 'например, 2500' },
+                    { id: 'priceThermostat', label: 'Цена терморегулятора', unit: '₽', type: 'number', min: 0, step: 100, value: 0, width: 'half', placeholder: 'например, 3500' }
+                ]
+            }
+        ],
+        compute: function (state) {
+            var SYSTEMS = {
+                mat: { power: 150, cablePerM2: 0, label: 'Мат 150 Вт/м²' },
+                cable10: { power: 180, cablePerM2: 10, label: 'Кабель, шаг 10 см' },
+                cable125: { power: 144, cablePerM2: 8, label: 'Кабель, шаг 12,5 см' },
+                cable15: { power: 120, cablePerM2: 6.67, label: 'Кабель, шаг 15 см' },
+                film: { power: 150, cablePerM2: 0, label: 'Плёночный пол' }
+            };
+            var area = positive(state.area);
+            var system = SYSTEMS[String(state.system)] || SYSTEMS.mat;
+            var warnings = [];
+
+            if (area <= 0) {
+                warnings.push('Укажите площадь обогрева.');
+            }
+
+            var power = area * system.power;
+            var current = power / 220;
+            var cable = area * system.cablePerM2;
+            var recommends = power > 3500 ? 'отдельная линия 2,5 мм², автомат 16 А' : 'линия 1,5 мм², автомат 10 А';
+
+            if (power > 0 && power < 150) {
+                warnings.push('Мощность меньше 150 Вт — обогрев будет ощущаться слабо, проверьте площадь.');
+            }
+            if (power > 5000) {
+                warnings.push('Мощность выше 5 кВт — нужна отдельная линия и согласование с электриком.');
+            }
+
+            var costSystem = area * positive(state.priceM2);
+            var costThermostat = positive(state.priceThermostat);
+            var total = money([costSystem, costThermostat]);
+
+            return {
+                groups: [
+                    {
+                        title: 'Мощность',
+                        rows: [
+                            row('Удельная мощность', system.power, 'Вт/м²', 0),
+                            row('Общая мощность', power, 'Вт', 0, null, true),
+                            row('Ток при 220 В', current, 'А', 1)
+                        ]
+                    },
+                    {
+                        title: 'Материалы',
+                        rows: [
+                            row('Площадь системы', area, 'м²', 1),
+                            row('Длина кабеля', cable, 'м', 1),
+                            row('Терморегулятор', 1, 'шт', 0, costThermostat)
+                        ]
+                    },
+                    {
+                        title: 'Стоимость',
+                        rows: [
+                            row(system.label, costSystem, '₽', 0, costSystem),
+                            row('Терморегулятор', costThermostat, '₽', 0, costThermostat)
+                        ]
+                    }
+                ],
+                total: total,
+                warnings: warnings,
+                notes: ['Рекомендуемая линия: ' + recommends]
+            };
+        }
+    };
+
     return {
         plitka: plitka,
         oboi: oboi,
         kraska: kraska,
         styazhka: styazhka,
+        gipsokarton: gipsokarton,
+        shtukaturka: shtukaturka,
+        teplyyPol: teplyPol,
         helpers: {
             num: num,
             positive: positive,

@@ -6,7 +6,7 @@
  * а без интернета калькулятор продолжает работать.
  */
 
-var CACHE_VERSION = 'kevloro-v12';
+var CACHE_VERSION = 'kevloro-v13';
 var NETWORK_TIMEOUT = 3000;
 
 var PRECACHE = [
@@ -19,7 +19,20 @@ var PRECACHE = [
     '/kraska/',
     '/styazhka/',
     '/kalkulyatory/',
+    '/gipsokarton/',
+    '/shtukaturka/',
+    '/teplyy-pol/',
     '/blog/',
+    '/blog/skolko-plitki-v-vannuyu/',
+    '/blog/kak-vyrovnyat-pol-pod-laminat/',
+    '/blog/plintus-s-kabel-kanalom/',
+    '/blog/porozhek-mezhdu-komnatami/',
+    '/blog/plitka-po-diagonali/',
+    '/blog/kak-rasschitat-gipsokarton/',
+    '/blog/shtukaturka-rashod-na-m2/',
+    '/blog/teplyy-pol-kabel-ili-mat/',
+    '/blog/laminat-na-staryy-pol/',
+    '/blog/kley-dlya-oboev-rashod/',
     '/blog/skolko-kleya-na-plitku/',
     '/blog/zapas-laminata-pri-ukladke/',
     '/blog/kak-rasschitat-oboi/',

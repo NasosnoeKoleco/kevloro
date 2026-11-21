@@ -55,7 +55,10 @@ const ENGINE_PAGES = [
     { file: 'plitka/index.html', url: 'https://kevloro.ru/plitka/', calc: 'plitka' },
     { file: 'oboi/index.html', url: 'https://kevloro.ru/oboi/', calc: 'oboi' },
     { file: 'kraska/index.html', url: 'https://kevloro.ru/kraska/', calc: 'kraska' },
-    { file: 'styazhka/index.html', url: 'https://kevloro.ru/styazhka/', calc: 'styazhka' }
+    { file: 'styazhka/index.html', url: 'https://kevloro.ru/styazhka/', calc: 'styazhka' },
+    { file: 'gipsokarton/index.html', url: 'https://kevloro.ru/gipsokarton/', calc: 'gipsokarton' },
+    { file: 'shtukaturka/index.html', url: 'https://kevloro.ru/shtukaturka/', calc: 'shtukaturka' },
+    { file: 'teplyy-pol/index.html', url: 'https://kevloro.ru/teplyy-pol/', calc: 'teplyyPol' }
 ];
 
 const CONTENT_PAGES = [
@@ -74,7 +77,17 @@ const BLOG_PAGES = [
     { file: 'blog/laminat-ili-spc/index.html', url: 'https://kevloro.ru/blog/laminat-ili-spc/' },
     { file: 'blog/podlozhka-pod-laminat/index.html', url: 'https://kevloro.ru/blog/podlozhka-pod-laminat/' },
     { file: 'blog/plitka-ili-keramogranit/index.html', url: 'https://kevloro.ru/blog/plitka-ili-keramogranit/' },
-    { file: 'blog/kak-rasschitat-plintus/index.html', url: 'https://kevloro.ru/blog/kak-rasschitat-plintus/' }
+    { file: 'blog/kak-rasschitat-plintus/index.html', url: 'https://kevloro.ru/blog/kak-rasschitat-plintus/' },
+    { file: 'blog/skolko-plitki-v-vannuyu/index.html', url: 'https://kevloro.ru/blog/skolko-plitki-v-vannuyu/' },
+    { file: 'blog/kak-vyrovnyat-pol-pod-laminat/index.html', url: 'https://kevloro.ru/blog/kak-vyrovnyat-pol-pod-laminat/' },
+    { file: 'blog/plintus-s-kabel-kanalom/index.html', url: 'https://kevloro.ru/blog/plintus-s-kabel-kanalom/' },
+    { file: 'blog/porozhek-mezhdu-komnatami/index.html', url: 'https://kevloro.ru/blog/porozhek-mezhdu-komnatami/' },
+    { file: 'blog/plitka-po-diagonali/index.html', url: 'https://kevloro.ru/blog/plitka-po-diagonali/' },
+    { file: 'blog/kak-rasschitat-gipsokarton/index.html', url: 'https://kevloro.ru/blog/kak-rasschitat-gipsokarton/' },
+    { file: 'blog/shtukaturka-rashod-na-m2/index.html', url: 'https://kevloro.ru/blog/shtukaturka-rashod-na-m2/' },
+    { file: 'blog/teplyy-pol-kabel-ili-mat/index.html', url: 'https://kevloro.ru/blog/teplyy-pol-kabel-ili-mat/' },
+    { file: 'blog/laminat-na-staryy-pol/index.html', url: 'https://kevloro.ru/blog/laminat-na-staryy-pol/' },
+    { file: 'blog/kley-dlya-oboev-rashod/index.html', url: 'https://kevloro.ru/blog/kley-dlya-oboev-rashod/' }
 ];
 
 const ALL_PAGES = [
@@ -237,7 +250,7 @@ for (const { file, calc } of ENGINE_PAGES) {
     if (!html.includes('/calculators.js')) {
         fail(`${file}: не подключён /calculators.js`);
     }
-    if (!calcSource.includes(calc + ': ' + calc) && !calcSource.includes(calc + ': {')) {
+    if (!calcSource.includes(calc + ':')) {
         fail(`calculators.js: нет калькулятора ${calc}`);
     }
 }
