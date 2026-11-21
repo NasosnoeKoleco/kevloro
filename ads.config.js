@@ -1,33 +1,38 @@
 /*!
  * Kevloro — настройки рекламы.
  *
- * enabled: false  — блоки скрыты, вёрстка не меняется (текущее состояние).
- * enabled: true   — блоки раскрываются, когда доскроллены до экрана.
+ * Как включить блок:
+ *   1. В кабинете VK у блока нажмите «Код интеграции» и скопируйте сниппет.
+ *   2. Вставьте его в поле code нужного блока ниже.
+ *   3. Сохраните файл — блок появится сам, остальные останутся скрытыми.
  *
- * provider:
- *   'vk'     — VK Реклама: заполните clientId и добавьте свой вызов в KevloroAdsRender.
- *   'teaser' — тизерная сеть: то же самое, через KevloroAdsRender.
- *   'custom' — простой HTML-блок из поля html (для проверки вёрстки).
- *
- * Пример подключения сети (добавить после ads.config.js):
- * window.KevloroAdsRender = function (slot, container, config) {
- *     var name = slot.getAttribute('data-ad');
- *     if (config.provider === 'vk') {
- *         // здесь вызов рекламного кода VK с номером площадки config.clientId
- *         // и идентификатором блока config.slots[name]
- *         container.innerHTML = '<div id="vk_ads_' + name + '"></div>';
- *     }
- * };
+ * Пока code пустой, слот не показывается и не занимает место в вёрстке.
  */
 window.KEVLORO_ADS_CONFIG = {
-    enabled: false,
+    enabled: true,
     provider: 'vk',
     clientId: '',
+
     slots: {
-        'article-top': '',
-        'article-mid': '',
-        'calculator-bottom': '',
-        'blog-bottom': ''
-    },
-    html: ''
+        'article-top': {
+            id: '2116290',
+            format: '300x250',
+            code: ''
+        },
+        'article-mid': {
+            id: '2116298',
+            format: '336x280',
+            code: ''
+        },
+        'calculator-bottom': {
+            id: '2116300',
+            format: '300x250',
+            code: ''
+        },
+        'blog-bottom': {
+            id: '2116302',
+            format: '300x250',
+            code: ''
+        }
+    }
 };
