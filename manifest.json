@@ -1,17 +1,19 @@
 {
-  "name": "Kevloro — Смета напольных покрытий",
+  "name": "Kevloro — калькулятор напольных покрытий",
   "short_name": "Kevloro",
-  "description": "Расчет ламината, плитки, плинтуса и сметы без интернета",
-  "start_url": "/",
+  "description": "Расчёт упаковок ламината, SPC и керамогранита, подложки, плинтуса и фурнитуры. Смета и экспорт в Excel — без интернета.",
   "id": "/",
+  "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait-primary",
   "background_color": "#0f172a",
   "theme_color": "#2563eb",
   "lang": "ru",
   "dir": "ltr",
   "categories": ["utilities", "productivity", "lifestyle"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/icon-192.png",
@@ -20,32 +22,26 @@
       "purpose": "any"
     },
     {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
       "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/icon-192.svg",
-      "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "/icon-512.svg",
-      "sizes": "512x512",
+      "src": "/icon.svg",
+      "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     }
@@ -53,13 +49,17 @@
   "shortcuts": [
     {
       "name": "Калькулятор ламината",
+      "short_name": "Ламинат",
       "url": "/laminat/",
-      "description": "Расчет расхода ламината и подложки"
+      "description": "Расчёт упаковок ламината, подложки и плинтуса",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
-      "name": "Калькулятор SPC",
+      "name": "Калькулятор SPC-кварцвинила",
+      "short_name": "SPC",
       "url": "/spc/",
-      "description": "Расчет замкового SPC кварцвинила"
+      "description": "Расчёт пачек SPC и плотной подложки",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }

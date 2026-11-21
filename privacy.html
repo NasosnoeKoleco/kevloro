@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Политика конфиденциальности — Kevloro</title>
+    <meta name="description" content="Какие данные хранит калькулятор Kevloro: расчёты остаются в браузере, на сервер ничего не отправляется. Использование Яндекс.Метрики и cookie.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://kevloro.ru/privacy.html">
+
+    <meta name="theme-color" content="#2563eb" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="/styles.css">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Kevloro">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:url" content="https://kevloro.ru/privacy.html">
+    <meta property="og:title" content="Политика конфиденциальности — Kevloro">
+    <meta property="og:description" content="Расчёты Kevloro выполняются в браузере. Какие данные хранятся локально и как используется Яндекс.Метрика.">
+    <meta property="og:image" content="https://kevloro.ru/og-image.png">
+    <meta property="og:image:alt" content="Kevloro — калькулятор напольных покрытий и сметы">
+
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('kevloro:theme');
+                if (!theme) {
+                    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (error) { /* приватный режим */ }
+        })();
+    </script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Перейти к содержанию</a>
+
+<div class="container">
+    <header class="header">
+        <a class="logo" href="/">KEVLORO</a>
+        <h1>Политика конфиденциальности</h1>
+        <p class="subtitle">Коротко и по делу: что происходит с вашими данными</p>
+        <nav class="nav-links-pills" aria-label="Калькуляторы">
+            <a class="pill" href="/">Все покрытия</a>
+            <a class="pill" href="/laminat/">Ламинат</a>
+            <a class="pill" href="/spc/">SPC кварцвинил</a>
+        </nav>
+    </header>
+
+    <nav class="breadcrumbs" aria-label="Вы находитесь здесь">
+        <ol>
+            <li><a href="/">Калькулятор покрытий</a></li>
+            <li aria-current="page">Конфиденциальность</li>
+        </ol>
+    </nav>
+
+    <main id="main">
+        <section class="card">
+            <h2 class="section-title">Расчёты не покидают ваш браузер</h2>
+            <p class="field-hint" style="margin-top:10px; font-size:0.82rem">
+                Калькулятор Kevloro — статический сайт. Все вычисления выполняются на вашем устройстве в JavaScript.
+                Введённые размеры помещений, цены и название объекта никуда не отправляются: у сайта нет серверной части,
+                которая принимала бы эти данные, и нет базы данных.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Что хранится в браузере</h2>
+            <ul class="method-list" style="margin-top:10px">
+                <li><strong>Черновик сметы</strong> — сохраняется в <code>localStorage</code>, чтобы расчёт не пропал при обновлении страницы.</li>
+                <li><strong>Сохранённые сметы</strong> — список объектов, который вы создаёте сами кнопкой «Сохранить смету».</li>
+                <li><strong>Тема оформления</strong> — светлая или тёмная.</li>
+                <li><strong>Отметка о скрытии баннера установки</strong> приложения.</li>
+            </ul>
+            <p class="field-hint" style="margin-top:10px">
+                Эти данные можно удалить в любой момент: очистите данные сайта в настройках браузера. Кнопка «Удалить»
+                рядом с сохранённой сметой убирает только её.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Ссылки со сметой</h2>
+            <p class="field-hint" style="margin-top:10px; font-size:0.82rem">
+                Кнопка «Ссылка» формирует адрес, в котором закодировано состояние калькулятора. Такой адрес содержит
+                введённые вами данные, поэтому отправляйте его только тем, кому готовы их показать.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Яндекс.Метрика и cookie</h2>
+            <p class="field-hint" style="margin-top:10px; font-size:0.82rem">
+                Для статистики посещений используется Яндекс.Метрика (счётчик № 112471439). Сервис устанавливает cookie
+                и собирает обезличенные данные: адрес посещённой страницы, тип устройства и браузера, источник перехода,
+                приблизительный регион, движения курсора и клики (Вебвизор). Эти данные обрабатывает ООО «Яндекс»
+                в соответствии со своей политикой конфиденциальности.
+            </p>
+            <p class="field-hint" style="margin-top:10px; font-size:0.82rem">
+                Мы не связываем статистику с вашей личностью и не передаём данные третьим лицам, кроме указанного
+                сервиса аналитики. Блокировщики рекламы и аналитики отключают счётчик, не влияя на работу калькулятора.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Реклама</h2>
+            <p class="field-hint" style="margin-top:10px; font-size:0.82rem">
+                На сайте нет рекламных блоков, партнёрских ссылок и промокодов. Мы не продаём и не передаём данные
+                о пользователях.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Вопросы</h2>
+            <p class="field-hint" style="margin-top:10px; font-size:0.82rem">
+                Сайт kevloro.ru — независимый бесплатный проект. Связаться с автором можно через страницу проекта
+                на GitHub. Политика может обновляться; актуальная версия всегда на этой странице.
+            </p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <nav aria-label="Разделы сайта">
+            <a href="/">Все покрытия</a>
+            <a href="/laminat/">Ламинат</a>
+            <a href="/spc/">SPC кварцвинил</a>
+        </nav>
+        <p>© 2026 kevloro.ru</p>
+    </footer>
+</div>
+</body>
+</html>

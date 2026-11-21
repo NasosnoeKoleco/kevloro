@@ -1,0 +1,8 @@
+# Локальные артефакты разработки
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+
+# Временные файлы инструментов
+tools/node_modules/
