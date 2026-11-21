@@ -394,7 +394,7 @@
                     '<span class="room-collapsed-badge">' + esc(badge) + '</span>' +
                 '</div>' +
                 '<div class="room-header-actions">' +
-                    '<button type="button" class="btn-room-action btn-toggle-room" data-action="toggle" aria-expanded="' + (room.isCollapsed ? 'false' : 'true') + '" aria-label="Свернуть или развернуть помещение">' + (room.isCollapsed ? '▼' : '▲') + '</button>' +
+                    '<button type="button" class="btn-room-action btn-toggle-room" data-action="toggle" aria-expanded="' + (room.isCollapsed ? 'false' : 'true') + '" aria-label="Свернуть или развернуть помещение">' + '<svg class="ico chev" aria-hidden="true"><use href="#i-chevron"></use></svg></button>' +
                     '<button type="button" class="btn-room-action btn-duplicate-room" data-action="duplicate" aria-label="Скопировать помещение">Копировать</button>' +
                     '<button type="button" class="btn-room-action btn-remove-room" data-action="remove" aria-label="Удалить помещение">Удалить</button>' +
                 '</div>' +
@@ -526,7 +526,6 @@
         card.classList.toggle('is-collapsed', room.isCollapsed);
         var button = card.querySelector('.btn-toggle-room');
         if (button) {
-            button.textContent = room.isCollapsed ? '▼' : '▲';
             button.setAttribute('aria-expanded', room.isCollapsed ? 'false' : 'true');
         }
         queueSave();
