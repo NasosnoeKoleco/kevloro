@@ -6,7 +6,7 @@
  * а без интернета калькулятор продолжает работать.
  */
 
-var CACHE_VERSION = 'kevloro-v10';
+var CACHE_VERSION = 'kevloro-v11';
 var NETWORK_TIMEOUT = 3000;
 
 var PRECACHE = [
@@ -14,11 +14,19 @@ var PRECACHE = [
     '/index.html',
     '/laminat/',
     '/spc/',
+    '/plitka/',
+    '/oboi/',
+    '/kraska/',
+    '/styazhka/',
+    '/kalkulyatory/',
     '/privacy.html',
     '/404.html',
     '/styles.css',
     '/core.js',
     '/app.js',
+    '/ui.js',
+    '/calculators.js',
+    '/engine.js',
     '/manifest.json',
     '/favicon.ico',
     '/icon.svg',

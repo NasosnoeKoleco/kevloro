@@ -33,6 +33,7 @@ jobs:
       - name: Проверка расчётов и разметки
         run: |
           node tools/test-core.mjs
+          node tools/test-calculators.mjs
           node tools/check.mjs
 
       - name: Prepare site directory

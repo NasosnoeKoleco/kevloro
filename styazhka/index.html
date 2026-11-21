@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Калькулятор стяжки и наливного пола: мешки, вода, цена | Kevloro</title>
+    <meta name="description" content="Рассчитайте стяжку и наливной пол: расход пескобетона или ЦПС по толщине слоя, мешки с запасом, вода для затворения, грунтовка и стоимость материалов.">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <link rel="canonical" href="https://kevloro.ru/styazhka/">
+
+    <meta name="theme-color" content="#3556f5" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#070c17" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kevloro">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Kevloro">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:url" content="https://kevloro.ru/styazhka/">
+    <meta property="og:title" content="Калькулятор стяжки и наливного пола">
+    <meta property="og:description" content="Расход пескобетона, ЦПС или наливного пола по площади и толщине, мешки с запасом, вода и грунтовка. Смета с ценами и экспорт в Excel.">
+    <meta property="og:image" content="https://kevloro.ru/og-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Kevloro — калькулятор стяжки и наливного пола">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Калькулятор стяжки и наливного пола">
+    <meta name="twitter:description" content="Мешки смеси, вода для затворения, грунтовка и стоимость по площади и толщине слоя.">
+    <meta name="twitter:image" content="https://kevloro.ru/og-image.png">
+    <meta name="twitter:image:alt" content="Kevloro — калькулятор стяжки и наливного пола">
+
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('kevloro:theme');
+                if (!theme) {
+                    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (error) { /* приватный режим */ }
+        })();
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://kevloro.ru/styazhka/#app",
+          "name": "Kevloro — калькулятор стяжки и наливного пола",
+          "url": "https://kevloro.ru/styazhka/",
+          "description": "Расчёт расхода пескобетона, ЦПС и наливного пола по площади и толщине слоя, количества мешков с запасом, воды для затворения, объёма раствора, грунтовки и стоимости материалов.",
+          "applicationCategory": "UtilityApplication",
+          "operatingSystem": "Any",
+          "inLanguage": "ru",
+          "isAccessibleForFree": true,
+          "browserRequirements": "Требуется JavaScript",
+          "featureList": [
+            "Расход сухой смеси по толщине слоя",
+            "Мешки с запасом на неровности",
+            "Вода для затворения и объём раствора",
+            "Грунтовка и стоимость материалов"
+          ],
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RUB" }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://kevloro.ru/styazhka/#breadcrumbs",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Калькуляторы отделки", "item": "https://kevloro.ru/kalkulyatory/" },
+            { "@type": "ListItem", "position": 2, "name": "Калькулятор стяжки", "item": "https://kevloro.ru/styazhka/" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://kevloro.ru/styazhka/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Сколько пескобетона нужно на 1 м² при толщине 5 см?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "5 см — это 50 мм. Пескобетон М300 даёт 2,0 кг/м² на каждый миллиметр слоя, значит 50 × 2,0 = 100 кг/м². С запасом 10 % калькулятор считает 110 кг/м²: для комнаты 20 м² это 2200 кг, или 88 мешков по 25 кг."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Чем отличается наливной пол от ЦПС?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Норма и вода разные: наливной пол — 1,6 кг/м² на 1 мм и 0,22 л воды на 1 кг, ЦПС — 1,8 кг/м² на 1 мм и 0,18 л/кг. Наливной пол растекается сам и укладывается тонким слоем, ЦПС — традиционная цементно-песчаная стяжка. При слое 50 мм ЦПС нужно 90 кг/м², наливного пола — 80 кг/м²."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Сколько воды лить в сухую смесь?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Вода = вес сухой смеси × водоотведение: 0,17 для пескобетона М300, 0,18 для ЦПС, 0,22 для наливного пола. На мешок 25 кг это 4,25 л, 4,5 л и 5,5 л соответственно. Добавляйте воду по инструкции на упаковке: лишняя вода снижает прочность стяжки."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Нужна ли грунтовка и фибра?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Грунтовка нужна: она обеспыливает основание и улучшает сцепление. Калькулятор берёт 0,25 л/м² и канистры по 10 л: для 20 м² это 5 л, то есть одна канистра. Фибра — армирующая добавка, в расчёте её нет: для толстой стяжки её добавляют по инструкции производителя, для наливного пола обычно не требуется."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Yandex.Metrika counter -->
+    <script>
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112471439', 'ym');
+
+    ym(112471439, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/112471439" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+</head>
+<body>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5A2.5 2.5 0 0 0 12.5 3H6a2.5 2.5 0 0 0-2.5 2.5V13"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a3.5 3.5 0 0 0 5 0l3-3a3.54 3.54 0 0 0-5-5l-1.6 1.6"/><path d="M13.5 10.5a3.5 3.5 0 0 0-5 0l-3 3a3.54 3.54 0 0 0 5 5l1.6-1.6"/></symbol>
+    <symbol id="i-sheet" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M3 15h18M9 4v16M15 4v16"/></symbol>
+    <symbol id="i-csv" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h4.5"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5"/><rect x="4" y="9" width="16" height="7" rx="2"/><path d="M7 16h10v5H7z"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></symbol>
+</svg>
+
+<a class="skip-link" href="#main">Перейти к калькулятору</a>
+
+<div class="container">
+    <header class="header">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Включить тёмную тему" aria-pressed="false">🌙</button>
+        <div class="offline-status" id="netStatus" role="status" aria-live="polite">
+            <span class="offline-dot" aria-hidden="true"></span>
+            <span id="netStatusText">Офлайн-режим готов</span>
+        </div>
+        <a class="logo" href="/">KEVLORO</a>
+        <h1>Калькулятор стяжки и наливного пола</h1>
+        <p class="subtitle">Мешки смеси, вода для затворения, грунтовка и стоимость по площади и толщине слоя</p>
+        <p class="hero-badges">
+            <span class="chip">Бесплатно</span>
+            <span class="chip">Без регистрации</span>
+            <span class="chip">Работает офлайн</span>
+        </p>
+        <nav class="nav-links-pills no-print" aria-label="Калькуляторы">
+            <a class="pill" href="/">Все покрытия</a>
+            <a class="pill" href="/laminat/">Ламинат</a>
+            <a class="pill" href="/spc/">SPC кварцвинил</a>
+            <a class="pill" href="/plitka/">Плитка</a>
+            <a class="pill" href="/kraska/">Краска</a>
+            <a class="pill is-active" href="/styazhka/" aria-current="page">Стяжка</a>
+            <a class="pill" href="/kalkulyatory/">Все калькуляторы</a>
+        </nav>
+        <div class="print-header-info" id="printHeaderInfo"></div>
+    </header>
+
+    <nav class="breadcrumbs no-print" aria-label="Вы находитесь здесь">
+        <ol>
+            <li><a href="/kalkulyatory/">Калькуляторы отделки</a></li>
+            <li aria-current="page">Стяжка</li>
+        </ol>
+    </nav>
+
+    <main id="main">
+        <section class="card" aria-labelledby="calc-heading">
+            <h2 class="section-title" id="calc-heading">Расчёт стяжки и наливного пола</h2>
+            <div id="calcRoot" data-calc="styazhka"></div>
+            <div class="validation-msg" id="calcWarnings" role="status" aria-live="polite"></div>
+            <div class="btn-row" style="margin-top:14px">
+                <button type="button" class="btn" id="calcBtn">Рассчитать</button>
+                <button type="button" class="btn-outline" id="calcReset" style="max-width:180px"><svg class="ico" aria-hidden="true"><use href="#i-reset"></use></svg>Сбросить</button>
+            </div>
+
+            <div class="results" id="calcResults" aria-live="polite">
+                <div id="calcGroups"></div>
+                <div class="total-price-box" id="calcTotalBox" hidden>
+                    <div>
+                        <div style="font-weight:700;font-size:.95rem">Ориентировочная стоимость:</div>
+                        <div id="calcTotalDetails" style="font-size:.75rem;margin-top:2px"></div>
+                    </div>
+                    <span class="total-price-val" id="calcTotal">0 ₽</span>
+                </div>
+                <div class="action-grid no-print">
+                    <button type="button" class="btn-action" id="copyBtn"><svg class="ico" aria-hidden="true"><use href="#i-copy"></use></svg>Текст</button>
+                    <button type="button" class="btn-action" id="shareLinkBtn"><svg class="ico" aria-hidden="true"><use href="#i-link"></use></svg>Ссылка</button>
+                    <button type="button" class="btn-action" id="excelBtn"><svg class="ico" aria-hidden="true"><use href="#i-sheet"></use></svg>Excel</button>
+                    <button type="button" class="btn-action" id="csvBtn"><svg class="ico" aria-hidden="true"><use href="#i-csv"></use></svg>CSV</button>
+                    <button type="button" class="btn-action" id="printBtn"><svg class="ico" aria-hidden="true"><use href="#i-print"></use></svg>Бланк</button>
+                </div>
+                <p class="results-note">Расчёт ориентировочный: фактический расход смеси зависит от ровности основания, толщины слоя и потерь при замешивании.</p>
+            </div>
+        </section>
+
+        <section class="card" id="methodCard" aria-labelledby="method-heading">
+            <h2 class="section-title" id="method-heading">Как считается стяжка</h2>
+            <ul class="method-list" style="margin-top:10px">
+                <li><strong>Расход смеси</strong> — <span class="formula">толщина, мм × норма, кг/м² на 1 мм</span>. Норма: пескобетон М300 — 2,0, ЦПС — 1,8, наливной пол — 1,6. При слое 50 мм это 100, 90 и 80 кг/м².</li>
+                <li><strong>Вес с запасом</strong> — <span class="formula">площадь × расход × (1 + запас ÷ 100)</span>: 5 % для ровного основания, 10 % для обычного, 15 % при сильных перепадах.</li>
+                <li><strong>Мешки</strong> — <span class="formula">⌈вес ÷ вес мешка⌉</span>, округление всегда вверх: докупать половину мешка дороже, чем оставить остаток.</li>
+                <li><strong>Вода</strong> — <span class="formula">вес с запасом × водоотведение</span>: 0,17 для пескобетона М300, 0,18 для ЦПС, 0,22 для наливного пола. Это литры на килограмм сухой смеси.</li>
+                <li><strong>Объём раствора</strong> — <span class="formula">вес с запасом ÷ 1800 кг/м³</span>: ориентир, какой объём займёт готовая смесь.</li>
+                <li><strong>Грунтовка</strong> — <span class="formula">площадь × 0,25 л/м²</span>, канистры по 10 л, количество округляется вверх.</li>
+                <li><strong>Стоимость</strong> — мешки × цена мешка плюс канистры грунта × цена канистры; цены подставляйте свои.</li>
+            </ul>
+        </section>
+
+        <section class="card" id="seoTableCard" aria-labelledby="norms-heading">
+            <h2 class="section-title" id="norms-heading">Нормы расхода стяжки</h2>
+            <p class="field-hint" style="margin:8px 0 0">Сухая смесь, вода и мешки по 25 кг для площади 20 м², слоя 50 мм и запаса 10 %.</p>
+            <div class="seo-table-container">
+                <table class="seo-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Тип смеси</th>
+                            <th scope="col">Норма</th>
+                            <th scope="col">Расход при 50 мм</th>
+                            <th scope="col">Вода</th>
+                            <th scope="col">Мешков на 20 м²</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Пескобетон М300</strong></td><td>2,0 кг/м² на 1 мм</td><td>100 кг/м²</td><td>0,17 л/кг</td><td>88</td></tr>
+                        <tr><td><strong>ЦПС</strong></td><td>1,8 кг/м² на 1 мм</td><td>90 кг/м²</td><td>0,18 л/кг</td><td>80</td></tr>
+                        <tr><td><strong>Наливной пол</strong></td><td>1,6 кг/м² на 1 мм</td><td>80 кг/м²</td><td>0,22 л/кг</td><td>71</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="card faq-card" aria-labelledby="faq-heading">
+            <h2 class="section-title" id="faq-heading">Вопросы по стяжке и наливному полу</h2>
+            <div style="margin-top:10px">
+                <details>
+                    <summary>Сколько пескобетона нужно на 1 м² при толщине 5 см?</summary>
+                    <p>5 см — это 50 мм. Пескобетон М300 даёт 2,0 кг/м² на каждый миллиметр слоя, значит 50 × 2,0 = 100 кг/м². С запасом 10 % калькулятор считает 110 кг/м²: для комнаты 20 м² это 2200 кг, или 88 мешков по 25 кг.</p>
+                </details>
+                <details>
+                    <summary>Чем отличается наливной пол от ЦПС?</summary>
+                    <p>Норма и вода разные: наливной пол — 1,6 кг/м² на 1 мм и 0,22 л воды на 1 кг, ЦПС — 1,8 кг/м² на 1 мм и 0,18 л/кг. Наливной пол растекается сам и укладывается тонким слоем, ЦПС — традиционная цементно-песчаная стяжка. При слое 50 мм ЦПС нужно 90 кг/м², наливного пола — 80 кг/м².</p>
+                </details>
+                <details>
+                    <summary>Сколько воды лить в сухую смесь?</summary>
+                    <p>Вода = вес сухой смеси × водоотведение: 0,17 для пескобетона М300, 0,18 для ЦПС, 0,22 для наливного пола. На мешок 25 кг это 4,25 л, 4,5 л и 5,5 л соответственно. Добавляйте воду по инструкции на упаковке: лишняя вода снижает прочность стяжки.</p>
+                </details>
+                <details>
+                    <summary>Нужна ли грунтовка и фибра?</summary>
+                    <p>Грунтовка нужна: она обеспыливает основание и улучшает сцепление. Калькулятор берёт 0,25 л/м² и канистры по 10 л: для 20 м² это 5 л, то есть одна канистра. Фибра — армирующая добавка, в расчёте её нет: для толстой стяжки её добавляют по инструкции производителя, для наливного пола обычно не требуется.</p>
+                </details>
+            </div>
+        </section>
+
+        <section class="card" id="relatedCard" aria-labelledby="related-heading">
+            <h2 class="section-title" id="related-heading">Другие калькуляторы</h2>
+            <div class="related-grid" style="margin-top:10px">
+                <a class="related-card" href="/plitka/">
+                    <strong>Плитка и керамогранит</strong>
+                    <span>Упаковки с запасом, клей по гребёнке и затирка по формату плитки.</span>
+                </a>
+                <a class="related-card" href="/kraska/">
+                    <strong>Краска и грунтовка</strong>
+                    <span>Банки краски по слоям, грунт и стоимость покраски стен.</span>
+                </a>
+                <a class="related-card" href="/kalkulyatory/">
+                    <strong>Все калькуляторы</strong>
+                    <span>Полы, стены и потолок: плитка, обои, краска, стяжка.</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer no-print">
+        <nav aria-label="Разделы сайта">
+            <a href="/">Все покрытия</a>
+            <a href="/kalkulyatory/">Калькуляторы</a>
+            <a href="/privacy.html">Конфиденциальность</a>
+        </nav>
+        <p>Kevloro — бесплатные калькуляторы отделки. Расчёты выполняются в браузере, без регистрации и отправки данных на сервер.</p>
+        <p>© 2026 kevloro.ru</p>
+    </footer>
+</div>
+
+<div class="pwa-banner" id="pwaBanner" hidden>
+    <div>
+        <span class="pwa-badge">⚡ Работает без интернета</span>
+        <div style="font-weight:700;font-size:.85rem">Установить Kevloro</div>
+        <div style="font-size:.74rem;color:var(--text-muted)" id="pwaDesc">Расчёт в магазине и на объекте офлайн</div>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center">
+        <button type="button" class="btn-action" id="pwaInstallBtn" style="padding:6px 12px;background:var(--primary);color:#fff">Установить</button>
+        <button type="button" id="pwaCloseBtn" aria-label="Скрыть предложение установки" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted)">&times;</button>
+    </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/ui.js" defer></script>
+<script src="/calculators.js" defer></script>
+<script src="/engine.js" defer></script>
+</body>
+</html>

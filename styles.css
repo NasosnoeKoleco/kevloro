@@ -330,24 +330,25 @@ a.logo:hover {
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 16px;
-    padding: 5px;
-    border-radius: var(--pill);
-    background: color-mix(in srgb, var(--surface) 70%, transparent);
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow-xs);
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
 }
 
 .pill {
     display: inline-flex;
     align-items: center;
-    padding: 8px 15px;
+    padding: 8px 14px;
     border-radius: var(--pill);
     font-size: 0.78rem;
     font-weight: 650;
     text-decoration: none;
     color: var(--muted);
-    border: 1px solid transparent;
-    transition: background-color 0.18s ease, color 0.18s ease;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-xs);
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
     white-space: nowrap;
 }
 
@@ -358,6 +359,7 @@ a.logo:hover {
 
 .pill.is-active {
     background: linear-gradient(135deg, var(--cta-1), var(--cta-2));
+    border-color: transparent;
     color: #fff;
     box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--accent) 80%, transparent);
 }
@@ -1739,5 +1741,55 @@ select {
     .faq-card details p,
     .results-note {
         color: #333333 !important;
+    }
+}
+
+/* ==========================================================================
+   Универсальный движок калькуляторов
+   ========================================================================== */
+
+.calc-group {
+    margin-bottom: 18px;
+}
+
+.calc-group:last-of-type {
+    margin-bottom: 6px;
+}
+
+.calc-group-title {
+    margin: 0 0 10px;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.col-full {
+    flex: 1 1 100%;
+}
+
+.btn-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.btn-row .btn {
+    width: auto;
+    flex: 1 1 200px;
+}
+
+.btn-row .btn-outline {
+    width: auto;
+    flex: 0 0 auto;
+}
+
+@media print {
+    .calc-group-title {
+        color: #000 !important;
+        border-bottom: 1px solid #bbb;
+        padding-bottom: 3px;
     }
 }

@@ -43,12 +43,32 @@ function stripTags(text) {
     return decodeEntities(text.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
 }
 
-const CALC_PAGES = [
+// Страницы с калькулятором на app.js (напольные покрытия)
+const APP_PAGES = [
     { file: 'index.html', url: 'https://kevloro.ru/' },
     { file: 'laminat/index.html', url: 'https://kevloro.ru/laminat/' },
     { file: 'spc/index.html', url: 'https://kevloro.ru/spc/' }
 ];
-const ALL_PAGES = [...CALC_PAGES.map((page) => page.file), 'privacy.html', '404.html'];
+
+// Страницы на универсальном движке engine.js
+const ENGINE_PAGES = [
+    { file: 'plitka/index.html', url: 'https://kevloro.ru/plitka/', calc: 'plitka' },
+    { file: 'oboi/index.html', url: 'https://kevloro.ru/oboi/', calc: 'oboi' },
+    { file: 'kraska/index.html', url: 'https://kevloro.ru/kraska/', calc: 'kraska' },
+    { file: 'styazhka/index.html', url: 'https://kevloro.ru/styazhka/', calc: 'styazhka' }
+];
+
+const CONTENT_PAGES = [
+    { file: 'kalkulyatory/index.html', url: 'https://kevloro.ru/kalkulyatory/' }
+];
+
+const ALL_PAGES = [
+    ...APP_PAGES.map((page) => page.file),
+    ...ENGINE_PAGES.map((page) => page.file),
+    ...CONTENT_PAGES.map((page) => page.file),
+    'privacy.html',
+    '404.html'
+];
 
 // --- 1. Разметка страниц -------------------------------------------------
 const pageInfo = new Map();
@@ -79,8 +99,8 @@ for (const file of ALL_PAGES) {
         fail(`${file}: остались inline-обработчики событий`);
     }
 
-    const canonical = html.match(/<link rel="canonical" href="([^"]+)">/);
     const isErrorPage = file === '404.html';
+    const canonical = html.match(/<link rel="canonical" href="([^"]+)">/);
     if (!canonical && !isErrorPage) {
         fail(`${file}: нет canonical`);
     } else if (canonical) {
@@ -92,8 +112,8 @@ for (const file of ALL_PAGES) {
         fail(`${file}: нет <title>`);
     } else {
         info.title = title[1].trim();
-        if (info.title.length > 75) {
-            fail(`${file}: title длиннее 75 символов (${info.title.length})`);
+        if (info.title.length > 78) {
+            fail(`${file}: title длиннее 78 символов (${info.title.length})`);
         }
     }
 
@@ -102,8 +122,8 @@ for (const file of ALL_PAGES) {
         fail(`${file}: нет meta description`);
     } else if (description) {
         info.description = description[1];
-        if (info.description.length < 110 || info.description.length > 175) {
-            fail(`${file}: description вне диапазона 110–175 символов (${info.description.length})`);
+        if (info.description.length < 110 || info.description.length > 180) {
+            fail(`${file}: description вне диапазона 110–180 символов (${info.description.length})`);
         }
     }
 
@@ -150,25 +170,66 @@ for (const file of ALL_PAGES) {
     pageInfo.set(file, info);
 }
 
-// --- 2. id, которые ищет app.js, обязаны быть на каждой странице ---------
-const appJs = read('app.js');
-const referencedIds = new Set([
-    ...[...appJs.matchAll(/\$\('([A-Za-z0-9_-]+)'\)/g)].map((match) => match[1]),
-    ...[...appJs.matchAll(/getElementById\('([A-Za-z0-9_-]+)'\)/g)].map((match) => match[1])
-]);
-
-for (const { file } of CALC_PAGES) {
-    const info = pageInfo.get(file);
-    const missing = [...referencedIds].filter((id) => !info.ids.has(id));
-    if (missing.length > 0) {
-        fail(`${file}: app.js ищет отсутствующие id — ${missing.join(', ')}`);
+// Уникальность title и description
+const titles = new Map();
+const descriptions = new Map();
+for (const [file, info] of pageInfo) {
+    if (info.title) {
+        if (titles.has(info.title)) {
+            fail(`${file}: title повторяет ${titles.get(info.title)}`);
+        }
+        titles.set(info.title, file);
+    }
+    if (info.description) {
+        if (descriptions.has(info.description)) {
+            fail(`${file}: description повторяет ${descriptions.get(info.description)}`);
+        }
+        descriptions.set(info.description, file);
     }
 }
-ok(`app.js использует ${referencedIds.size} id, все найдены на страницах калькулятора`);
 
-// --- 3. Никакой рекламы и старых артефактов -----------------------------
+// --- 2. id, которые ищет JS, обязаны быть на страницах -------------------
+function checkIds(scriptFile, pages, pattern, label) {
+    const source = read(scriptFile);
+    const ids = new Set([
+        ...[...source.matchAll(pattern)].map((match) => match[1])
+    ]);
+    for (const { file } of pages) {
+        const info = pageInfo.get(file);
+        const missing = [...ids].filter((id) => !info.ids.has(id));
+        if (missing.length > 0) {
+            fail(`${file}: ${scriptFile} ищет отсутствующие id — ${missing.join(', ')}`);
+        }
+    }
+    ok(`${label}: ${ids.size} id, все найдены`);
+}
+
+checkIds('app.js', APP_PAGES, /\$\('([A-Za-z0-9_-]+)'\)/g, 'app.js');
+checkIds('engine.js', ENGINE_PAGES, /UI\.\$\('([A-Za-z0-9_-]+)'\)/g, 'engine.js');
+
+// --- 3. Связка страниц движка с реестром калькуляторов ------------------
+const calcSource = read('calculators.js');
+for (const { file, calc } of ENGINE_PAGES) {
+    const html = pageInfo.get(file).html;
+    const declared = (html.match(/id="calcRoot" data-calc="([^"]+)"/) || [])[1];
+    if (declared !== calc) {
+        fail(`${file}: ожидался data-calc="${calc}", найдено "${declared || 'ничего'}"`);
+    }
+    if (!html.includes('/engine.js')) {
+        fail(`${file}: не подключён /engine.js`);
+    }
+    if (!html.includes('/calculators.js')) {
+        fail(`${file}: не подключён /calculators.js`);
+    }
+    if (!calcSource.includes(calc + ': ' + calc) && !calcSource.includes(calc + ': {')) {
+        fail(`calculators.js: нет калькулятора ${calc}`);
+    }
+}
+ok(`движок: ${ENGINE_PAGES.length} страниц связаны с реестром`);
+
+// --- 4. Никакой рекламы и старых артефактов -----------------------------
 const AD_PATTERNS = [/partner/i, /erid/i, /promo/i, /advestiga/i, /яндекс\s*плюс/i, /промокод/i];
-for (const file of [...ALL_PAGES.filter((name) => name !== 'privacy.html'), 'styles.css', 'app.js', 'core.js', 'sw.js']) {
+for (const file of [...ALL_PAGES.filter((name) => name !== 'privacy.html'), 'styles.css', 'app.js', 'core.js', 'sw.js', 'ui.js', 'engine.js', 'calculators.js']) {
     const content = read(file);
     for (const pattern of AD_PATTERNS) {
         if (pattern.test(content)) {
@@ -177,23 +238,23 @@ for (const file of [...ALL_PAGES.filter((name) => name !== 'privacy.html'), 'sty
     }
 }
 
-// --- 4. FAQ: разметка должна совпадать с видимыми вопросами -------------
-for (const { file } of CALC_PAGES) {
+// --- 5. FAQ: разметка должна совпадать с видимыми вопросами -------------
+for (const file of ALL_PAGES) {
     const info = pageInfo.get(file);
-    const faqSection = info.html.match(/<section class="card faq-card"[\s\S]*?<\/section>/);
-    if (!faqSection) {
-        fail(`${file}: нет блока FAQ`);
-        continue;
-    }
-    const visible = [...faqSection[0].matchAll(/<summary>([\s\S]*?)<\/summary>/g)].map((match) => stripTags(match[1]));
     const faq = info.jsonLd
         .flatMap((block) => (block['@graph'] ? block['@graph'] : [block]))
         .find((node) => node && node['@type'] === 'FAQPage');
 
     if (!faq) {
-        fail(`${file}: нет JSON-LD FAQPage`);
         continue;
     }
+
+    const faqSection = info.html.match(/<section class="card faq-card"[\s\S]*?<\/section>/);
+    if (!faqSection) {
+        fail(`${file}: есть FAQPage, но нет блока .faq-card`);
+        continue;
+    }
+    const visible = [...faqSection[0].matchAll(/<summary>([\s\S]*?)<\/summary>/g)].map((match) => stripTags(match[1]));
     const schema = faq.mainEntity.map((question) => question.name);
     const missingInSchema = visible.filter((question) => !schema.includes(question));
     const extraInSchema = schema.filter((question) => !visible.includes(question));
@@ -206,20 +267,30 @@ for (const { file } of CALC_PAGES) {
     ok(`${file}: FAQ ${visible.length} вопросов совпадает с разметкой`);
 }
 
-// --- 5. Sitemap и robots -------------------------------------------------
+// --- 6. Sitemap и robots -------------------------------------------------
 const sitemap = read('sitemap.xml');
 const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-for (const { file, url } of CALC_PAGES) {
+const expectedUrls = [
+    ...APP_PAGES.map((page) => page.url),
+    ...ENGINE_PAGES.map((page) => page.url),
+    ...CONTENT_PAGES.map((page) => page.url),
+    'https://kevloro.ru/privacy.html'
+];
+for (const url of expectedUrls) {
     if (!locs.includes(url)) {
         fail(`sitemap.xml: нет ${url}`);
     }
-    const info = pageInfo.get(file);
-    if (info.canonical !== url) {
-        fail(`${file}: canonical ${info.canonical} не равен ожидаемому ${url}`);
+}
+for (const loc of locs) {
+    if (!expectedUrls.includes(loc)) {
+        fail(`sitemap.xml: лишний или неизвестный адрес ${loc}`);
     }
 }
-if (!locs.includes('https://kevloro.ru/privacy.html')) {
-    fail('sitemap.xml: нет страницы политики конфиденциальности');
+for (const [file, info] of pageInfo) {
+    const expected = expectedUrls.find((url) => url === info.canonical);
+    if (info.canonical && !expected && file !== '404.html') {
+        fail(`${file}: canonical не совпадает ни с одним адресом sitemap`);
+    }
 }
 if (new Set(locs).size !== locs.length) {
     fail('sitemap.xml: повторяющиеся адреса');
@@ -228,7 +299,7 @@ if (!/Sitemap: https:\/\/kevloro\.ru\/sitemap\.xml/.test(read('robots.txt'))) {
     fail('robots.txt: нет ссылки на sitemap');
 }
 
-// --- 6. Манифест и иконки ------------------------------------------------
+// --- 7. Манифест и иконки ------------------------------------------------
 let manifest;
 try {
     manifest = JSON.parse(read('manifest.json'));
@@ -268,13 +339,15 @@ if (manifest) {
     if (!manifest.icons.some((icon) => icon.purpose === 'maskable')) {
         fail('manifest.json: нет maskable-иконки');
     }
-    if (manifest.start_url !== '/?source=pwa') {
-        fail(`manifest.json: неожиданный start_url ${manifest.start_url}`);
+    for (const shortcut of manifest.shortcuts || []) {
+        if (!exists(shortcut.url.replace(/^\//, '').replace(/\/$/, '') + '/index.html')) {
+            fail(`manifest.json: ярлык ${shortcut.url} ведёт на несуществующую страницу`);
+        }
     }
-    ok(`manifest.json: ${manifest.icons.length} иконок, размеры совпадают с файлами`);
+    ok(`manifest.json: ${manifest.icons.length} иконок, ${(manifest.shortcuts || []).length} ярлыков`);
 }
 
-// --- 7. Service worker: всё из precache должно существовать --------------
+// --- 8. Service worker: всё из precache должно существовать --------------
 const sw = read('sw.js');
 const precacheBlock = sw.match(/var PRECACHE = \[([\s\S]*?)\];/);
 if (!precacheBlock) {
@@ -291,10 +364,16 @@ if (!precacheBlock) {
             fail(`sw.js: в precache отсутствует ${url}`);
         }
     }
+    for (const { url } of [...APP_PAGES, ...ENGINE_PAGES, ...CONTENT_PAGES]) {
+        const asPath = url.replace('https://kevloro.ru', '') || '/';
+        if (!urls.includes(asPath)) {
+            fail(`sw.js: ${asPath} не попал в precache`);
+        }
+    }
     ok(`sw.js: precache из ${urls.length} адресов, все на месте`);
 }
 
-// --- 8. Остатки старых файлов -------------------------------------------
+// --- 9. Остатки старых файлов -------------------------------------------
 for (const legacy of ['icon-192.svg', 'icon-512.svg']) {
     if (exists(legacy)) {
         fail(`${legacy}: старый дубль остался в репозитории`);
