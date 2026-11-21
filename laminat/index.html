@@ -159,19 +159,14 @@
 <div class="container">
     <header class="header">
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Включить тёмную тему" aria-pressed="false">🌙</button>
-        <div class="offline-status" id="netStatus" role="status" aria-live="polite">
+        <div class="offline-status" id="netStatus" role="status" aria-live="polite" hidden>
             <span class="offline-dot" aria-hidden="true"></span>
-            <span id="netStatusText">Офлайн-режим готов</span>
+            <span id="netStatusText">Нет сети</span>
         </div>
         <a class="logo" href="/">KEVLORO</a>
         <h1>Калькулятор ламината онлайн</h1>
         <p class="subtitle">Упаковки, запас на подрезку, подложка и плинтус</p>
-        <p class="hero-badges">
-            <span class="chip">Бесплатно</span>
-            <span class="chip">Без регистрации</span>
-            <span class="chip">Работает офлайн</span>
-        </p>
-        <nav class="nav-links-pills no-print" aria-label="Калькуляторы">
+                <nav class="nav-links-pills no-print" aria-label="Калькуляторы">
             <a class="pill" href="/">Все покрытия</a>
             <a class="pill is-active" href="/laminat/" aria-current="page">Ламинат</a>
             <a class="pill" href="/spc/">SPC кварцвинил</a>
@@ -367,7 +362,7 @@
                     <button type="button" class="share-btn share-native" id="shareNative" title="Поделиться в другом приложении">Ещё</button>
                 </div>
 
-                <p class="results-note">Сумма ориентировочная: цены и наличие уточняйте у продавца. Расчёт выполняется в браузере, данные не отправляются на сервер.</p>
+                <p class="results-note">Суммы ориентировочные — уточняйте цены у продавца.</p>
             </div>
         </section>
 

@@ -200,8 +200,10 @@
             return;
         }
         var offline = !window.navigator.onLine;
+        // В сети статус не показываем: он ничего не сообщает пользователю.
+        box.hidden = !offline;
         box.classList.toggle('is-offline', offline);
-        text.textContent = offline ? 'Работает без интернета' : 'Офлайн-режим готов';
+        text.textContent = offline ? 'Нет сети — расчёт работает' : 'Нет сети';
     }
 
     on(window, 'online', updateNetStatus);
