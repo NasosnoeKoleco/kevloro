@@ -6,7 +6,7 @@
  * а без интернета калькулятор продолжает работать.
  */
 
-var CACHE_VERSION = 'kevloro-v11';
+var CACHE_VERSION = 'kevloro-v12';
 var NETWORK_TIMEOUT = 3000;
 
 var PRECACHE = [
@@ -19,6 +19,18 @@ var PRECACHE = [
     '/kraska/',
     '/styazhka/',
     '/kalkulyatory/',
+    '/blog/',
+    '/blog/skolko-kleya-na-plitku/',
+    '/blog/zapas-laminata-pri-ukladke/',
+    '/blog/kak-rasschitat-oboi/',
+    '/blog/skolko-kraski-na-stenu/',
+    '/blog/rashod-smesi-na-styazhku/',
+    '/blog/teplyy-pol-pod-laminat/',
+    '/blog/laminat-ili-spc/',
+    '/blog/podlozhka-pod-laminat/',
+    '/blog/plitka-ili-keramogranit/',
+    '/blog/kak-rasschitat-plintus/',
+    '/feed.xml',
     '/privacy.html',
     '/404.html',
     '/styles.css',
@@ -27,6 +39,8 @@ var PRECACHE = [
     '/ui.js',
     '/calculators.js',
     '/engine.js',
+    '/ads.js',
+    '/ads.config.js',
     '/manifest.json',
     '/favicon.ico',
     '/icon.svg',

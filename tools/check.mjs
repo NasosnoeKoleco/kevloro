@@ -62,10 +62,26 @@ const CONTENT_PAGES = [
     { file: 'kalkulyatory/index.html', url: 'https://kevloro.ru/kalkulyatory/' }
 ];
 
+
+const BLOG_PAGES = [
+    { file: 'blog/index.html', url: 'https://kevloro.ru/blog/', hub: true },
+    { file: 'blog/skolko-kleya-na-plitku/index.html', url: 'https://kevloro.ru/blog/skolko-kleya-na-plitku/' },
+    { file: 'blog/zapas-laminata-pri-ukladke/index.html', url: 'https://kevloro.ru/blog/zapas-laminata-pri-ukladke/' },
+    { file: 'blog/kak-rasschitat-oboi/index.html', url: 'https://kevloro.ru/blog/kak-rasschitat-oboi/' },
+    { file: 'blog/skolko-kraski-na-stenu/index.html', url: 'https://kevloro.ru/blog/skolko-kraski-na-stenu/' },
+    { file: 'blog/rashod-smesi-na-styazhku/index.html', url: 'https://kevloro.ru/blog/rashod-smesi-na-styazhku/' },
+    { file: 'blog/teplyy-pol-pod-laminat/index.html', url: 'https://kevloro.ru/blog/teplyy-pol-pod-laminat/' },
+    { file: 'blog/laminat-ili-spc/index.html', url: 'https://kevloro.ru/blog/laminat-ili-spc/' },
+    { file: 'blog/podlozhka-pod-laminat/index.html', url: 'https://kevloro.ru/blog/podlozhka-pod-laminat/' },
+    { file: 'blog/plitka-ili-keramogranit/index.html', url: 'https://kevloro.ru/blog/plitka-ili-keramogranit/' },
+    { file: 'blog/kak-rasschitat-plintus/index.html', url: 'https://kevloro.ru/blog/kak-rasschitat-plintus/' }
+];
+
 const ALL_PAGES = [
     ...APP_PAGES.map((page) => page.file),
     ...ENGINE_PAGES.map((page) => page.file),
     ...CONTENT_PAGES.map((page) => page.file),
+    ...BLOG_PAGES.map((page) => page.file),
     'privacy.html',
     '404.html'
 ];
@@ -249,7 +265,7 @@ for (const file of ALL_PAGES) {
         continue;
     }
 
-    const faqSection = info.html.match(/<section class="card faq-card"[\s\S]*?<\/section>/);
+    const faqSection = info.html.match(/<section[^>]*class="[^"]*faq-card[^"]*"[\s\S]*?<\/section>/);
     if (!faqSection) {
         fail(`${file}: есть FAQPage, но нет блока .faq-card`);
         continue;
@@ -274,6 +290,7 @@ const expectedUrls = [
     ...APP_PAGES.map((page) => page.url),
     ...ENGINE_PAGES.map((page) => page.url),
     ...CONTENT_PAGES.map((page) => page.url),
+    ...BLOG_PAGES.map((page) => page.url),
     'https://kevloro.ru/privacy.html'
 ];
 for (const url of expectedUrls) {
@@ -381,6 +398,113 @@ for (const legacy of ['icon-192.svg', 'icon-512.svg']) {
 }
 if (!exists('_config.yml') || !exists('.nojekyll')) {
     fail('пропали служебные файлы публикации (_config.yml / .nojekyll)');
+}
+
+// --- 10. Блог: разметка статей и перелинковка ---------------------------
+const articlePages = BLOG_PAGES.filter((page) => !page.hub);
+for (const { file: blogFile } of articlePages) {
+    const info = pageInfo.get(blogFile);
+    const graph = info.jsonLd.flatMap((block) => (block['@graph'] ? block['@graph'] : [block]));
+
+    const article = graph.find((node) => node && node['@type'] === 'Article');
+    if (!article) {
+        fail(`${blogFile}: нет JSON-LD Article`);
+    } else {
+        ['headline', 'description', 'datePublished', 'dateModified', 'image', 'author', 'publisher'].forEach((key) => {
+            if (!article[key]) {
+                fail(`${blogFile}: в Article нет поля ${key}`);
+            }
+        });
+    }
+
+    const crumbs = graph.find((node) => node && node['@type'] === 'BreadcrumbList');
+    if (!crumbs || crumbs.itemListElement.length < 3) {
+        fail(`${blogFile}: хлебные крошки должны быть из 3 уровней`);
+    }
+
+    const linksToTools = [...info.html.matchAll(/href="\/(plitka|laminat|spc|oboi|kraska|styazhka|kalkulyatory)\//g)].length;
+    if (linksToTools < 2) {
+        fail(`${blogFile}: статья должна ссылаться минимум на два калькулятора (найдено ${linksToTools})`);
+    }
+
+    if (!info.html.includes('/ads.js')) {
+        fail(`${blogFile}: не подключён /ads.js`);
+    }
+}
+
+// Хаб блога перечисляет все статьи
+{
+    const hub = pageInfo.get('blog/index.html');
+    const graph = hub.jsonLd.flatMap((block) => (block['@graph'] ? block['@graph'] : [block]));
+    const list = graph.find((node) => node && node['@type'] === 'ItemList');
+    if (!list) {
+        fail('blog/index.html: нет ItemList со статьями');
+    } else {
+        const urls = list.itemListElement.map((item) => item.url);
+        for (const page of articlePages) {
+            if (!urls.includes(page.url)) {
+                fail(`blog/index.html: в ItemList нет ${page.url}`);
+            }
+        }
+        ok(`блог: ${urls.length} статей в ItemList`);
+    }
+}
+
+// Рекламные места: скрыты, подписаны, с уникальными id
+for (const file of ALL_PAGES) {
+    const info = pageInfo.get(file);
+    const slots = [...info.html.matchAll(/<aside class="ad-slot"[^>]*>/g)].map((match) => match[0]);
+    if (slots.length === 0) {
+        continue;
+    }
+    if (!info.html.includes('/ads.js')) {
+        fail(`${file}: есть рекламный слот, но не подключён /ads.js`);
+    }
+    for (const slot of slots) {
+        if (!/\shidden(\s|>)/.test(slot)) {
+            fail(`${file}: рекламный слот должен быть скрыт до включения сети`);
+        }
+        if (!/aria-label="Рекламный блок"/.test(slot)) {
+            fail(`${file}: у рекламного слота нет подписи для доступности`);
+        }
+    }
+    if (!/class="ad-label">Реклама</.test(info.html)) {
+        fail(`${file}: нет видимой пометки «Реклама»`);
+    }
+}
+
+// RSS: канал, элементы и соответствие sitemap
+{
+    const feed = read('feed.xml');
+    const items = [...feed.matchAll(/<item>[\s\S]*?<\/item>/g)].map((match) => match[0]);
+    if (items.length !== articlePages.length) {
+        fail(`feed.xml: элементов ${items.length}, статей ${articlePages.length}`);
+    }
+    for (const item of items) {
+        const link = (item.match(/<link>([^<]+)<\/link>/) || [])[1];
+        if (!link) {
+            fail('feed.xml: элемент без ссылки');
+            continue;
+        }
+        if (!locs.includes(link)) {
+            fail(`feed.xml: ссылка ${link} отсутствует в sitemap`);
+        }
+        const relative = link.replace('https://kevloro.ru/', '').replace(/\/$/, '');
+        if (!exists(`${relative}/index.html`)) {
+            fail(`feed.xml: страница ${link} не найдена в репозитории`);
+        }
+    }
+    if (!/<title>[^<]+<\/title>/.test(feed) || !/<description>/.test(feed)) {
+        fail('feed.xml: нет заголовка или описания канала');
+    }
+    ok(`RSS: ${items.length} статей, ссылки сходятся с sitemap`);
+}
+
+// Каждый калькулятор ссылается на блог
+for (const file of [...APP_PAGES.map((page) => page.file), ...ENGINE_PAGES.map((page) => page.file), ...CONTENT_PAGES.map((page) => page.file)]) {
+    if (!pageInfo.get(file).html.includes('href="/blog/"')) {
+        fail(`${file}: нет ссылки на /blog/ — блог должен быть связан с калькуляторами`);
+    }
 }
 
 // --- Итог ---------------------------------------------------------------

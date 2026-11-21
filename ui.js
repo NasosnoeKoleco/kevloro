@@ -267,6 +267,32 @@
         storage.set('kevloro:pwa-banner-closed', '1');
     });
 
+    /* --------------------------------------------------- cookie-баннер */
+
+    (function consent() {
+        if (storage.get('kevloro:consent')) {
+            return;
+        }
+        var banner = document.createElement('div');
+        banner.className = 'consent';
+        banner.setAttribute('role', 'dialog');
+        banner.setAttribute('aria-label', 'Использование cookie');
+        banner.innerHTML = '<p>Сайт использует cookie для статистики посещений. ' +
+            'Расчёты остаются в браузере. <a href="/privacy.html">Подробнее</a>.</p>' +
+            '<div class="consent-actions"><button type="button" class="btn-action" data-consent="ok">Понятно</button></div>';
+        document.body.appendChild(banner);
+
+        banner.addEventListener('click', function (event) {
+            var button = event.target.closest ? event.target.closest('[data-consent]') : null;
+            if (!button) {
+                return;
+            }
+            storage.set('kevloro:consent', '1');
+            banner.remove();
+            track('consent_ok');
+        });
+    })();
+
     window.KevloroUI = {
         $: $,
         on: on,

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kevloro — статьи о ремонте и расчёте материалов</title>
+    <link>https://kevloro.ru/blog/</link>
+    <description>Расход материалов, запасы и выбор покрытий: разборы с таблицами и расчётами.</description>
+    <language>ru</language>
+    <lastBuildDate>Sat, 21 Nov 2026 20:00:00 +0300</lastBuildDate>
+    <atom:link href="https://kevloro.ru/feed.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title>Сколько клея нужно на 1 м² плитки</title>
+      <link>https://kevloro.ru/blog/skolko-kleya-na-plitku/</link>
+      <guid>https://kevloro.ru/blog/skolko-kleya-na-plitku/</guid>
+      <pubDate>Sat, 21 Nov 2026 19:00:00 +0300</pubDate>
+      <description>Расход клея по гребёнке шпателя, формула расчёта мешков на комнату и запас, который стоит заложить.</description>
+    </item>
+    <item>
+      <title>Какой запас ламината нужен при укладке</title>
+      <link>https://kevloro.ru/blog/zapas-laminata-pri-ukladke/</link>
+      <guid>https://kevloro.ru/blog/zapas-laminata-pri-ukladke/</guid>
+      <pubDate>Sat, 21 Nov 2026 18:50:00 +0300</pubDate>
+      <description>5 % для прямой укладки, 10 % для диагонали, 15 % для «ёлочки» — и почему запас нужен не только на подрезку.</description>
+    </item>
+    <item>
+      <title>Как рассчитать обои на комнату</title>
+      <link>https://kevloro.ru/blog/kak-rasschitat-oboi/</link>
+      <guid>https://kevloro.ru/blog/kak-rasschitat-oboi/</guid>
+      <pubDate>Sat, 21 Nov 2026 18:40:00 +0300</pubDate>
+      <description>Периметр, площадь стен, раппорт и полотна в рулоне: почему при высоком потолке рулонов нужно больше.</description>
+    </item>
+    <item>
+      <title>Сколько краски нужно на стену</title>
+      <link>https://kevloro.ru/blog/skolko-kraski-na-stenu/</link>
+      <guid>https://kevloro.ru/blog/skolko-kraski-na-stenu/</guid>
+      <pubDate>Sat, 21 Nov 2026 18:30:00 +0300</pubDate>
+      <description>Литры на слой по типу краски, число слоёв, банки и грунтовка — с примером на 40 м².</description>
+    </item>
+    <item>
+      <title>Расход смеси на стяжку</title>
+      <link>https://kevloro.ru/blog/rashod-smesi-na-styazhku/</link>
+      <guid>https://kevloro.ru/blog/rashod-smesi-na-styazhku/</guid>
+      <pubDate>Sat, 21 Nov 2026 18:20:00 +0300</pubDate>
+      <description>Пескобетон, ЦПС и наливной пол: кг на м², вода для затворения и мешки на 20 м².</description>
+    </item>
+    <item>
+      <title>Тёплый пол под ламинат и SPC</title>
+      <link>https://kevloro.ru/blog/teplyy-pol-pod-laminat/</link>
+      <guid>https://kevloro.ru/blog/teplyy-pol-pod-laminat/</guid>
+      <pubDate>Sat, 21 Nov 2026 18:10:00 +0300</pubDate>
+      <description>Температурные ограничения, термосопротивление и почему мягкая подложка всё портит.</description>
+    </item>
+    <item>
+      <title>Ламинат или SPC: что выбрать</title>
+      <link>https://kevloro.ru/blog/laminat-ili-spc/</link>
+      <guid>https://kevloro.ru/blog/laminat-ili-spc/</guid>
+      <pubDate>Sat, 21 Nov 2026 18:00:00 +0300</pubDate>
+      <description>Основа, влагостойкость, тёплый пол, шум и цена — сравнение без категоричных советов.</description>
+    </item>
+    <item>
+      <title>Какую подложку выбрать под ламинат</title>
+      <link>https://kevloro.ru/blog/podlozhka-pod-laminat/</link>
+      <guid>https://kevloro.ru/blog/podlozhka-pod-laminat/</guid>
+      <pubDate>Sat, 21 Nov 2026 17:50:00 +0300</pubDate>
+      <description>XPS, пробка, полиэтилен и жёсткая подложка для SPC — что и где уместно.</description>
+    </item>
+    <item>
+      <title>Плитка или керамогранит</title>
+      <link>https://kevloro.ru/blog/plitka-ili-keramogranit/</link>
+      <guid>https://kevloro.ru/blog/plitka-ili-keramogranit/</guid>
+      <pubDate>Sat, 21 Nov 2026 17:40:00 +0300</pubDate>
+      <description>Состав, водопоглощение, прочность и цена — где что уместно и как это влияет на расход клея.</description>
+    </item>
+    <item>
+      <title>Как рассчитать плинтус, углы и заглушки</title>
+      <link>https://kevloro.ru/blog/kak-rasschitat-plintus/</link>
+      <guid>https://kevloro.ru/blog/kak-rasschitat-plintus/</guid>
+      <pubDate>Sat, 21 Nov 2026 17:30:00 +0300</pubDate>
+      <description>Чистый периметр, запас 5 %, длина планки, углы и порожки — с примером на комнату 5 × 3 м.</description>
+    </item>
+  </channel>
+</rss>

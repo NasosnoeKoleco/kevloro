@@ -7,6 +7,7 @@
     <meta name="description" content="Рассчитайте количество обоев по периметру комнаты: полотна с подгонкой по раппорту, рулоны, клей и стоимость. Площадь стен — с учётом окон и дверей.">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
     <link rel="canonical" href="https://kevloro.ru/oboi/">
+    <link rel="alternate" type="application/rss+xml" title="Статьи Kevloro" href="https://kevloro.ru/feed.xml">
 
     <meta name="theme-color" content="#3556f5" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#070c17" media="(prefers-color-scheme: dark)">
@@ -297,12 +298,30 @@
                 </a>
             </div>
         </section>
+        <section class="card" id="articlesCard" aria-labelledby="articles-heading">
+            <h2 class="section-title" id="articles-heading">Полезные статьи</h2>
+            <div class="article-list" style="margin-top:10px">
+                <a class="article-card" href="/blog/kak-rasschitat-oboi/">
+                    <strong>Как рассчитать обои на комнату</strong>
+                    <span>Периметр, площадь стен, раппорт и полотна в рулоне.</span>
+                </a>
+            </div>
+        </section>
+
+        <aside class="ad-slot" data-ad="calculator-bottom" hidden aria-label="Рекламный блок">
+            <div class="ad-slot-inner" id="ad-calculator-bottom">
+                <span class="ad-label">Реклама</span>
+                <div class="ad-placeholder">Здесь будет рекламный блок</div>
+            </div>
+        </aside>
+
     </main>
 
     <footer class="footer no-print">
         <nav aria-label="Разделы сайта">
             <a href="/">Все покрытия</a>
             <a href="/kalkulyatory/">Калькуляторы</a>
+            <a href="/blog/">Статьи</a>
             <a href="/privacy.html">Конфиденциальность</a>
         </nav>
         <p>Kevloro — бесплатные калькуляторы отделки. Расчёты выполняются в браузере, без регистрации и отправки данных на сервер.</p>
@@ -327,5 +346,7 @@
 <script src="/ui.js" defer></script>
 <script src="/calculators.js" defer></script>
 <script src="/engine.js" defer></script>
+<script src="/ads.config.js" defer></script>
+<script src="/ads.js" defer></script>
 </body>
 </html>
